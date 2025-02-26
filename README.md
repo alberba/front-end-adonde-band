@@ -1,2 +1,3 @@
-# front-end
-front-end
+# Front-end
+
+Client web del servidor central.
