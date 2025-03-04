@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginPage.vue'
 import HomePage from '@/views/HomePage.vue'
+import { useAuthStore } from '@/store'
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
@@ -14,8 +15,7 @@ const router = createRouter({
 
 // Guard de navegación para verificar la autenticación
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = false // Aquí deberías implementar tu lógica de autenticación
-  if (to.meta.requiresAuth && !isAuthenticated) {
+  if (to.meta.requiresAuth && !useAuthStore().isAuthenticated) {
     next('/login')
   }
   next()

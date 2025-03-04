@@ -1,15 +1,19 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/store'
 import { useRouter } from 'vue-router'
+
+const authStore = useAuthStore()
 
 const router = useRouter()
 function tempRedirectHome() {
-  router.push('/home')
+  authStore.login()
+  router.push('/')
 }
 </script>
 
 <template>
   <header class="flex w-full flex-row items-center justify-between py-2.5">
-    <h1 class="text-4xl md:text-[48px] lg:text-[64px] font-bold">Bienvenido a BotSports</h1>
+    <h1 class="text-4xl font-bold md:text-[48px] lg:text-[64px]">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
 
