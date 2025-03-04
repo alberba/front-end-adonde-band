@@ -33,7 +33,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
 <template>
   <HeaderApp />
 
-  <main class="flex w-[860px] flex-col items-center justify-center">
+  <main class="flex max-w-[860px] flex-col items-center justify-center lg:w-[860px] mb-10">
     <header class="m-3 flex w-full flex-col gap-2">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">Mis Ligas</h1>
@@ -48,13 +48,13 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       <div class="h-0 w-full border"></div>
     </header>
 
-    <section class="flex w-full flex-col items-center gap-4">
+    <section class="flex w-full flex-col items-center gap-4 mb-6">
       <div class="flex w-full flex-col gap-1 text-[#9b9b9b]">
         <h2 class="text-xl">En vivo</h2>
         <div class="h-0 w-[120px] border"></div>
       </div>
 
-      <ul class="flex flex-wrap justify-center gap-8">
+      <ul class="flex flex-wrap justify-center gap-x-8 gap-y-5">
         <li v-for="liga in ligasEnCurso" :key="liga.id" class="w-fit">
           <ButtonLeague :liga="liga" />
         </li>
