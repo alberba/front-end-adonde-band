@@ -8,12 +8,12 @@ function tempRedirectHome() {
 </script>
 
 <template>
-  <header class="mx-12 my-2.5 flex flex-row items-center justify-between">
+  <header class="w-full px-12 py-2.5 flex flex-row items-center justify-between">
     <h1 class="text-[64px] font-bold">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
 
-  <main class="my-10 flex justify-center">
+  <main class="my-10 flex w-full justify-center">
     <form
       action="post"
       class="flex w-2/5 flex-col items-center gap-4 rounded-md bg-white p-6 text-black"
@@ -49,7 +49,6 @@ function tempRedirectHome() {
       >
         Iniciar Sesión
       </button>
-      <RouterLink to="/home">Iniciar Sesion</RouterLink>
 
       <a href="register" class="flex w-48 justify-center rounded-full bg-[#525252] py-2 text-white">
         Registrarse
