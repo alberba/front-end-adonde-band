@@ -8,15 +8,15 @@ function tempRedirectHome() {
 </script>
 
 <template>
-  <header class="w-full px-12 py-2.5 flex flex-row items-center justify-between">
-    <h1 class="text-[64px] font-bold">Bienvenido a BotSports</h1>
+  <header class="flex w-full flex-row items-center justify-between py-2.5">
+    <h1 class="text-4xl md:text-[48px] lg:text-[64px] font-bold">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
 
   <main class="my-10 flex w-full justify-center">
     <form
       action="post"
-      class="flex w-2/5 flex-col items-center gap-4 rounded-md bg-white p-6 text-black"
+      class="flex w-full flex-col items-center gap-4 rounded-md bg-white p-6 text-black md:mx-24 lg:mx-36 lg:w-[700px]"
     >
       <label for="email" class="flex w-full flex-col">
         Email
@@ -45,7 +45,7 @@ function tempRedirectHome() {
       <button
         @click="tempRedirectHome()"
         type="submit"
-        class="w-2xs rounded-full bg-[#06f] py-2 text-white"
+        class="mx-3 box-border w-full rounded-full bg-[#06f] py-2 text-white md:w-xs lg:w-2xs"
       >
         Iniciar Sesión
       </button>
