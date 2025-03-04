@@ -9,7 +9,7 @@ function tempRedirectHome() {
 
 <template>
   <header class="mx-12 my-2.5 flex flex-row items-center justify-between">
-    <h1 class="text-6xl font-bold">Bienvenido a BotSports</h1>
+    <h1 class="text-[64px] font-bold">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
 
