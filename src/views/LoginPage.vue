@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+function tempRedirectHome() {
+  router.push('/home')
+}
+</script>
 
 <template>
   <header class="mx-12 my-2.5 flex flex-row items-center justify-between">
@@ -35,9 +42,14 @@
 
       <a href="http://" class="self-start underline">Forgot Password?</a>
 
-      <button type="submit" class="w-2xs rounded-full bg-[#06f] py-2 font-bold text-white">
+      <button
+        @click="tempRedirectHome()"
+        type="submit"
+        class="w-2xs rounded-full bg-[#06f] py-2 text-white"
+      >
         Iniciar Sesión
       </button>
+      <RouterLink to="/home">Iniciar Sesion</RouterLink>
 
       <a href="register" class="flex w-48 justify-center rounded-full bg-[#525252] py-2 text-white">
         Registrarse
