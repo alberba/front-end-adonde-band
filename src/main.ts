@@ -2,6 +2,6 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import router from './router'
-import LoginPage from './views/LoginPage.vue'
+import App from './App.vue'
 
-createApp(LoginPage).use(router).mount('#app')
+createApp(App).use(router).mount('#app')
