@@ -5,6 +5,8 @@ import ProfileView from '@/views/ProfilePage.vue'
 import { useAuthStore } from '@/store'
 import ChatPage from '@/views/ChatPage.vue'
 import MyLeaguePage from '@/views/MyLeaguePage.vue'
+import MyBotsPage from '@/views/MyBotsPage.vue'
+
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
@@ -12,6 +14,7 @@ const routes = [
   { path: '/profile', component: ProfileView, meta: { requiresAuth: true } },
   { path: '/chat', component: ChatPage },
   { path: '/myLeague', component: MyLeaguePage },
+  { path: '/myBots', component: MyBotsPage },
 ]
 
 const router = createRouter({
