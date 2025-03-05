@@ -10,8 +10,8 @@ const route = useRoute()
   <header class="flex w-full flex-row items-center justify-between py-2.5">
     <h1 v-if="props.isHeading1" class="text-3xl font-semibold">{{ props.title }}</h1>
     <h2 v-else class="text-[24px] font-semibold">{{ props.title }}</h2>
-    <nav class="hidden flex-row items-center gap-4 sm:flex sm:gap-11">
-      <div class="flex flex-row items-center gap-3">
+    <nav class="flex flex-row items-center gap-4 sm:gap-11">
+      <div class="hidden flex-row items-center gap-3 sm:flex">
         <!-- Muestra de botones dinámicos según actual página-->
         <RouterLink
           to="/"
@@ -28,16 +28,12 @@ const route = useRoute()
           Mis Bots
         </RouterLink>
       </div>
-      <div class="overflow-hidden rounded-full w-[54px] object-contain">
+      <div class="w-[54px] overflow-hidden rounded-full object-contain">
         <RouterLink to="/profile">
           <img src="@/assets/tempProfile.png" alt="" />
         </RouterLink>
       </div>
+      <button class="w-10 block sm:hidden"><img src="@/assets/menuIcon.svg" alt="" srcset=""></button>
     </nav>
-    <button class="overflow-hidden rounded-full sm:hidden">
-      <RouterLink to="/">
-        <img src="@/assets/tempProfile.png" alt="" />
-      </RouterLink>
-    </button>
   </header>
 </template>
