@@ -8,8 +8,11 @@ const route = useRoute()
 
 <template>
   <header class="flex w-full flex-row items-center justify-between py-2.5">
-    <h1 v-if="props.isHeading1" class="text-3xl font-semibold">{{ props.title }}</h1>
-    <h2 v-else class="text-[24px] font-semibold">{{ props.title }}</h2>
+    <div class="flex flex-row gap-8">
+      <slot></slot>
+      <h1 v-if="props.isHeading1" class="text-3xl font-semibold">{{ props.title }}</h1>
+      <h2 v-else class="text-[24px] font-semibold">{{ props.title }}</h2>
+    </div>
     <nav class="flex flex-row items-center gap-4 sm:gap-11">
       <div class="hidden flex-row items-center gap-3 sm:flex">
         <!-- Muestra de botones dinámicos según actual página-->
