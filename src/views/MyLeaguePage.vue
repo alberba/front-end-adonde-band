@@ -10,13 +10,26 @@ const clasificacion = ref([
 ])
 
 const ligaNombre = 'LaLiga EA Sports'
-const jornadaNum = 3
+const jornadaNum = ref(3)
+const jornadaMax = 12
 const encuentros = [
   {
     equipo1: 'Equipo 1',
     equipo2: 'Equipo 2',
   },
 ]
+
+const incrementJornada = () => {
+  if (jornadaNum.value < jornadaMax) {
+    jornadaNum.value++
+  }
+}
+
+const decrementJornada = () => {
+  if (jornadaNum.value > 1) {
+    jornadaNum.value--
+  }
+}
 </script>
 
 <template>
@@ -41,12 +54,12 @@ const encuentros = [
       <!-- Container para la jornada -->
       <div class="w-full bg-[#BBBBBB] p-4">
         <div class="flex items-center justify-center">
-          <button>
+          <button @click="decrementJornada">
             <img src="@/assets/svg/izquierdaicon.svg" alt="Izquierda" class="mr-3 h-6 w-6" />
           </button>
           <img src="@/assets/svg/calendaricon.svg" alt="calendar" class="mr-2 w-7" />
           <div class="text-2xl font-bold text-[#242424]">JORNADA {{ jornadaNum }}</div>
-          <button>
+          <button @click="incrementJornada">
             <img src="@/assets/svg/derechaicon.svg" alt="Derecha" class="ml-2 h-6 w-6" />
           </button>
         </div>
@@ -58,7 +71,7 @@ const encuentros = [
         <div
           v-for="(encuentro, index) in encuentros"
           :key="index"
-          class="flex items-center justify-center border-b border-[#BBBBBB] py-2"
+          class="flex items-center justify-center text-3xl font-bold text-[#242424] border-b border-[#BBBBBB] py-2"
         >
           <div class="text-lg">{{ encuentro.equipo1 }} vs {{ encuentro.equipo2 }}</div>
         </div>
@@ -91,7 +104,7 @@ const encuentros = [
           <tr
             v-for="(equipo, index) in clasificacion"
             :key="index"
-            class="flex w-full flex-row gap-8 border-b border-[#242424] text-xl"
+            class="flex w-full flex-row gap-8 border-b border-[#9B9B9B] text-xl"
           >
             <th class="w-16">{{ equipo.pos }}</th>
             <th class="flex w-75 justify-start">{{ equipo.equipo }}</th>
