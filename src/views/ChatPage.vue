@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeaderApp from '@/components/HeaderApp.vue'
 import MessageApp from '@/components/MessageApp.vue'
+import SideBar from '@/components/SideBar/SideBar.vue'
 import type { Mensaje } from '@/types'
 
 const mensajes: Mensaje[] = [
@@ -36,14 +37,19 @@ const mensajes: Mensaje[] = [
 </script>
 
 <template>
-  <HeaderApp :isHeading1="true" title="Carlos vs AdondeBoy">
-    <button class="h-8 w-8 cursor-pointer object-contain">
-      <img src="@/assets/svg/toggleSideBarIcon.svg" alt="" />
-    </button>
-  </HeaderApp>
-  <main class="flex w-full flex-col gap-6 px-32">
-    <div v-for="mensaje in mensajes" :key="mensaje.id">
-      <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
+  <div class="flex h-full w-full flex-row">
+    <SideBar />
+    <div class="w-full">
+      <HeaderApp :isHeading1="true" title="Carlos vs AdondeBoy">
+        <button class="h-8 w-8 cursor-pointer object-contain">
+          <img src="@/assets/svg/toggleSideBarIcon.svg" alt="" />
+        </button>
+      </HeaderApp>
+      <main class="flex w-full flex-col gap-6 px-32">
+        <div v-for="mensaje in mensajes" :key="mensaje.id">
+          <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
+        </div>
+      </main>
     </div>
-  </main>
+  </div>
 </template>
