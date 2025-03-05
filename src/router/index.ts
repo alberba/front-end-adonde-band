@@ -3,11 +3,13 @@ import LoginView from '../views/LoginPage.vue'
 import HomePage from '@/views/HomePage.vue'
 import ProfileView from '@/views/ProfilePage.vue'
 import { useAuthStore } from '@/store'
+import ChatPage from '@/views/ChatPage.vue'
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/login', component: LoginView },
-  { path: '/profile', component: ProfileView, meta: { requiresAuth: true } }
+  { path: '/profile', component: ProfileView, meta: { requiresAuth: true } },
+  { path: '/chat', component: ChatPage },
 ]
 
 const router = createRouter({
