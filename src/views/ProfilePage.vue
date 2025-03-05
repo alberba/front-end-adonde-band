@@ -10,31 +10,27 @@ import HeaderApp from '@/components/HeaderApp.vue'
       class="flex w-full max-w-4xl flex-col items-center justify-center rounded-xl bg-[#2a2a2a] p-6 shadow-xl"
     >
       <!-- Bienvenida al Perfil -->
-      <div class="mb-6 text-center text-4xl font-semibold text-white">
-        <h2>¡Hola, Adonde Boy!</h2>
-        <div class="mx-auto mt-2 w-[80%] border-b-2 border-[#525252]"></div>
+      <div class="mb-6 w-full text-center text-3xl font-semibold text-white md:text-4xl">
+        <h2 class="">¡Hola, Adonde Boy!</h2>
+        <div class="mx-auto mt-2 w-1/4 border border-white"></div>
       </div>
 
       <!-- Imagen del Usuario -->
-      <div
-        class="relative mb-6 flex h-[150px] w-[150px] items-center justify-center rounded-full bg-red-500 text-[64px] font-bold text-white"
-      >
-        <span>Ad</span>
-      </div>
+      <img src="@/assets/tempProfile.png" alt="" class="w-[150px] rounded-full object-contain" />
 
       <form
         action="post"
-        class="flex w-full flex-col items-center gap-4 rounded-md bg-[#2a2a2a] p-6 text-white md:mx-24 lg:mx-36 lg:w-[700px]"
+        class="mt-10 flex w-full flex-col items-center gap-4 rounded-md bg-[#2a2a2a] pb-6 text-white md:mx-24 lg:mx-36 lg:w-[700px]"
       >
-        <div class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="mb-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
           <!-- Nombre -->
           <div class="w-full">
             <label for="name" class="text-white">Nombre</label>
             <input
               id="name"
               type="text"
-              class="w-full rounded-lg border-2 border-[#333] bg-[#121212] p-3 text-white"
-              placeholder="Introduce tu nombre..."
+              class="w-full rounded-lg border-2 border-[#333] bg-[#171717] p-3 text-white"
+              placeholder="Introduce tu nombre"
               required
             />
           </div>
@@ -45,17 +41,15 @@ import HeaderApp from '@/components/HeaderApp.vue'
             <input
               id="email"
               type="email"
-              class="w-full rounded-lg border-2 border-[#333] bg-[#121212] p-3 text-white"
-              placeholder="Introduce tu correo electrónico..."
+              class="w-full rounded-lg border-2 border-[#333] bg-[#171717] p-3 text-white"
+              placeholder="Introduce tu correo electrónico"
               required
             />
           </div>
         </div>
-
-        <div class="mb-12"></div>
         <div class="mb-6 text-center text-2xl font-semibold text-white">
           <h2>Cambiar Contraseña</h2>
-          <div class="mx-auto mt-2 w-[80%] border-b-2 border-[#525252]"></div>
+          <div class="mx-auto mt-2 w-1/2 border border-white"></div>
         </div>
 
         <div class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
@@ -65,8 +59,8 @@ import HeaderApp from '@/components/HeaderApp.vue'
             <input
               id="password"
               type="password"
-              class="w-full rounded-lg border-2 border-[#333] bg-[#121212] p-3 text-white"
-              placeholder="Introduce tu contraseña..."
+              class="w-full rounded-lg border-2 border-[#333] bg-[#171717] p-3 text-white"
+              placeholder="Introduce tu contraseña"
               required
             />
           </div>
@@ -77,8 +71,8 @@ import HeaderApp from '@/components/HeaderApp.vue'
             <input
               id="confirmPassword"
               type="password"
-              class="w-full rounded-lg border-2 border-[#333] bg-[#121212] p-3 text-white"
-              placeholder="Confirma tu contraseña..."
+              class="w-full rounded-lg border-2 border-[#333] bg-[#171717] p-3 text-white"
+              placeholder="Confirma tu contraseña"
               required
             />
           </div>
