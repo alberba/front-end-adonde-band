@@ -33,7 +33,9 @@ const route = useRoute()
           <img src="@/assets/tempProfile.png" alt="" />
         </RouterLink>
       </div>
-      <button class="w-10 block sm:hidden"><img src="@/assets/menuIcon.svg" alt="" srcset=""></button>
+      <button class="block w-10 sm:hidden">
+        <img src="@/assets/svg/menuIcon.svg" alt="" srcset="" />
+      </button>
     </nav>
   </header>
 </template>
