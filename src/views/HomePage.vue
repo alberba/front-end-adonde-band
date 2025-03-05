@@ -31,9 +31,9 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
 </script>
 
 <template>
-  <HeaderApp />
+  <HeaderApp title="¡Hola, AdondeBoy!" :isHeading1="false" />
 
-  <main class="flex max-w-[860px] flex-col items-center justify-center lg:w-[860px] mb-10">
+  <main class="mb-10 flex max-w-[860px] flex-col items-center justify-center lg:w-[860px]">
     <header class="m-3 flex w-full flex-col gap-2">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">Mis Ligas</h1>
@@ -48,7 +48,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       <div class="h-0 w-full border"></div>
     </header>
 
-    <section class="flex w-full flex-col items-center gap-4 mb-6">
+    <section class="mb-6 flex w-full flex-col items-center gap-4">
       <div class="flex w-full flex-col gap-1 text-[#9b9b9b]">
         <h2 class="text-xl">En vivo</h2>
         <div class="h-0 w-[120px] border"></div>
