@@ -4,3 +4,9 @@ export interface Liga {
   imagePath: string;
   finalizado: boolean;
 }
+
+export interface Mensaje {
+  id: number;
+  texto: string;
+  imgPath: string;
+}
