@@ -41,7 +41,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
           class="flex flex-row items-center gap-2 rounded-full bg-[#06f] px-3 py-2 text-white"
         >
           Ordenar
-          <img src="@/assets/orderIcon.svg" alt="" class="w-7" />
+          <img src="@/assets/svg/orderIcon.svg" alt="" class="w-7" />
         </button>
       </div>
 
@@ -63,7 +63,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       <button
         class="flex w-fit flex-row items-center gap-4 rounded-2xl border-2 border-dashed bg-[#3b3b3b] px-10 py-6 text-xl"
       >
-        <img src="@/assets/addIcon.svg" alt="" />Añadir Liga
+        <img src="@/assets/svg/addIcon.svg" alt="" />Añadir Liga
       </button>
     </section>
     <section class="flex w-full flex-col items-center gap-4">
