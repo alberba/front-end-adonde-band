@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store'
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/login', component: LoginView },
-  { path: '/profile', component: ProfileView}
+  { path: '/profile', component: ProfileView, meta: { requiresAuth: true } }
 ]
 
 const router = createRouter({
@@ -18,6 +18,7 @@ const router = createRouter({
 // Guard de navegación para verificar la autenticación
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !useAuthStore().isAuthenticated) {
+    localStorage.setItem('redirectPath', to.fullPath)
     next('/login')
   }
   next()
