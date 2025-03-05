@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { defineProps } from 'vue'
-
 const props = defineProps<{ id: number; imgPath: string }>()
 
 const isTextLeft = props.id % 2 === 0
@@ -18,14 +16,14 @@ function getAssetUrl(fileName: string) {
       v-if="isTextLeft"
       :src="getAssetUrl(props.imgPath)"
       alt="Profile"
-      class="w-8 object-contain rounded-full"
+      class="w-8 rounded-full object-contain"
     />
     <div :class="[bgColor, radiusClass]" class="max-w-xl p-3.5"><slot class=""></slot></div>
     <img
       v-if="!isTextLeft"
       :src="getAssetUrl(props.imgPath)"
       alt="Profile"
-      class="w-8 object-contain rounded-full"
+      class="w-8 rounded-full object-contain"
     />
   </div>
 </template>
