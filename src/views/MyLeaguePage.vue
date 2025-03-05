@@ -10,14 +10,69 @@ const clasificacion = ref([
 ])
 
 const ligaNombre = 'LaLiga EA Sports'
-const jornadaNum = ref(3)
+const jornadaNum = ref(1)
 const jornadaMax = 12
-const encuentros = [
+// Ejemplo de datos de jornadas con encuentros
+const jornadas = ref([
   {
-    equipo1: 'Equipo 1',
-    equipo2: 'Equipo 2',
+    encuentros: [
+      { 
+        equipo1: { nombre: "Real Madrid", img: "/img/real_madrid.png" }, 
+        equipo2: { nombre: "Barcelona", img: "/img/barcelona.png" }, 
+        ganador: "Real Madrid" 
+      },
+      { 
+        equipo1: { nombre: "Atletico", img: "/img/atletico.png" }, 
+        equipo2: { nombre: "Sevilla", img: "/img/sevilla.png" }, 
+        ganador: "Atletico" 
+      },
+      { 
+        equipo1: { nombre: "Betis", img: "/img/betis.png" }, 
+        equipo2: { nombre: "Valencia", img: "/img/valencia.png" }, 
+        ganador: "Valencia" 
+      },
+      { 
+        equipo1: { nombre: "Villarreal", img: "/img/villarreal.png" }, 
+        equipo2: { nombre: "Getafe", img: "/img/getafe.png" }, 
+        ganador: "Empate" 
+      }
+    ]
   },
-]
+  {
+    encuentros: [
+      { equipo1: { nombre: "Celta", img: "/img/celta.png" }, equipo2: { nombre: "Almeria", img: "/img/almeria.png" }, ganador: "Celta" },
+      { equipo1: { nombre: "Osasuna", img: "/img/osasuna.png" }, equipo2: { nombre: "Mallorca", img: "/img/mallorca.png" }, ganador: "Osasuna" },
+      { equipo1: { nombre: "Granada", img: "/img/granada.png" }, equipo2: { nombre: "Cadiz", img: "/img/cadiz.png" }, ganador: "Cadiz" },
+      { equipo1: { nombre: "Rayo Vallecano", img: "/img/rayo.png" }, equipo2: { nombre: "Girona", img: "/img/girona.png" }, ganador: "Girona" }
+    ]
+  },
+  {
+    encuentros: [
+      { equipo1: { nombre: "Barcelona", img: "/img/barcelona.png" }, equipo2: { nombre: "Atletico", img: "/img/atletico.png" }, ganador: "Atletico" },
+      { equipo1: { nombre: "Sevilla", img: "/img/sevilla.png" }, equipo2: { nombre: "Betis", img: "/img/betis.png" }, ganador: "Empate" },
+      { equipo1: { nombre: "Valencia", img: "/img/valencia.png" }, equipo2: { nombre: "Villarreal", img: "/img/villarreal.png" }, ganador: "Villarreal" },
+      { equipo1: { nombre: "Real Madrid", img: "/img/real_madrid.png" }, equipo2: { nombre: "Getafe", img: "/img/getafe.png" }, ganador: "Real Madrid" }
+    ]
+  },
+  {
+    encuentros: [
+      { equipo1: { nombre: "Girona", img: "/img/girona.png" }, equipo2: { nombre: "Mallorca", img: "/img/mallorca.png" }, ganador: "Girona" },
+      { equipo1: { nombre: "Almeria", img: "/img/almeria.png" }, equipo2: { nombre: "Celta", img: "/img/celta.png" }, ganador: "Celta" },
+      { equipo1: { nombre: "Granada", img: "/img/granada.png" }, equipo2: { nombre: "Osasuna", img: "/img/osasuna.png" }, ganador: "Osasuna" },
+      { equipo1: { nombre: "Cadiz", img: "/img/cadiz.png" }, equipo2: { nombre: "Rayo Vallecano", img: "/img/rayo.png" }, ganador: "Cadiz" }
+    ]
+  },
+  {
+    encuentros: [
+      { equipo1: { nombre: "Real Madrid", img: "/img/real_madrid.png" }, equipo2: { nombre: "Sevilla", img: "/img/sevilla.png" }, ganador: "Real Madrid" },
+      { equipo1: { nombre: "Barcelona", img: "/img/barcelona.png" }, equipo2: { nombre: "Valencia", img: "/img/valencia.png" }, ganador: "Barcelona" },
+      { equipo1: { nombre: "Atletico", img: "/img/atletico.png" }, equipo2: { nombre: "Betis", img: "/img/betis.png" }, ganador: "Betis" },
+      { equipo1: { nombre: "Villarreal", img: "/img/villarreal.png" }, equipo2: { nombre: "Getafe", img: "/img/getafe.png" }, ganador: "Empate" }
+    ]
+  }
+])
+
+
 
 const incrementJornada = () => {
   if (jornadaNum.value < jornadaMax) {
@@ -67,14 +122,19 @@ const decrementJornada = () => {
 
       <!-- Container de los encuentros -->
       <div class="-mt-5 w-full bg-[#DDDDDD] p-4">
-        <!-- Fila de encuentros -->
-        <div
-          v-for="(encuentro, index) in encuentros"
-          :key="index"
-          class="flex items-center justify-center text-3xl font-bold text-[#242424] border-b border-[#BBBBBB] py-2"
-        >
-          <div class="text-lg">{{ encuentro.equipo1 }} vs {{ encuentro.equipo2 }}</div>
-        </div>
+        <table class="w-full text-[#242424]">
+          <tbody>
+            <tr
+              v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
+              :key="index"
+              class="border-b border-[#BBBBBB]"
+            >
+              <td class="text-2xl font-bold text-[#242424] flex-col items-center justify-center text-center">{{ encuentro.equipo1 }}</td>
+              <td class="text-2xl font-bold text-[#242424] flex-col items-center justify-center text-center">{{ encuentro.ganador }}</td>
+              <td class="text-2xl font-bold text-[#242424] flex-col items-center justify-center text-center">{{ encuentro.equipo2 }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
