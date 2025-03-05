@@ -13,21 +13,23 @@ const route = useRoute()
     <nav class="hidden flex-row items-center gap-4 sm:flex sm:gap-11">
       <div class="flex flex-row items-center gap-3">
         <!-- Muestra de botones dinámicos según actual página-->
-        <div
+        <RouterLink
+          to="/"
           v-if="route.path != '/'"
           class="overflow-hidden rounded-full bg-[#525252] px-5 py-3 leading-none font-semibold"
         >
-          <RouterLink to="/" class="leading-none">Mis Ligas</RouterLink>
-        </div>
-        <div
+          Mis Ligas
+        </RouterLink>
+        <RouterLink
+          to="/"
           v-if="route.path != '/misBots'"
           class="overflow-hidden rounded-full bg-[#525252] px-5 py-3 leading-none font-semibold"
         >
-          <RouterLink to="/" class="leading-none">Mis Bots</RouterLink>
-        </div>
+          Mis Bots
+        </RouterLink>
       </div>
-      <div class="overflow-hidden rounded-full">
-        <RouterLink to="/">
+      <div class="overflow-hidden rounded-full w-[54px] object-contain">
+        <RouterLink to="/profile">
           <img src="@/assets/tempProfile.png" alt="" />
         </RouterLink>
       </div>
