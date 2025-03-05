@@ -5,7 +5,7 @@ import HeaderApp from '@/components/HeaderApp.vue'
 <template>
   <HeaderApp title="Mi Perfil" :isHeading1="true" />
 
-  <main class="flex flex-col items-center justify-center py-10">
+  <main class="flex flex-col items-center justify-center px-10 py-10">
     <div
       class="flex w-full max-w-4xl flex-col items-center justify-center rounded-xl bg-[#2a2a2a] p-6 shadow-xl"
     >

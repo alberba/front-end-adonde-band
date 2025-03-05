@@ -34,7 +34,7 @@ const decrementJornada = () => {
 
 <template>
   <HeaderApp title="¡Hola, AdondeBoy!" :is-heading1="false" />
-  <main class="mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 lg:w-[860px]">
+  <main class="px-10 mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 lg:w-[860px]">
     <!-- Contenedor pequeño que incluye solo el header -->
     <header class="m-3 flex w-full flex-col gap-3">
       <div class="flex flex-row items-center justify-between">
