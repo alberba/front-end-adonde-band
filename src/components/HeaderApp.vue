@@ -6,7 +6,7 @@ const route = useRoute()
 </script>
 
 <template>
-  <header class="flex w-full flex-row items-center justify-between py-2.5">
+  <header class="flex w-full flex-row items-center justify-between px-10 py-4">
     <div class="flex flex-row gap-8">
       <slot></slot>
       <h1 v-if="props.isHeading1" class="text-3xl font-semibold">{{ props.title }}</h1>

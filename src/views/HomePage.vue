@@ -33,7 +33,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
 <template>
   <HeaderApp title="¡Hola, AdondeBoy!" :isHeading1="false" />
 
-  <main class="mb-10 flex max-w-[860px] flex-col items-center justify-center lg:w-[860px]">
+  <main class="mb-10 flex max-w-[860px] flex-col items-center justify-center px-10 lg:w-[860px]">
     <header class="m-3 flex w-full flex-col gap-2">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">Mis Ligas</h1>
