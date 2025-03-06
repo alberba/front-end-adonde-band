@@ -6,6 +6,19 @@ import { ref } from 'vue'
 const clasificacion = ref([
   { pos: 1, equipo: 'Equipo 1', PJ: 10, G: 6, E: 2, P: 2, Ptos: 20 },
   { pos: 2, equipo: 'Equipo 2', PJ: 10, G: 5, E: 3, P: 2, Ptos: 18 },
+  {  pos: 3, equipo: 'Equipo 3', PJ: 10, G: 5, E: 2, P: 3, Ptos: 17 },
+  { pos: 4, equipo: 'Equipo 4', PJ: 10, G: 4, E: 4, P: 2, Ptos: 16 },
+  { pos: 5, equipo: 'Equipo 5', PJ: 10, G: 4, E: 3, P: 3, Ptos: 15 },
+  { pos: 6, equipo: 'Equipo 6', PJ: 10, G: 4, E: 2, P: 4, Ptos: 14 },
+  { pos: 7, equipo: 'Equipo 7', PJ: 10, G: 3, E: 4, P: 3, Ptos: 13 },
+  { pos: 8, equipo: 'Equipo 8', PJ: 10, G: 3, E: 3, P: 4, Ptos: 12 },
+  { pos: 9, equipo: 'Equipo 9', PJ: 10, G: 3, E: 2, P: 5, Ptos: 11 },
+  { pos: 10, equipo: 'Equipo 10', PJ: 10, G: 2, E: 4, P: 4, Ptos: 10 },
+  { pos: 11, equipo: 'Equipo 11', PJ: 10, G: 2, E: 3, P: 5, Ptos: 9 },
+  { pos: 12, equipo: 'Equipo 12', PJ: 10, G: 2, E: 2, P: 6, Ptos: 8 },
+  { pos: 13, equipo: 'Equipo 13', PJ: 10, G: 1, E: 4, P: 5, Ptos: 7 },
+  { pos: 14, equipo: 'Equipo 14', PJ: 10, G: 1, E: 3, P: 6, Ptos: 6 },
+  
   // Agrega más equipos según sea necesario
 ])
 
@@ -83,7 +96,7 @@ const decrementJornada = () => {
   <HeaderApp title="¡Hola, AdondeBoy!" :is-heading1="false" />
   <main class="px-10 mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 lg:w-[860px]">
     <!-- Contenedor pequeño que incluye solo el header -->
-    <header class="m-3 flex w-full flex-col gap-3">
+    <header class="m-3 flex w-full flex-col gap-3 flex-wrap">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
         <button
@@ -93,7 +106,7 @@ const decrementJornada = () => {
           <img src="@/assets/svg/StatsIcon.svg" alt="" class="w-7" />
         </button>
       </div>
-      <div class="mt-4 h-0 w-full border border-[#BBBBBB]"></div>
+      <div class="mt-2 h-0 w-full border border-[#BBBBBB]"></div>
     </header>
 
     <!-- Contenedor que contiene tanto el container para las jornadas como el container de encuentros -->
@@ -113,16 +126,15 @@ const decrementJornada = () => {
       </div>
 
       <!-- Container de los encuentros -->
-      <div class="-mt-5 w-full bg-[#DDDDDD] p-4">
-        <table class="w-full text-[#242424]">
-          <tbody>
+      <div class="-mt-5 w-full overflow-x-auto bg-[#DDDDDD] p-4">
+        <table class="w-full border-colapse  text-[#242424]">          <tbody>
             <tr
               v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
               :key="index"
               class="border-b border-[#BBBBBB]"
             >
-              <td class="text-2xl font-bold text-[#242424] flex items-center justify-center space-x-4">
-                <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
+            <td class=" flex-shrink-0 text-2xl font-bold text-[#242424] flex items-center justify-center space-x-4">
+              <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
                 <img :src="encuentro.equipo1.img" :alt="encuentro.equipo1.nombre" class="w-10 h-10" />
               </td>
               <td class=""><img :src="encuentro.ganador.img" alt=" " class="w-10 h-10" /></td>
@@ -147,33 +159,41 @@ const decrementJornada = () => {
       </header>
 
       <!-- Cuadro de clasificación -->
-      <div class="w-full bg-transparent p-4">
-        <table class="flex flex-col gap-4 text-[#FFFFFF]">
-          <tr class="flex gap-8 border-b text-2xl">
-            <th class="w-16 font-bold">Pos</th>
-            <th class="flex w-75 justify-start font-bold">Equipo</th>
-            <th class="w-8 font-bold">PJ</th>
-            <th class="w-8 font-bold">G</th>
-            <th class="w-8 font-bold">E</th>
-            <th class="w-8 font-bold">P</th>
-            <th class="w-16 font-bold">Ptos</th>
-          </tr>
+      <div class="w-full bg-transparent p-4 overflow-x-auto">
+  <div class="max-h-[300px] overflow-y-auto">
+    <table class="w-full border-collapse text-[#FFFFFF]">
+      <!-- Encabezados -->
+      <thead class="bg-[#242424] sticky top-0">
+        <tr class="text-2xl border-b">
+          <th class="w-16 p-2 font-bold">Pos</th>
+          <th class="text-left p-2 font-bold">Equipo</th>
+          <th class="w-8 p-2 font-bold">PJ</th>
+          <th class="w-8 p-2 font-bold">G</th>
+          <th class="w-8 p-2 font-bold">E</th>
+          <th class="w-8 p-2 font-bold">P</th>
+          <th class="w-16 p-2 font-bold">Ptos</th>
+        </tr>
+      </thead>
 
-          <tr
-            v-for="(equipo, index) in clasificacion"
-            :key="index"
-            class="flex w-full flex-row gap-8 border-b border-[#9B9B9B] text-xl"
-          >
-            <th class="w-16">{{ equipo.pos }}</th>
-            <th class="flex w-75 justify-start">{{ equipo.equipo }}</th>
-            <th class="w-8">{{ equipo.PJ }}</th>
-            <th class="w-8">{{ equipo.G }}</th>
-            <th class="w-8">{{ equipo.E }}</th>
-            <th class="w-8">{{ equipo.P }}</th>
-            <th class="w-16">{{ equipo.Ptos }}</th>
-          </tr>
-        </table>
-      </div>
+      <!-- Cuerpo de la tabla -->
+      <tbody>
+        <tr
+          v-for="(equipo, index) in clasificacion" 
+          :key="index"
+          class="border-b border-[#9B9B9B] text-xl"
+        >
+          <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
+          <td class="p-2">{{ equipo.equipo }}</td>
+          <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
+          <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
+          <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
+          <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
+          <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
     </div>
   </main>
 </template>
