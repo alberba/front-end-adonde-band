@@ -3,6 +3,7 @@ import HeaderApp from '@/components/HeaderApp.vue'
 import MessageApp from '@/components/MessageApp.vue'
 import SideBar from '@/components/SideBar/SideBar.vue'
 import type { Mensaje } from '@/types'
+import { ref } from 'vue'
 
 const mensajes: Mensaje[] = [
   {
@@ -34,14 +35,23 @@ const mensajes: Mensaje[] = [
     imgPath: 'tempProfile.png',
   },
 ]
+
+const sideBarHidden = ref(false)
+const toggleSideBar = () => {
+  sideBarHidden.value = !sideBarHidden.value
+}
 </script>
 
 <template>
   <div class="flex h-full w-full flex-row">
-    <SideBar />
+    <SideBar @toggle-sidebar="toggleSideBar" :isHidden="sideBarHidden" />
     <div class="w-full">
       <HeaderApp :isHeading1="true" title="Carlos vs AdondeBoy">
-        <button class="h-8 w-8 cursor-pointer object-contain">
+        <button
+          @click="toggleSideBar()"
+          :class="sideBarHidden ? 'block' : 'hidden'"
+          class="h-8 w-8 cursor-pointer object-contain"
+        >
           <img src="@/assets/svg/toggleSideBarIcon.svg" alt="" />
         </button>
       </HeaderApp>

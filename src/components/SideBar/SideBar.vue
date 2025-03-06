@@ -70,16 +70,21 @@ const combates: Combate[] = [
     finished: false,
   },
 ]
+
+const props = defineProps<{ isHidden: boolean }>()
 </script>
 
 <template>
-  <aside class="flex h-screen w-[20rem] flex-col gap-16 bg-[#3b3b3b] px-6 py-4">
+  <aside
+    class="h-screen w-[20rem] flex-col gap-16 bg-[#3b3b3b] px-6 py-4 transition-all duration-300 ease-in-out"
+    :class="props.isHidden ? '-ml-[20rem]' : 'ml-0'"
+  >
     <header class="flex flex-row items-center justify-between">
       <div class="font-bold">
         <h3 class="text-xs text-[#a8a8a8]">LaLiga EA Sports</h3>
         <h2 class="text-2xl">Jornada 24</h2>
       </div>
-      <button class="h-8 w-8 cursor-pointer object-contain">
+      <button @click="$emit('toggle-sidebar')" class="h-8 w-8 cursor-pointer object-contain">
         <img src="@/assets/svg/toggleSideBarIcon.svg" alt="" />
       </button>
     </header>
