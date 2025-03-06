@@ -15,7 +15,7 @@ function tempRedirectHome() {
 </script>
 
 <template>
-  <header class="flex w-full flex-row items-center justify-between py-2.5">
+  <header class="px-10 flex w-full flex-row items-center justify-between py-2.5">
     <h1 class="text-4xl font-bold md:text-[48px] lg:text-[64px]">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
