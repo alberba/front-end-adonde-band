@@ -18,7 +18,13 @@ function getAssetUrl(fileName: string) {
       alt="Profile"
       class="w-8 rounded-full object-contain"
     />
-    <div :class="[bgColor, radiusClass]" class="max-w-xl p-3.5"><slot class=""></slot></div>
+    <div
+      :class="[bgColor, radiusClass]"
+      :style="{ maxWidth: 'min(2/3*100%, 36rem)' }"
+      class="p-3.5 text-sm lg:text-[16px]"
+    >
+      <slot></slot>
+    </div>
     <img
       v-if="!isTextLeft"
       :src="getAssetUrl(props.imgPath)"
