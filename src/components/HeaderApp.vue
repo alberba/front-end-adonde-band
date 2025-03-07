@@ -28,8 +28,8 @@ const isChatPage = route.path === '/chat'
           Mis Ligas
         </RouterLink>
         <RouterLink
-          to="/"
-          v-if="route.path != '/misBots'"
+          to="/myBots"
+          v-if="route.path != '/myBots'"
           class="overflow-hidden rounded-full bg-[#525252] px-5 py-3 leading-none font-semibold"
         >
           Mis Bots
