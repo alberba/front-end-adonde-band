@@ -2,7 +2,9 @@
 const props = defineProps<{ id: number; imgPath: string }>()
 
 const isTextLeft = props.id % 2 === 0
-const bgColor = !isTextLeft ? 'bg-[#06f]' : 'bg-[#606060]'
+const bgColor = !isTextLeft
+  ? 'bg-[#06f] text-white'
+  : 'bg-[#e3e3e3] dark:bg-[#606060]'
 const radiusClass = ['rounded-3xl', !isTextLeft ? 'rounded-br-none' : 'rounded-bl-none']
 
 function getAssetUrl(fileName: string) {
