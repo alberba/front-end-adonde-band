@@ -38,6 +38,9 @@ const ligas = ref<Liga[]>([
 // Posición del Bot en la clasificación
 const posBot = ref(4)
 
+// Estado para mostrar/ocultar la ventana de ayuda
+const showHelpModal = ref(false)
+
 // Función para obtener los índices que se deben mostrar para la clasificación de una liga
 function getIndices(league: Liga): number[] {
 
@@ -53,7 +56,7 @@ function getIndices(league: Liga): number[] {
 <template>
   <HeaderApp title="Mis Bots" :is-heading1="false" />
   <main
-    class="mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]"
+    class="flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]"
   >
     <!-- Se itera sobre cada liga -->
     <section
@@ -104,13 +107,43 @@ function getIndices(league: Liga): number[] {
           Ver liga
         </button>
       </div>
-
     </section>
-
-    <footer class="text-center text-white text-[16px]">
-      <img src="@/assets/svg/ayuda.svg" alt="Ayuda" class="w-6 h-6 inline-block" />
-
-    </footer>
-
   </main>
+
+  <footer
+    class="w-full h-[132px] flex items-end justify-end pr-4 pb-4"
+  >
+    <!-- Ícono de ayuda -->
+    <img src="@/assets/svg/ayuda.svg" alt="Ayuda" class="w-6 h-6 cursor-pointer"
+      @click="showHelpModal = true"
+    />
+
+  </footer>
+
+  <!-- Modal para la gestión de la ayuda -->
+  <div
+    v-show="showHelpModal"
+    class="fixed inset-0 flex items-center justify-center
+          backdrop-blur-[3px]"
+  >
+    <div
+      class="bg-[#525252] text-white p-6 rounded-xl w-[300px] text-center"
+      :class="showHelpModal ? 'scale-100' : 'scale-75'"
+    >
+      <h2 class="text-xl font-bold mb-4">Ayuda</h2>
+      <ul class="list-inside text-left mb-4">
+        <li><strong>PJ</strong>: Partidas jugadas</li>
+        <li><strong>G</strong>: Ganadas (3 puntos)</li>
+        <li><strong>E</strong>: Empatadas (1 punto)</li>
+        <li><strong>P</strong>: Perdidas (0 puntos)</li>
+      </ul>
+      <button
+        class="mt-2 px-4 py-2 bg-[#06f] text-white rounded-md font-semibold"
+        @click="showHelpModal = false"
+      >
+        Volver
+      </button>
+    </div>
+  </div>
+
 </template>
