@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ToggleSideBarIcon from '@/assets/svg/ToggleSideBarIcon.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import MessageApp from '@/components/MessageApp.vue'
 import SideBar from '@/components/SideBar/SideBar.vue'
@@ -52,10 +53,10 @@ const toggleSideBar = () => {
           :class="sideBarHidden ? 'block' : 'hidden'"
           class="h-8 w-8 cursor-pointer object-contain"
         >
-          <img src="@/assets/svg/toggleSideBarIcon.svg" alt="" />
+          <ToggleSideBarIcon classList="h-8 w-8" />
         </button>
       </HeaderApp>
-      <main class="flex w-full flex-col gap-6 mb-12 px-4 md:px-32">
+      <main class="mb-12 flex w-full flex-col gap-6 px-4 md:px-32">
         <div v-for="mensaje in mensajes" :key="mensaje.id">
           <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
         </div>

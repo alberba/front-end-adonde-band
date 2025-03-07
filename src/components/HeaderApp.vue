@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MenuIcon from '@/assets/svg/menuIcon.vue'
 import { useRoute } from 'vue-router'
 
 const props = defineProps<{ isHeading1: boolean; title: string }>()
@@ -15,22 +16,19 @@ const isChatPage = route.path === '/chat'
       <h2 v-else class="text-2xl font-semibold">{{ props.title }}</h2>
     </div>
     <nav class="flex flex-row items-center gap-4" :class="isChatPage ? 'lg:gap-11' : 'sm:gap-11'">
-      <div
-        class="hidden flex-row items-center gap-3"
-        :class="isChatPage ? 'lg:flex' : 'sm:flex'"
-      >
+      <div class="hidden flex-row items-center gap-3" :class="isChatPage ? 'lg:flex' : 'sm:flex'">
         <!-- Muestra de botones dinámicos según actual página-->
         <RouterLink
           to="/"
           v-if="route.path != '/'"
-          class="overflow-hidden rounded-full bg-[#525252] px-5 py-3 leading-none font-semibold"
+          class="overflow-hidden rounded-full bg-[#d3d3d3] px-5 py-3 leading-none font-semibold dark:bg-[#525252]"
         >
           Mis Ligas
         </RouterLink>
         <RouterLink
           to="/myBots"
           v-if="route.path != '/myBots'"
-          class="overflow-hidden rounded-full bg-[#525252] px-5 py-3 leading-none font-semibold"
+          class="overflow-hidden rounded-full bg-[#d3d3d3] px-5 py-3 leading-none font-semibold dark:bg-[#525252]"
         >
           Mis Bots
         </RouterLink>
@@ -41,7 +39,7 @@ const isChatPage = route.path === '/chat'
         </RouterLink>
       </div>
       <button class="block w-8" :class="isChatPage ? 'lg:hidden' : 'sm:hidden'">
-        <img src="@/assets/svg/menuIcon.svg" alt="" srcset="" />
+        <MenuIcon classList="stroke-black dark:stroke-white" />
       </button>
     </nav>
   </header>
