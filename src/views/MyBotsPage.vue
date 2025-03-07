@@ -18,6 +18,20 @@ const ligas = ref<Liga[]>([
       { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 }
       // ...
     ]
+  },
+  {
+    id: 1,
+    nombre: 'Generosidad', // Sería más bien el nombre del Bot
+    imagePath: '',
+    finalizado: false,
+    clasificacion: [
+      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
+      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
+      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
+      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
+      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 }
+      // ...
+    ]
   }
 ])
 
@@ -69,6 +83,7 @@ function getIndices(league: Liga): number[] {
             v-for="i in getIndices(liga)"
             :key="i"
             class="border-b border-gray-500 text-sm"
+            :class="{ 'font-bold text-[#FADA5E]': i === posBot }"
           >
             <td class="py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].pos }}</td>
             <td class="py-2 text-[20px]">{{ liga.clasificacion[i - 1].equipo }}</td>
@@ -84,8 +99,7 @@ function getIndices(league: Liga): number[] {
       <!-- "Ver liga" -->
       <div class="mt-4 flex justify-center">
         <button
-          class="rounded-full bg-[#06f] px-6 py-2 text-sm font-medium text-white
-                     transition-colors hover:bg-blue-600"
+          class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
         >
           Ver liga
         </button>
@@ -93,37 +107,10 @@ function getIndices(league: Liga): number[] {
 
     </section>
 
-    <!-- Cuadro de clasificación
-    <div class="w-full bg-transparent p-4">
-      <table class="flex flex-col gap-4 text-[#FFFFFF]">
-        <tr class="flex gap-8 border-b text-2xl">
-          <th class="w-16 font-bold">Pos</th>
-          <th class="flex w-75 justify-start font-bold">Equipo</th>
-          <th class="w-8 font-bold">PJ</th>
-          <th class="w-8 font-bold">G</th>
-          <th class="w-8 font-bold">E</th>
-          <th class="w-8 font-bold">P</th>
-          <th class="w-16 font-bold">Ptos</th>
-        </tr>
+    <footer class="text-center text-white text-[16px]">
+      <img src="@/assets/svg/ayuda.svg" alt="Ayuda" class="w-6 h-6 inline-block" />
 
-        <tr
-          v-for="i in [PosBot - 1, PosBot, PosBot + 1]"
-          :key="i"
-          v-if="i > 0 && i <= clasificacion.length"
-          class="flex w-full flex-row gap-8 border-b border-[#9B9B9B] text-xl"
-        >
-          <th class="w-16">{{ clasificacion[i - 1].pos }}</th>
-          <th class="flex w-75 justify-start">{{ clasificacion[i - 1].equipo }}</th>
-          <th class="w-8">{{ clasificacion[i - 1].PJ }}</th>
-          <th class="w-8">{{ clasificacion[i - 1].G }}</th>
-          <th class="w-8">{{ clasificacion[i - 1].E }}</th>
-          <th class="w-8">{{ clasificacion[i - 1].P }}</th>
-          <th class="w-16">{{ clasificacion[i - 1].Ptos }}</th>
-        </tr>
-      </table>
-    </div>
-    -->
-
+    </footer>
 
   </main>
 </template>
