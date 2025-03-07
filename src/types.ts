@@ -1,8 +1,19 @@
+export interface Equipo {
+  pos: number
+  nombre: string
+  PJ: number
+  G: number
+  E: number
+  P: number
+  Ptos: number
+}
+
 export interface Liga {
   id: number
   nombre: string
   imagePath: string
   finalizado: boolean
+  clasificacion: Equipo[]
 }
 
 export interface Mensaje {
