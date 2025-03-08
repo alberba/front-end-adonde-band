@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HeaderApp from '@/components/HeaderApp.vue'
+import FooterApp from '@/components/FooterApp.vue'
 import { ref } from 'vue'
 import type { Liga } from '@/types'
 
@@ -110,15 +111,15 @@ function getIndices(league: Liga): number[] {
     </section>
   </main>
 
-  <footer
-    class="w-full h-[132px] flex items-end justify-end pr-4 pb-4"
-  >
+  <FooterApp>
     <!-- Ícono de ayuda -->
-    <img src="@/assets/svg/ayuda.svg" alt="Ayuda" class="w-6 h-6 cursor-pointer"
+    <img
+      src="@/assets/svg/ayuda.svg"
+      alt="Ayuda"
+      class="h-6 w-6 cursor-pointer"
       @click="showHelpModal = true"
     />
-
-  </footer>
+  </FooterApp>
 
   <!-- Modal para la gestión de la ayuda -->
   <div

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import { ref } from 'vue'
 
@@ -196,4 +197,5 @@ const decrementJornada = () => {
 </div>
     </div>
   </main>
+  <FooterApp />
 </template>

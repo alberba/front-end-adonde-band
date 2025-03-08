@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FooterApp from '@/components/FooterApp.vue'
 import { useAuthStore } from '@/store'
 import { useRouter } from 'vue-router'
 
@@ -62,4 +63,5 @@ function tempRedirectHome() {
       </a>
     </form>
   </main>
+  <FooterApp />
 </template>
