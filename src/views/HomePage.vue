@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AddIcon from '@/assets/svg/AddIcon.vue'
 import ButtonLeague from '@/components/ButtonLeague.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
@@ -72,7 +73,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       <div class="h-0 w-full border"></div>
     </header>
 
-    <section class="mb-6 flex w-full flex-col items-center gap-4">
+    <section class="mb-6 flex w-full flex-col items-center gap-4 font-semibold">
       <div class="flex w-full flex-col gap-1 text-[#9b9b9b]">
         <h2 class="text-xl">En vivo</h2>
         <div class="h-0 w-[120px] border"></div>
@@ -85,12 +86,13 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       </ul>
 
       <button
-        class="flex w-fit flex-row items-center gap-4 rounded-2xl border-2 border-dashed bg-[#3b3b3b] px-10 py-6 text-xl"
+        class="flex w-fit flex-row items-center gap-4 rounded-2xl border-2 border-dashed bg-[#d3d3d3] px-10 py-6 text-xl dark:bg-[#3b3b3b]"
       >
-        <img src="@/assets/svg/addIcon.svg" alt="" />Añadir Liga
+        <AddIcon classList="h-8 w-8 fill-black dark:fill-white" />
+        Añadir Liga
       </button>
     </section>
-    <section class="flex w-full flex-col items-center gap-4">
+    <section class="flex w-full flex-col items-center gap-4 font-semibold">
       <div class="flex w-full flex-col gap-1 text-[#9b9b9b]">
         <h2 class="text-xl">Finalizadas</h2>
         <div class="h-0 w-[120px] border"></div>
