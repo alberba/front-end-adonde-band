@@ -45,9 +45,9 @@ const toggleSideBar = () => {
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-row">
+  <div class="flex min-h-screen w-full flex-row">
     <SideBar @toggle-sidebar="toggleSideBar" :isHidden="sideBarHidden" />
-    <div class="w-full">
+    <div class="flex w-full flex-col">
       <HeaderApp :isHeading1="true" title="Carlos vs AdondeBoy">
         <button
           @click="toggleSideBar()"
@@ -62,7 +62,7 @@ const toggleSideBar = () => {
           <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
         </div>
       </main>
+      <FooterApp :hideDarkLight="true" />
     </div>
   </div>
-  <FooterApp />
 </template>

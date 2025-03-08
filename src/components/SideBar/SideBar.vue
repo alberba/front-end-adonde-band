@@ -85,7 +85,7 @@ const toggleDarkMode = () => {
 
 <template>
   <aside
-    class="h-screen w-[20rem] z-10 flex-col gap-16 bg-[#eee] px-6 py-4 transition-[margin] duration-300 ease-in-out dark:bg-[#3b3b3b]"
+    class="min-h-screen w-[20rem] z-10 flex-col gap-16 bg-[#eee] px-6 py-4 transition-[margin] duration-300 ease-in-out dark:bg-[#3b3b3b]"
     :class="props.isHidden ? '-ml-[20rem]' : 'ml-0'"
   >
     <header class="flex flex-row items-center justify-between">
