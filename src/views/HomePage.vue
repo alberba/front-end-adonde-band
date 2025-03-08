@@ -10,6 +10,13 @@ const ligas: Liga[] = [
     imagePath:
       'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.fifplay.com%2Fimg%2Fpublic%2Flaliga-logo.png&f=1&nofb=1&ipt=23bde28a17fadd8e4ab36893c3247fc039ddf921d0d8245eaa26b64d017074ce&ipo=images',
     finalizado: false,
+    clasificacion: [
+      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
+      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
+      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
+      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
+      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
+    ],
   },
   {
     id: 2,
@@ -17,6 +24,13 @@ const ligas: Liga[] = [
     imagePath:
       'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
     finalizado: true,
+    clasificacion: [
+      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
+      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
+      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
+      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
+      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
+    ],
   },
   {
     id: 3,
@@ -24,6 +38,13 @@ const ligas: Liga[] = [
     imagePath:
       'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
     finalizado: false,
+    clasificacion: [
+      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
+      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
+      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
+      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
+      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
+    ],
   },
 ]
 

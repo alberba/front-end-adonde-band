@@ -7,7 +7,7 @@ import { ref } from 'vue'
 const clasificacion = ref([
   { pos: 1, equipo: 'Equipo 1', PJ: 10, G: 6, E: 2, P: 2, Ptos: 20 },
   { pos: 2, equipo: 'Equipo 2', PJ: 10, G: 5, E: 3, P: 2, Ptos: 18 },
-  {  pos: 3, equipo: 'Equipo 3', PJ: 10, G: 5, E: 2, P: 3, Ptos: 17 },
+  { pos: 3, equipo: 'Equipo 3', PJ: 10, G: 5, E: 2, P: 3, Ptos: 17 },
   { pos: 4, equipo: 'Equipo 4', PJ: 10, G: 4, E: 4, P: 2, Ptos: 16 },
   { pos: 5, equipo: 'Equipo 5', PJ: 10, G: 4, E: 3, P: 3, Ptos: 15 },
   { pos: 6, equipo: 'Equipo 6', PJ: 10, G: 4, E: 2, P: 4, Ptos: 14 },
@@ -19,7 +19,7 @@ const clasificacion = ref([
   { pos: 12, equipo: 'Equipo 12', PJ: 10, G: 2, E: 2, P: 6, Ptos: 8 },
   { pos: 13, equipo: 'Equipo 13', PJ: 10, G: 1, E: 4, P: 5, Ptos: 7 },
   { pos: 14, equipo: 'Equipo 14', PJ: 10, G: 1, E: 3, P: 6, Ptos: 6 },
-  
+
   // Agrega más equipos según sea necesario
 ])
 
@@ -30,55 +30,137 @@ const jornadaMax = 12
 const jornadas = ref([
   {
     encuentros: [
-      { 
-        equipo1: { nombre: "Real Madrid", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, 
-        equipo2: { nombre: "Barcelona", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, 
-        ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } 
+      {
+        equipo1: {
+          nombre: 'Real Madrid',
+          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+        },
+        equipo2: {
+          nombre: 'Barcelona',
+          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+        },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
-      { 
-        equipo1: { nombre: "Atletico", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, 
-        equipo2: { nombre: "Sevilla", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, 
-        ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } 
+      {
+        equipo1: { nombre: 'Atletico', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        equipo2: { nombre: 'Sevilla', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
-      { 
-        equipo1: { nombre: "Betis", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, 
-        equipo2: { nombre: "Valencia", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, 
-        ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } 
+      {
+        equipo1: { nombre: 'Betis', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        equipo2: {
+          nombre: 'Valencia',
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+        },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
       },
-      { 
-        equipo1: { nombre: "Villarreal", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, 
-        equipo2: { nombre: "Getafe", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, 
-        ganador: {  img: new URL('@/assets/svg/gay.svg', import.meta.url).href } 
-      }
-    ]
+      {
+        equipo1: {
+          nombre: 'Villarreal',
+          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+      },
+    ],
   },
   {
     encuentros: [
-      { equipo1: { nombre: "Celta", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, equipo2: { nombre: "Almeria", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Osasuna", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, equipo2: { nombre: "Mallorca", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Granada", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, equipo2: { nombre: "Cadiz", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Rayo Vallecano", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, equipo2: { nombre: "Girona", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } }
-    ]
+      {
+        equipo1: { nombre: 'Celta', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+        equipo2: { nombre: 'Almeria', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+      },
+      {
+        equipo1: {
+          nombre: 'Osasuna',
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+      },
+      {
+        equipo1: { nombre: 'Granada', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        equipo2: { nombre: 'Cadiz', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+      },
+      {
+        equipo1: {
+          nombre: 'Rayo Vallecano',
+          img: new URL('@/assets/svg/gay.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Girona', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+      },
+    ],
   },
   {
     encuentros: [
-      { equipo1: { nombre: "Barcelona", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, equipo2: { nombre: "Atletico", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Sevilla", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, equipo2: { nombre: "Betis", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Valencia", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, equipo2: { nombre: "Villarreal", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Real Madrid", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, equipo2: { nombre: "Getafe", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/gay.svg', import.meta.url).href } }
-    ]
-   },
+      {
+        equipo1: {
+          nombre: 'Barcelona',
+          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Atletico', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+      },
+      {
+        equipo1: {
+          nombre: 'Sevilla',
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Betis', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+      },
+      {
+        equipo1: { nombre: 'Valencia', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        equipo2: {
+          nombre: 'Villarreal',
+          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+        },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+      },
+      {
+        equipo1: {
+          nombre: 'Real Madrid',
+          img: new URL('@/assets/svg/gay.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+      },
+    ],
+  },
   {
     encuentros: [
-      { equipo1: { nombre: "Girona", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, equipo2: { nombre: "Mallorca", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/arg.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Almeria", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, equipo2: { nombre: "Celta", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Granada", img: new URL('@/assets/svg/gay.svg', import.meta.url).href }, equipo2: { nombre: "Osasuna", img: new URL('@/assets/svg/arg.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/gay.svg', import.meta.url).href } },
-      { equipo1: { nombre: "Cadiz", img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href }, equipo2: { nombre: "Rayo Vallecano", img: new URL('@/assets/svg/sky.svg', import.meta.url).href }, ganador: {  img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href } }
-    ]
-  }
-]);
-
-
+      {
+        equipo1: { nombre: 'Girona', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+      },
+      {
+        equipo1: {
+          nombre: 'Almeria',
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+        },
+        equipo2: { nombre: 'Celta', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+      },
+      {
+        equipo1: { nombre: 'Granada', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        equipo2: { nombre: 'Osasuna', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+      },
+      {
+        equipo1: { nombre: 'Cadiz', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+        equipo2: {
+          nombre: 'Rayo Vallecano',
+          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+        },
+        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+      },
+    ],
+  },
+])
 
 const incrementJornada = () => {
   if (jornadaNum.value < jornadaMax) {
@@ -95,9 +177,11 @@ const decrementJornada = () => {
 
 <template>
   <HeaderApp title="¡Hola, AdondeBoy!" :is-heading1="false" />
-  <main class="px-10 mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 lg:w-[860px]">
+  <main
+    class="mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]"
+  >
     <!-- Contenedor pequeño que incluye solo el header -->
-    <header class="m-3 flex w-full flex-col gap-3 flex-wrap">
+    <header class="m-3 flex w-full flex-col flex-wrap gap-3">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
         <button
@@ -128,20 +212,33 @@ const decrementJornada = () => {
 
       <!-- Container de los encuentros -->
       <div class="-mt-5 w-full overflow-x-auto bg-[#DDDDDD] p-4">
-        <table class="w-full border-colapse  text-[#242424]">          <tbody>
+        <table class="border-colapse w-full text-[#242424]">
+          <tbody>
             <tr
               v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
               :key="index"
               class="border-b border-[#BBBBBB]"
             >
-            <td class=" flex-shrink-0 text-2xl font-bold text-[#242424] flex items-center justify-center space-x-4">
-              <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
-                <img :src="encuentro.equipo1.img" :alt="encuentro.equipo1.nombre" class="w-10 h-10" />
+              <td
+                class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold text-[#242424]"
+              >
+                <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
+                <img
+                  :src="encuentro.equipo1.img"
+                  :alt="encuentro.equipo1.nombre"
+                  class="h-10 w-10"
+                />
               </td>
-              <td class=""><img :src="encuentro.ganador.img" alt=" " class="w-10 h-10" /></td>
-              <td class="text-2xl font-bold text-[#242424] flex items-center justify-center space-x-4">
+              <td class=""><img :src="encuentro.ganador.img" alt=" " class="h-10 w-10" /></td>
+              <td
+                class="flex items-center justify-center space-x-4 text-2xl font-bold text-[#242424]"
+              >
                 <div>{{ encuentro.equipo2.nombre }}</div>
-                <img :src="encuentro.equipo2.img" :alt="encuentro.equipo2.nombre" class="w-10 h-10 " />
+                <img
+                  :src="encuentro.equipo2.img"
+                  :alt="encuentro.equipo2.nombre"
+                  class="h-10 w-10"
+                />
               </td>
             </tr>
           </tbody>
@@ -160,41 +257,41 @@ const decrementJornada = () => {
       </header>
 
       <!-- Cuadro de clasificación -->
-      <div class="w-full bg-transparent p-4 overflow-x-auto">
-  <div class="max-h-[300px] overflow-y-auto">
-    <table class="w-full border-collapse text-[#FFFFFF]">
-      <!-- Encabezados -->
-      <thead class="bg-[#242424] sticky top-0">
-        <tr class="text-2xl border-b">
-          <th class="w-16 p-2 font-bold">Pos</th>
-          <th class="text-left p-2 font-bold">Equipo</th>
-          <th class="w-8 p-2 font-bold">PJ</th>
-          <th class="w-8 p-2 font-bold">G</th>
-          <th class="w-8 p-2 font-bold">E</th>
-          <th class="w-8 p-2 font-bold">P</th>
-          <th class="w-16 p-2 font-bold">Ptos</th>
-        </tr>
-      </thead>
+      <div class="w-full overflow-x-auto bg-transparent p-4">
+        <div class="max-h-[300px] overflow-y-auto">
+          <table class="w-full border-collapse text-[#FFFFFF]">
+            <!-- Encabezados -->
+            <thead class="sticky top-0 bg-[#242424]">
+              <tr class="border-b text-2xl">
+                <th class="w-16 p-2 font-bold">Pos</th>
+                <th class="p-2 text-left font-bold">Equipo</th>
+                <th class="w-8 p-2 font-bold">PJ</th>
+                <th class="w-8 p-2 font-bold">G</th>
+                <th class="w-8 p-2 font-bold">E</th>
+                <th class="w-8 p-2 font-bold">P</th>
+                <th class="w-16 p-2 font-bold">Ptos</th>
+              </tr>
+            </thead>
 
-      <!-- Cuerpo de la tabla -->
-      <tbody>
-        <tr
-          v-for="(equipo, index) in clasificacion" 
-          :key="index"
-          class="border-b border-[#9B9B9B] text-xl"
-        >
-          <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
-          <td class="p-2">{{ equipo.equipo }}</td>
-          <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
-          <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
-          <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
-          <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
-          <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+            <!-- Cuerpo de la tabla -->
+            <tbody>
+              <tr
+                v-for="(equipo, index) in clasificacion"
+                :key="index"
+                class="border-b border-[#9B9B9B] text-xl"
+              >
+                <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
+                <td class="p-2">{{ equipo.equipo }}</td>
+                <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
+                <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
+                <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
+                <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
+                <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </main>
   <FooterApp />
