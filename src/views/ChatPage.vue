@@ -11,18 +11,18 @@ const mensajes: Mensaje[] = [
   {
     id: 1,
     texto:
-      'El Calo la chupa un montón, el calo la chupa un montón, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton, el calo la chupa un monton',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at euismod neque, a ullamcorper metus. Integer cursus ultricies tortor sed auctor. Proin ultrices tortor tortor, et posuere urna sagittis non. Donec nibh tellus, aliquet vel elit a, malesuada aliquet nunc. Sed pulvinar, ligula sit amet vulputate venenatis, nulla lectus ultrices justo, pharetra vestibulum lectus magna non turpis. Duis at justo nec ipsum bibendum aliquet at id quam. Vivamus auctor enim tellus, id luctus neque ornare a. Curabitur placerat augue ut cursus luctus. Curabitur venenatis ex non porttitor sollicitudin. Nullam in efficitur erat. Maecenas arcu felis, lacinia varius enim sit amet, suscipit faucibus magna. Proin et tempor felis. Duis vulputate ornare tortor, ut ultrices eros cursus sed. Aenean nec justo eros. Nam interdum nisi sed nisl iaculis dapibus. ',
     imgPath: 'tempProfile.png',
   },
   {
     id: 2,
-    texto: 'Santi Chupa muchos pitos, como tu hermana, pancho',
+    texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     imgPath: 'Logo_CM.png',
   },
   {
     id: 3,
     texto:
-      'Zelda zelda bro zelda zelda videojuegos videojuegos. Vite el nuevo Mario 40 4K 656FPS? Re Chevere',
+      'Pellentesque sed sem scelerisque, lacinia arcu ac, placerat velit. Nam pellentesque mattis metus eu convallis. Nulla facilisi. Nam in rutrum turpis. In hac habitasse platea dictumst.',
     imgPath: 'tempProfile.png',
   },
   {
@@ -33,7 +33,7 @@ const mensajes: Mensaje[] = [
   },
   {
     id: 5,
-    texto: 'Brosi, la verdad es que me has convencido, soy maricon.',
+    texto: 'Brosi, la verdad es que me has convencido.',
     imgPath: 'tempProfile.png',
   },
 ]
@@ -48,7 +48,7 @@ const toggleSideBar = () => {
   <div class="flex min-h-screen w-full flex-row">
     <SideBar @toggle-sidebar="toggleSideBar" :isHidden="sideBarHidden" />
     <div class="flex w-full flex-col">
-      <HeaderApp :isHeading1="true" title="Carlos vs AdondeBoy">
+      <HeaderApp :isHeading1="true" title="Soberbia vs Empatía">
         <button
           @click="toggleSideBar()"
           :class="sideBarHidden ? 'block' : 'hidden'"
