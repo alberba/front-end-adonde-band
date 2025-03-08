@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
+import router from '@/router'
 import { ref } from 'vue'
 
 // Ejemplo de datos de clasificación
@@ -217,7 +218,8 @@ const decrementJornada = () => {
             <tr
               v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
               :key="index"
-              class="border-b border-[#BBBBBB]"
+              class="border-b border-[#BBBBBB] cursor-pointer"
+              @click="router.push('/chat')"
             >
               <td
                 class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold text-[#242424]"
