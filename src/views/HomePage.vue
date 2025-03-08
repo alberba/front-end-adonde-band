@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ButtonLeague from '@/components/ButtonLeague.vue'
+import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import type { Liga } from '@/types'
 const ligas: Liga[] = [
@@ -81,4 +82,5 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       </ul>
     </section>
   </main>
+  <FooterApp />
 </template>

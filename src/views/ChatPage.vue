@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ToggleSideBarIcon from '@/assets/svg/ToggleSideBarIcon.vue'
+import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import MessageApp from '@/components/MessageApp.vue'
 import SideBar from '@/components/SideBar/SideBar.vue'
@@ -63,4 +64,5 @@ const toggleSideBar = () => {
       </main>
     </div>
   </div>
+  <FooterApp />
 </template>

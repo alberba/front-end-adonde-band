@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 </script>
 
@@ -85,4 +86,5 @@ import HeaderApp from '@/components/HeaderApp.vue'
       </form>
     </div>
   </main>
+  <FooterApp />
 </template>
