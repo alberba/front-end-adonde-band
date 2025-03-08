@@ -12,7 +12,7 @@ const imageClass = computed(() => {
 </script>
 
 <template>
-  <div class="w-fit">
+  <RouterLink to="/myLeague">
     <div
       class="flex h-[145px] w-[250px] items-center justify-center rounded-t-xl bg-white px-[40px] py-[12px] border-t-2 border-l-2 border-r-2 border-[#d3d3d3]"
     >
@@ -23,5 +23,5 @@ const imageClass = computed(() => {
     >
       {{ liga.nombre }}
     </h3>
-  </div>
+  </RouterLink>
 </template>
