@@ -294,5 +294,5 @@ const decrementJornada = () => {
 
 
   </main>
-
+  <FooterApp />
 </template>
