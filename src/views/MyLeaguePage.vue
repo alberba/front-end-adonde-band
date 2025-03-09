@@ -181,18 +181,17 @@ const decrementJornada = () => {
   <main
     class="mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]"
   >
-    <!-- Contenedor pequeño que incluye solo el header -->
-    <header class="m-3 flex w-full flex-col flex-wrap gap-3">
-      <div class="flex flex-row items-center justify-between">
-        <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
-        <button
-          class="flex flex-row items-center gap-2 rounded-full bg-[#06f] px-3 py-2 text-white"
-        >
-          Estadísticas
-          <img src="@/assets/svg/StatsIcon.svg" alt="" class="w-7" />
-        </button>
-      </div>
-      <div class="mt-2 h-0 w-full border border-[#BBBBBB]"></div>
+  
+  <!-- Contenedor pequeño que incluye solo el header -->
+  <header class="m-3 flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
+      <button
+        class="flex flex-row items-center justify-center text-center gap-2 rounded-full bg-[#06f] px-3 py-2 text-white"
+      >
+        Estadísticas
+        <img src="@/assets/svg/StatsIcon.svg" alt="" class="w-7 items-center justify-center text-center" />
+      </button>
+      <div class="mt-2 h-0 w-full border border-[#BBBBBB] lg:mt-0 lg:w-auto"></div>
     </header>
 
     <!-- Contenedor que contiene tanto el container para las jornadas como el container de encuentros -->
@@ -212,8 +211,8 @@ const decrementJornada = () => {
       </div>
 
       <!-- Container de los encuentros -->
-      <div class="-mt-5 w-full overflow-x-auto bg-[#DDDDDD] p-4">
-        <table class="border-colapse w-full text-[#242424]">
+      <div class="-mt-5 w-full bg-[#DDDDDD] p-4">
+        <table class="w-full text-[#242424]">
           <tbody>
             <tr
               v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
@@ -222,24 +221,24 @@ const decrementJornada = () => {
               @click="router.push('/chat')"
             >
               <td
-                class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold text-[#242424]"
+                class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold text-[#242424] lg:text-3xl"
               >
                 <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
                 <img
                   :src="encuentro.equipo1.img"
                   :alt="encuentro.equipo1.nombre"
-                  class="h-10 w-10"
+                  class="h-10 w-10 lg:h-12 lg:w-12"
                 />
               </td>
-              <td class=""><img :src="encuentro.ganador.img" alt=" " class="h-10 w-10" /></td>
+              <td class="text-center"><img :src="encuentro.ganador.img" alt=" " class="h-10 w-10 lg:h-12 lg:w-12" /></td>
               <td
-                class="flex items-center justify-center space-x-4 text-2xl font-bold text-[#242424]"
+                class="flex items-center justify-center space-x-4 text-2xl font-bold text-[#242424] lg:text-3xl"
               >
                 <div>{{ encuentro.equipo2.nombre }}</div>
                 <img
                   :src="encuentro.equipo2.img"
                   :alt="encuentro.equipo2.nombre"
-                  class="h-10 w-10"
+                  class="h-10 w-10 lg:h-12 lg:w-12"
                 />
               </td>
             </tr>
@@ -247,7 +246,6 @@ const decrementJornada = () => {
         </table>
       </div>
     </div>
-
     <!-- Contenedor para la clasificación -->
     <div class="flex w-full flex-col gap-5">
       <!-- Header de la clasificación -->
@@ -259,42 +257,42 @@ const decrementJornada = () => {
       </header>
 
       <!-- Cuadro de clasificación -->
-      <div class="w-full overflow-x-auto bg-transparent p-4">
-        <div class="max-h-[300px] overflow-y-auto">
-          <table class="w-full border-collapse text-[#FFFFFF]">
-            <!-- Encabezados -->
-            <thead class="sticky top-0 bg-[#242424]">
-              <tr class="border-b text-2xl">
-                <th class="w-16 p-2 font-bold">Pos</th>
-                <th class="p-2 text-left font-bold">Equipo</th>
-                <th class="w-8 p-2 font-bold">PJ</th>
-                <th class="w-8 p-2 font-bold">G</th>
-                <th class="w-8 p-2 font-bold">E</th>
-                <th class="w-8 p-2 font-bold">P</th>
-                <th class="w-16 p-2 font-bold">Ptos</th>
-              </tr>
-            </thead>
+      <div class="w-full bg-transparent p-4">
+        <table class="w-full border-collapse text-[#FFFFFF]">
+          <!-- Encabezados -->
+          <thead class="sticky top-0 bg-[#242424]">
+            <tr class="border-b text-2xl">
+              <th class="w-16 p-2 font-bold">Pos</th>
+              <th class="p-2 text-left font-bold">Equipo</th>
+              <th class="w-8 p-2 font-bold">PJ</th>
+              <th class="w-8 p-2 font-bold">G</th>
+              <th class="w-8 p-2 font-bold">E</th>
+              <th class="w-8 p-2 font-bold">P</th>
+              <th class="w-16 p-2 font-bold">Ptos</th>
+            </tr>
+          </thead>
 
-            <!-- Cuerpo de la tabla -->
-            <tbody>
-              <tr
-                v-for="(equipo, index) in clasificacion"
-                :key="index"
-                class="border-b border-[#9B9B9B] text-xl"
-              >
-                <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
-                <td class="p-2">{{ equipo.equipo }}</td>
-                <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
-                <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
-                <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
-                <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
-                <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <!-- Cuerpo de la tabla -->
+          <tbody>
+            <tr
+              v-for="(equipo, index) in clasificacion"
+              :key="index"
+              class="border-b border-[#9B9B9B] text-xl"
+            >
+              <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
+              <td class="p-2">{{ equipo.equipo }}</td>
+              <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
+              <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
+              <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
+              <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
+              <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
+
   </main>
-  <FooterApp />
+
 </template>
