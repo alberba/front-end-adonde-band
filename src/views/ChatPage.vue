@@ -47,7 +47,7 @@ const toggleSideBar = () => {
 <template>
   <div class="flex min-h-screen w-full flex-row">
     <SideBar @toggle-sidebar="toggleSideBar" :isHidden="sideBarHidden" />
-    <div class="flex w-full flex-col">
+    <div class="w-full flex-col sm:flex" :class="sideBarHidden ? 'flex' : 'hidden'">
       <HeaderApp :isHeading1="true" title="Soberbia vs Empatía">
         <button
           @click="toggleSideBar()"
