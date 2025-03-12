@@ -38,57 +38,57 @@ const jornadas = ref([
         },
         equipo2: {
           nombre: 'Barcelona',
-          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
         },
         ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
       {
         equipo1: { nombre: 'Atletico', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        equipo2: { nombre: 'Sevilla', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        equipo2: { nombre: 'Sevilla', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
         ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
       {
-        equipo1: { nombre: 'Betis', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
+        equipo1: { nombre: 'Betis', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
         equipo2: {
           nombre: 'Valencia',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
         },
         ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
       },
       {
         equipo1: {
           nombre: 'Villarreal',
-          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
+          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
         },
-        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
     ],
   },
   {
     encuentros: [
       {
-        equipo1: { nombre: 'Celta', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-        equipo2: { nombre: 'Almeria', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+        equipo1: { nombre: 'Celta', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+        equipo2: { nombre: 'Almeria', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
+        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
       {
         equipo1: {
           nombre: 'Osasuna',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
+          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
         },
-        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
         ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
       },
       {
-        equipo1: { nombre: 'Granada', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
+        equipo1: { nombre: 'Granada', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
         equipo2: { nombre: 'Cadiz', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
         ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
       },
       {
         equipo1: {
           nombre: 'Rayo Vallecano',
-          img: new URL('@/assets/svg/gay.svg', import.meta.url).href,
+          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
         },
         equipo2: { nombre: 'Girona', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
         ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
@@ -181,7 +181,7 @@ const decrementJornada = () => {
   <main
     class="mb-15 flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]"
   >
-  
+
   <!-- Contenedor pequeño que incluye solo el header -->
   <header class="m-3 flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
       <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
@@ -191,7 +191,6 @@ const decrementJornada = () => {
         Estadísticas
         <img src="@/assets/svg/StatsIcon.svg" alt="" class="w-7 items-center justify-center text-center" />
       </button>
-      <div class="mt-2 h-0 w-full border border-[#BBBBBB] lg:mt-0 lg:w-auto"></div>
     </header>
 
     <!-- Contenedor que contiene tanto el container para las jornadas como el container de encuentros -->
