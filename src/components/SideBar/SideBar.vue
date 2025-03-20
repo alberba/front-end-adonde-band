@@ -85,8 +85,8 @@ const toggleDarkMode = () => {
 
 <template>
   <aside
-    class="z-10 flex min-h-screen w-full flex-col gap-16 bg-[#eee] px-8 py-4 transition-transform duration-300 ease-in-out sm:w-[20rem] sm:px-6 dark:bg-[#3b3b3b]"
-    :class="props.isHidden ? '-translate-x-full fixed' : 'translate-x-0'"
+    class="z-10 flex min-h-screen w-full flex-col gap-10 bg-[#eee] px-8 py-4 transition-transform duration-300 ease-in-out sm:w-[20rem] sm:px-6 dark:bg-[#3b3b3b]"
+    :class="props.isHidden ? 'fixed -translate-x-full' : 'translate-x-0'"
   >
     <header class="flex flex-row items-center justify-between">
       <div class="font-bold">
@@ -97,7 +97,7 @@ const toggleDarkMode = () => {
         <ToggleSideBarIcon classList="w-8 h-8" />
       </button>
     </header>
-    <div class="flex h-9/10 flex-col gap-2.5">
+    <div class="flex flex-col gap-2.5 overflow-y-auto">
       <SectionSideBar
         title="Finalizado"
         :combates="combates.filter((combate) => combate.finished)"
@@ -109,7 +109,10 @@ const toggleDarkMode = () => {
         classListButtonChat="w-full sm:w-fit text-[24px] sm:text-[20px]"
       />
     </div>
-    <button class="flex h-9 w-9 items-center justify-center" @click="toggleDarkMode()">
+    <button
+      class="fixed bottom-5 left-5 flex h-9 w-9 items-center justify-center"
+      @click="toggleDarkMode()"
+    >
       <img class="hidden dark:block" src="@/assets/svg/lightIcon.svg" alt="Modo claro" />
       <img class="dark:hidden" src="@/assets/svg/darkIcon.svg" alt="Modo oscuro" />
     </button>
