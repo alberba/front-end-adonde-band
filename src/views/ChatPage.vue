@@ -45,7 +45,7 @@ const toggleSideBar = () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen w-full flex-row">
+  <div class="flex h-screen w-full flex-row">
     <SideBar @toggle-sidebar="toggleSideBar" :isHidden="sideBarHidden" />
     <div class="w-full flex-col sm:flex" :class="sideBarHidden ? 'flex' : 'hidden'">
       <HeaderApp :isHeading1="true" title="Soberbia vs Empatía">
@@ -57,9 +57,13 @@ const toggleSideBar = () => {
           <ToggleSideBarIcon classList="h-8 w-8" />
         </button>
       </HeaderApp>
-      <main class="md:px-8 mx-auto mb-12 flex max-w-5xl flex-col justify-center gap-3 sm:gap-6 px-2">
-        <div v-for="mensaje in mensajes" :key="mensaje.id">
-          <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
+      <main class="mr-1 mb-6 overflow-y-auto">
+        <div
+          class="mx-auto mb-12 flex max-w-5xl flex-col justify-center gap-3 px-2 sm:gap-6 md:px-8"
+        >
+          <div v-for="mensaje in mensajes" :key="mensaje.id">
+            <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
+          </div>
         </div>
       </main>
       <FooterApp :hideDarkLight="true" />
