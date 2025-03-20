@@ -9,7 +9,7 @@ const isChatPage = route.path === '/chat'
 </script>
 
 <template>
-  <header class="flex w-full flex-row items-center justify-between px-8 py-4 md:px-10">
+  <header class="flex w-full flex-row items-center justify-between px-3 sm:px-8 py-4 md:px-10">
     <div class="flex flex-row gap-2 md:gap-8">
       <slot></slot>
       <h1 v-if="props.isHeading1" class="text-xl font-semibold md:text-3xl">{{ props.title }}</h1>

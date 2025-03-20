@@ -57,7 +57,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
   <HeaderApp title="¡Hola, AdondeBoy!" :isHeading1="false" />
 
   <main
-    class="mb-10 flex max-w-[860px] flex-col items-center justify-center px-8 md:px-10 lg:w-[860px]"
+    class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]"
   >
     <header class="m-3 flex w-full flex-col gap-2">
       <div class="flex flex-row items-center justify-between">
@@ -86,9 +86,9 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       </ul>
 
       <button
-        class="flex w-fit flex-row items-center gap-4 rounded-2xl border-2 border-dashed bg-[#d3d3d3] px-10 py-6 text-xl dark:bg-[#3b3b3b]"
+        class="xs:w-fit xs:gap-4 xs:text-md flex w-38.5 flex-row items-center gap-2 rounded-2xl border-2 border-dashed bg-[#d3d3d3] px-5 py-3 text-sm sm:px-10 sm:py-6 sm:text-xl dark:bg-[#3b3b3b]"
       >
-        <AddIcon classList="h-8 w-8 fill-black dark:fill-white" />
+        <AddIcon classList="h-6 w-6 sm:h-8 sm:w-8 fill-black dark:fill-white" />
         Añadir Liga
       </button>
     </section>

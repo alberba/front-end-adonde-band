@@ -18,11 +18,11 @@ function getAssetUrl(fileName: string) {
       v-if="isTextLeft"
       :src="getAssetUrl(props.imgPath)"
       alt="Profile"
-      class="w-8 rounded-full object-contain"
+      class="w-6 sm:w-8 rounded-full object-contain"
     />
     <div
       :class="[bgColor, radiusClass]"
-      :style="{ maxWidth: 'min(2/3*100%, 36rem)' }"
+      :style="{ maxWidth: 'min(3/4*100%, 36rem)' }"
       class="p-3.5 text-sm lg:text-[16px]"
     >
       <slot></slot>
@@ -31,7 +31,7 @@ function getAssetUrl(fileName: string) {
       v-if="!isTextLeft"
       :src="getAssetUrl(props.imgPath)"
       alt="Profile"
-      class="w-8 rounded-full object-contain"
+      class="w-6 sm:w-8 rounded-full object-contain"
     />
   </div>
 </template>

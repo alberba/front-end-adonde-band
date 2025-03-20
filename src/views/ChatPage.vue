@@ -57,7 +57,7 @@ const toggleSideBar = () => {
           <ToggleSideBarIcon classList="h-8 w-8" />
         </button>
       </HeaderApp>
-      <main class="mb-12 flex w-full flex-col gap-6 px-4 md:px-32">
+      <main class="md:px-8 mx-auto mb-12 flex max-w-5xl flex-col justify-center gap-3 sm:gap-6 px-2">
         <div v-for="mensaje in mensajes" :key="mensaje.id">
           <MessageApp :id="mensaje.id" :imgPath="mensaje.imgPath">{{ mensaje.texto }}</MessageApp>
         </div>
