@@ -1,6 +1,7 @@
 export interface Equipo {
   pos: number
-  equipo: string
+  nombre: string
+  cualidad: string
   PJ: number
   G: number
   E: number
