@@ -2,6 +2,7 @@ export interface Equipo {
   pos: number
   nombre: string
   cualidad: string
+  imagen: string
   PJ: number
   G: number
   E: number
