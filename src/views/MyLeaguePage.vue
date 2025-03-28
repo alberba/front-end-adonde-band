@@ -6,23 +6,21 @@ import { ref } from 'vue'
 
 // Ejemplo de datos de clasificación
 const clasificacion = ref([
-  { pos: 1, equipo: 'Equipo 1', PJ: 10, G: 6, E: 2, P: 2, Ptos: 20 },
-  { pos: 2, equipo: 'Equipo 2', PJ: 10, G: 5, E: 3, P: 2, Ptos: 18 },
-  { pos: 3, equipo: 'Equipo 3', PJ: 10, G: 5, E: 2, P: 3, Ptos: 17 },
-  { pos: 4, equipo: 'Equipo 4', PJ: 10, G: 4, E: 4, P: 2, Ptos: 16 },
-  { pos: 5, equipo: 'Equipo 5', PJ: 10, G: 4, E: 3, P: 3, Ptos: 15 },
-  { pos: 6, equipo: 'Equipo 6', PJ: 10, G: 4, E: 2, P: 4, Ptos: 14 },
-  { pos: 7, equipo: 'Equipo 7', PJ: 10, G: 3, E: 4, P: 3, Ptos: 13 },
-  { pos: 8, equipo: 'Equipo 8', PJ: 10, G: 3, E: 3, P: 4, Ptos: 12 },
-  { pos: 9, equipo: 'Equipo 9', PJ: 10, G: 3, E: 2, P: 5, Ptos: 11 },
-  { pos: 10, equipo: 'Equipo 10', PJ: 10, G: 2, E: 4, P: 4, Ptos: 10 },
-  { pos: 11, equipo: 'Equipo 11', PJ: 10, G: 2, E: 3, P: 5, Ptos: 9 },
-  { pos: 12, equipo: 'Equipo 12', PJ: 10, G: 2, E: 2, P: 6, Ptos: 8 },
-  { pos: 13, equipo: 'Equipo 13', PJ: 10, G: 1, E: 4, P: 5, Ptos: 7 },
-  { pos: 14, equipo: 'Equipo 14', PJ: 10, G: 1, E: 3, P: 6, Ptos: 6 },
-
-  // Agrega más equipos según sea necesario
-])
+  { pos: 1, equipo: 'Equipo 1', PJ: 10, G: 6, E: 2, P: 2, Ptos: 20, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 2, equipo: 'Equipo 2', PJ: 10, G: 5, E: 3, P: 2, Ptos: 18, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 3, equipo: 'Equipo 3', PJ: 10, G: 5, E: 2, P: 3, Ptos: 17, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 4, equipo: 'Equipo 4', PJ: 10, G: 4, E: 4, P: 2, Ptos: 16, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 5, equipo: 'Equipo 5', PJ: 10, G: 4, E: 3, P: 3, Ptos: 15, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 6, equipo: 'Equipo 6', PJ: 10, G: 4, E: 2, P: 4, Ptos: 14, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 7, equipo: 'Equipo 7', PJ: 10, G: 3, E: 4, P: 3, Ptos: 13, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 8, equipo: 'Equipo 8', PJ: 10, G: 3, E: 3, P: 4, Ptos: 12, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 9, equipo: 'Equipo 9', PJ: 10, G: 3, E: 2, P: 5, Ptos: 11, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 10, equipo: 'Equipo 10', PJ: 10, G: 2, E: 4, P: 4, Ptos: 10, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 11, equipo: 'Equipo 11', PJ: 10, G: 2, E: 3, P: 5, Ptos: 9, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 12, equipo: 'Equipo 12', PJ: 10, G: 2, E: 2, P: 6, Ptos: 8, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 13, equipo: 'Equipo 13', PJ: 10, G: 1, E: 4, P: 5, Ptos: 7, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+  { pos: 14, equipo: 'Equipo 14', PJ: 10, G: 1, E: 3, P: 6, Ptos: 6, img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
+]);
 
 const ligaNombre = 'LaLiga EA Sports'
 const jornadaNum = ref(1)
@@ -162,6 +160,11 @@ const jornadas = ref([
     ],
   },
 ])
+const misBots = ['Equipo 1', 'Equipo 3', 'Equipo 5']; // Ejemplo de equipos
+
+const esMiBot = (nombreEquipo: string) => {
+  return misBots.includes(nombreEquipo);
+};
 
 const incrementJornada = () => {
   if (jornadaNum.value < jornadaMax) {
@@ -183,44 +186,39 @@ const decrementJornada = () => {
   >
 
   <!-- Contenedor pequeño que incluye solo el header -->
-  <header class="m-3 flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <h1 class="text-4xl font-bold">{{ ligaNombre }}</h1>
-      <button
-        class="flex flex-row items-center justify-center text-center gap-2 rounded-full bg-[#06f] px-3 py-2 text-white"
-      >
-        Estadísticas
-        <img src="@/assets/svg/StatsIcon.svg" alt="" class="w-7 items-center justify-center text-center" />
-      </button>
+  <header class="m-3 flex w-full flex-col gap-3   ">
+      <h1 class="text-4xl text-left font-bold">{{ ligaNombre }}</h1>
+      <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
     </header>
 
     <!-- Contenedor que contiene tanto el container para las jornadas como el container de encuentros -->
     <div class="flex w-full flex-col gap-5">
       <!-- Container para la jornada -->
-      <div class="w-full bg-[#BBBBBB] p-4">
+      <div class="w-full bg-[#BBBBBB]  dark:bg-[#525252] p-4">
         <div class="flex items-center justify-center">
           <button @click="decrementJornada">
-            <img src="@/assets/svg/izquierdaicon.svg" alt="Izquierda" class="mr-3 h-6 w-6" />
+            <img src="@/assets/svg/izquierdaicon.svg" alt="Izquierda" class="mr-3 h-6 w-6 dark:filter dark:brightness-0 dark:invert" />
           </button>
-          <img src="@/assets/svg/calendaricon.svg" alt="calendar" class="mr-2 w-7" />
-          <div class="text-2xl font-bold text-[#242424]">JORNADA {{ jornadaNum }}</div>
+          <img src="@/assets/svg/calendaricon.svg" alt="calendar" class="mr-2 w-7 dark:filter dark:brightness-0 dark:invert" />
+          <div class="text-2xl font-bold ">JORNADA {{ jornadaNum }}</div>
           <button @click="incrementJornada">
-            <img src="@/assets/svg/derechaicon.svg" alt="Derecha" class="ml-2 h-6 w-6" />
+            <img src="@/assets/svg/derechaicon.svg" alt="Derecha" class="ml-2 h-6 w-6 dark:filter dark:brightness-0 dark:invert" />
           </button>
         </div>
       </div>
 
       <!-- Container de los encuentros -->
-      <div class="-mt-5 w-full bg-[#DDDDDD] p-4">
-        <table class="w-full text-[#242424]">
+      <div class="-mt-5 w-full bg-[#DDDDDD] dark:bg-[#2D2D2D] p-4">
+        <table class="w-full ">
           <tbody>
             <tr
               v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
               :key="index"
-              class="border-b border-[#BBBBBB] cursor-pointer"
+              
               @click="router.push('/chat')"
             >
               <td
-                class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold text-[#242424] lg:text-3xl"
+                class="flex flex-shrink-0 items-center justify-center space-x-4 text-2xl font-bold  lg:text-2xl"
               >
                 <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
                 <img
@@ -231,7 +229,7 @@ const decrementJornada = () => {
               </td>
               <td class="text-center"><img :src="encuentro.ganador.img" alt=" " class="h-10 w-10 lg:h-12 lg:w-12" /></td>
               <td
-                class="flex items-center justify-center space-x-4 text-2xl font-bold text-[#242424] lg:text-3xl"
+                class="flex items-center justify-center space-x-4 text-2xl font-bold  lg:text-2xl"
               >
                 <div>{{ encuentro.equipo2.nombre }}</div>
                 <img
@@ -250,16 +248,16 @@ const decrementJornada = () => {
       <!-- Header de la clasificación -->
       <header class="m-3 flex w-full flex-col gap-3">
         <div class="flex flex-row items-center justify-between">
-          <h1 class="text-2xl font-bold text-[#9B9B9B]">Clasificación</h1>
+          <h1 class="text-2xl font-bold text-left text-[#9B9B9B] dark:text-[#FFFFFF]">Clasificación</h1>
         </div>
-        <div class="mt-0 h-0 w-40 border border-[#9B9B9B]"></div>
+        <div class="mt-0 h-0 w-40 border border-[#9B9B9B] dark:border-[#FFFFFF] "></div>
       </header>
 
       <!-- Cuadro de clasificación -->
-      <div class="w-full bg-transparent p-4">
-        <table class="w-full border-collapse text-[#FFFFFF]">
+      <div class="w-4/7 mx-auto bg-[#DDDDDD] dark:bg-[#2D2D2D] rounded-lg p-2">
+        <table class="w-full border-collapse ">
           <!-- Encabezados -->
-          <thead class="sticky top-0 bg-[#242424]">
+          <thead class="sticky top-0 border-b bg-[#DDDDDD] dark:bg-[#2D2D2D]">
             <tr class="border-b text-2xl">
               <th class="w-16 p-2 font-bold">Pos</th>
               <th class="p-2 text-left font-bold">Equipo</th>
@@ -276,15 +274,49 @@ const decrementJornada = () => {
             <tr
               v-for="(equipo, index) in clasificacion"
               :key="index"
-              class="border-b border-[#9B9B9B] text-xl"
+              class="border-b text-xl"
             >
-              <td class="w-16 p-2 text-center">{{ equipo.pos }}</td>
-              <td class="p-2">{{ equipo.equipo }}</td>
-              <td class="w-8 p-2 text-center">{{ equipo.PJ }}</td>
-              <td class="w-8 p-2 text-center">{{ equipo.G }}</td>
-              <td class="w-8 p-2 text-center">{{ equipo.E }}</td>
-              <td class="w-8 p-2 text-center">{{ equipo.P }}</td>
-              <td class="w-16 p-2 text-center">{{ equipo.Ptos }}</td>
+              <td
+                :class="['w-16 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.pos }}
+              </td>
+              <td
+              
+                :class="['p-2 flex ', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                <img
+                  :src="equipo.img"
+                  alt=" "
+                  class="h-6 w-6 lg:h-8 lg:w-8 -ml-2"
+                />
+                {{ equipo.equipo }}
+              </td>
+              <td
+                :class="['w-8 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.PJ }}
+              </td>
+              <td
+                :class="['w-8 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.G }}
+              </td>
+              <td
+                :class="['w-8 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.E }}
+              </td>
+              <td
+                :class="['w-8 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.P }}
+              </td>
+              <td
+                :class="['w-16 p-2 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+              >
+                {{ equipo.Ptos }}
+              </td>
             </tr>
           </tbody>
         </table>
