@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import HeaderApp from '@/components/HeaderApp.vue'
 import FooterApp from '@/components/FooterApp.vue'
+import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Liga } from '@/types'
 
 // Declaración de las diferentes Ligas dónde participan mis bots:
@@ -10,7 +11,7 @@ const ligas = ref<Liga[]>([
   {
     id: 1,
     nombre: 'RBOTITO (Empatía)', // Sería más bien el nombre del Bot
-    imagePath: '',
+    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
     finalizado: false,
     clasificacion: [
       { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "",  PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
@@ -23,8 +24,22 @@ const ligas = ref<Liga[]>([
   },
   {
     id: 2,
+    nombre: 'PEPITA (Soledad)', // Sería más bien el nombre del Bot
+    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
+    finalizado: false,
+    clasificacion: [
+      { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "", PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
+      { pos: 2, nombre: 'MisterY', cualidad: 'Sinceridad', imagen: "", PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
+      { pos: 3, nombre: 'Luris', cualidad: 'Soledad', imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href, PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
+      { pos: 4, nombre: 'Rbotito', cualidad: 'Empatia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
+      { pos: 5, nombre: 'Ramingo', cualidad: 'Envidia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
+      // ...
+    ],
+  },
+  {
+    id: 2,
     nombre: 'TUTTO_FREE (Generosidad)', // Sería más bien el nombre del Bot
-    imagePath: '',
+    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
     finalizado: false,
     clasificacion: [
       { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "", PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
@@ -42,6 +57,50 @@ const botName = ref('Rbotito')
 
 // Estado para mostrar/ocultar la ventana de ayuda
 const showHelpModal = ref(false)
+
+// Resumen del bot
+const resumenBot = ref({
+  victorias: 0,
+  empates: 0,
+  derrotas: 0,
+  ligasJugadas: [] as Liga[],
+})
+
+// Función para calcular el resumen del bot
+function getBotSummary(botName: string) {
+  let totalG = 0
+  let totalE = 0
+  let totalP = 0
+  const ligasJugadas: Liga[] = []  // Ahora es un arreglo de Liga
+
+  ligas.value.forEach((liga) => {
+    const row = liga.clasificacion.find(
+      (item) => item.nombre.toLowerCase() === botName.toLowerCase()
+    )
+    if (row) {
+      totalG += row.G
+      totalE += row.E
+      totalP += row.P
+      // Agregamos la liga completa
+      ligasJugadas.push(liga)
+    }
+  })
+
+  resumenBot.value = {
+    victorias: totalG,
+    empates: totalE,
+    derrotas: totalP,
+    ligasJugadas,
+  }
+}
+
+// Actualizar el resumen cada vez que cambie el nombre del bot
+watch(botName, () => {
+  getBotSummary(botName.value)
+})
+
+// Calcular el resumen al iniciar
+getBotSummary(botName.value)
 
 function getIndicesByBotName(league: Liga, name: string): number[] {
   // Buscamos la posición en la clasificación:
@@ -84,7 +143,8 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                 ({{ liga.nombre.split(' (')[1]?.replace(')', '') }})
               </h3>
 
-              <div class="mx-auto mt-1 mb-4 h-[2px] w-1/2 bg-gray-500"></div>
+              <!-- Línea Separadora -->
+              <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
 
               <p class="text-center text-[16px] text-white font-bold mb-2">
                   Posición en la Liga Actual
@@ -183,7 +243,93 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
         <!-- Modo Resumen -->
         <template #resumen>
           <div>
-            <p class="text-white">Contenido del Modo Resumen aún no implementado.</p>
+            <!-- Se itera sobre cada liga -->
+            <section
+              v-for="liga in ligas"
+              :key="liga.id"
+              class="w-full pt-4 pb-4 pl-8 pr-8 mb-4"
+            >
+              <!-- Nombre del Bot -->
+              <h2 class="text-center text-[32px] font-bold text-white">
+                {{ liga.nombre.split(' (')[0] }}
+              </h2>
+
+              <!-- Cualidad del Bot -->
+              <h3 class="text-center text-[32px] font-semibold text-white">
+                ({{ liga.nombre.split(' (')[1]?.replace(')', '') }})
+              </h3>
+
+              <!-- Línea Separadora -->
+              <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
+
+              <!-- Calculamos el resumen "al vuelo" para el botName actual -->
+              <div v-if="(resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0) && getIndicesByBotName(liga, botName).length">                <!-- Mostramos las estadísticas -->
+
+                <!-- Mostramos las estadísticas -->
+                <div class="mt-2 flex items-center justify-center gap-12 text-white">
+
+                  <!-- Empates -->
+                  <div class="flex flex-col items-center">
+                    <div class="mt-4 text-[32px] font-bold">
+                      {{ resumenBot.empates }}
+                    </div>
+                    <div class="mb-1 h-[1px] w-8 bg-white"></div>
+                    <div class="text-[20px] font-semibold">
+                      Empate
+                    </div>
+                  </div>
+
+                  <!-- Victorias -->
+                  <div class="flex flex-col items-center -mt-4">
+                    <div class="text-[48px] font-bold">
+                      {{ resumenBot.victorias }}
+                    </div>
+                    <div class="-mt-2 mb-1 h-[1px] w-8 bg-white"></div>
+                    <div class="text-[24px] font-semibold">
+                      Victorias
+                    </div>
+                  </div>
+
+                  <!-- Derrotas -->
+                  <div class="flex flex-col items-center">
+                    <div class="mt-4 text-[32px] font-bold">
+                      {{ resumenBot.derrotas }}
+                    </div>
+                    <div class="mb-1 h-[1px] w-8 bg-white"></div>
+                    <div class="text-[20px] font-semibold">
+                      Derrotas
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ligas Jugadas -->
+                <p class="mt-4 text-[24px] font-semibold text-white text-center">Ligas Jugadas</p>
+                <div class="mt-3 flex flex-wrap items-center justify-center gap-6">
+                  <ButtonLeague
+                    v-for="liga in resumenBot.ligasJugadas"
+                    :key="liga.id"
+                    :liga="liga"
+                  />
+                </div>
+              </div>
+
+              <!-- Si no ha jugado en ninguna liga, mostramos un mensaje -->
+              <div v-else>
+
+                <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
+                  No ha jugado en ninguna liga...
+                </p>
+
+                <div class="mt-4 flex justify-center gap-x-4">
+                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
+                    Apuntarse
+                  </button>
+                </div>
+
+              </div>
+
+
+            </section>
           </div>
         </template>
       </BotoneraModo>
