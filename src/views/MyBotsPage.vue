@@ -164,7 +164,12 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                   En ninguna liga actualmente...
                 </p>
 
-                <!-- "Ver liga" -->
+                <!-- Botones -->
+                <div class="mt-4 flex justify-center gap-x-4">
+                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
+                    Apuntarse
+                  </button>
+                </div>
                 <div class="mt-4 flex justify-center gap-x-4">
                   <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
                     Ver Historial de Ligas
