@@ -37,18 +37,26 @@ const ligas = ref<Liga[]>([
   },
 ])
 
-// Posición del Bot en la clasificación
-const posBot = ref(4)
+// Nombre del bot a buscar en la liga:
+const botName = ref('Rbotito')
 
 // Estado para mostrar/ocultar la ventana de ayuda
 const showHelpModal = ref(false)
 
-// Función para obtener los índices que se deben mostrar para la clasificación de una liga
-function getIndices(league: Liga): number[] {
-  const indices = [posBot.value - 1, posBot.value, posBot.value + 1]
+function getIndicesByBotName(league: Liga, name: string): number[] {
+  // Buscamos la posición en la clasificación:
+  const index = league.clasificacion.findIndex(item => item.nombre.toLowerCase() === name.toLowerCase())
+
+  // Si el bot no está en la clasificación, devolvemos []
+  if (index === -1) {
+    return []
+  }
+
+  const posBot = index + 1
+  const indices = [posBot - 1, posBot, posBot + 1]
 
   // Filtramos para quedarnos solo con índices válidos
-  return indices.filter((i) => i > 0 && i <= league.clasificacion.length)
+  return indices.filter(i => i > 0 && i <= league.clasificacion.length)
 }
 </script>
 
@@ -78,58 +86,90 @@ function getIndices(league: Liga): number[] {
 
               <div class="mx-auto mt-1 mb-4 h-[2px] w-1/2 bg-gray-500"></div>
 
-              <p class="text-center text-[16px] text-white mb-2">
-                Posición en la Liga Actual
+              <p class="text-center text-[16px] text-white font-bold mb-2">
+                  Posición en la Liga Actual
               </p>
 
-              <!-- Tabla: muestra la clasificación completa -->
-              <table class="mx-auto w-full max-w-[600px] border-collapse text-white">
-                <thead>
-                  <tr class="border-b border-gray-600 text-left text-sm">
-                    <th class="px-3 py-2 text-center text-[24px]">Pos</th>
-                    <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Nombre</th>
-                    <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Cualidad</th>
-                    <th class="px-2 py-2 text-center text-[24px]">PJ</th>
-                    <th class="px-2 py-2 text-center text-[24px]">G</th>
-                    <th class="px-2 py-2 text-center text-[24px]">E</th>
-                    <th class="px-2 py-2 text-center text-[24px]">P</th>
-                    <th class="px-3 py-2 text-center text-[24px]">Ptos</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="i in getIndices(liga)"
-                    :key="i"
-                    class="border-b border-gray-500 text-sm"
-                    :class="{ 'font-bold text-[#FADA5E]': i === posBot }"
-                  >
-                    <td class="px-3 py-2 text-center text-[18px]">{{ liga.clasificacion[i - 1].pos }}</td>
-                    <td class="px-4 py-2 text-left text-[18px] whitespace-nowrap flex items-center">
-                      <img
-                        :src="liga.clasificacion[i - 1].imagen"
-                        alt=""
-                        class="mr-2"
-                      />
-                      {{ liga.clasificacion[i - 1].nombre }}
-                    </td>
-                    <td class="px-4 py-2 text-left text-[20px] whitespace-nowrap">{{ liga.clasificacion[i - 1].cualidad }}</td>
-                    <td class="px-2 py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].PJ }}</td>
-                    <td class="px-2 py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].G }}</td>
-                    <td class="px-2 py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].E }}</td>
-                    <td class="px-2 py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].P }}</td>
-                    <td class="px-3 py-2 text-center text-[20px]">{{ liga.clasificacion[i - 1].Ptos }}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <!-- Si el bot tiene una posición dentro de la liga:-->
+              <div v-if="getIndicesByBotName(liga, botName).length">
+                <table class="mx-auto w-full max-w-[600px] border-collapse text-white">
+                  <thead>
+                    <tr class="border-b border-gray-600 text-left text-sm">
+                      <th class="px-3 py-2 text-center text-[24px]">Pos</th>
+                      <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Nombre</th>
+                      <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Cualidad</th>
+                      <th class="px-2 py-2 text-center text-[24px]">PJ</th>
+                      <th class="px-2 py-2 text-center text-[24px]">G</th>
+                      <th class="px-2 py-2 text-center text-[24px]">E</th>
+                      <th class="px-2 py-2 text-center text-[24px]">P</th>
+                      <th class="px-3 py-2 text-center text-[24px]">Ptos</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="i in getIndicesByBotName(liga, botName)"
+                      :key="i"
+                      class="border-b border-gray-500 text-sm"
+                      :class="{
+                        'font-bold text-[#FADA5E]': liga.clasificacion[i - 1].nombre === botName
+                      }"
+                    >
+                      <td class="px-3 py-2 text-center text-[18px]">
+                        {{ liga.clasificacion[i - 1].pos }}
+                      </td>
+                      <td class="px-4 py-2 text-left text-[18px] whitespace-nowrap flex items-center">
+                        <img
+                          :src="liga.clasificacion[i - 1].imagen"
+                          alt=""
+                          class="mr-2"
+                        />
+                        {{ liga.clasificacion[i - 1].nombre }}
+                      </td>
+                      <td class="px-4 py-2 text-left text-[20px] whitespace-nowrap">
+                        {{ liga.clasificacion[i - 1].cualidad }}
+                      </td>
+                      <td class="px-2 py-2 text-center text-[20px]">
+                        {{ liga.clasificacion[i - 1].PJ }}
+                      </td>
+                      <td class="px-2 py-2 text-center text-[20px]">
+                        {{ liga.clasificacion[i - 1].G }}
+                      </td>
+                      <td class="px-2 py-2 text-center text-[20px]">
+                        {{ liga.clasificacion[i - 1].E }}
+                      </td>
+                      <td class="px-2 py-2 text-center text-[20px]">
+                        {{ liga.clasificacion[i - 1].P }}
+                      </td>
+                      <td class="px-3 py-2 text-center text-[20px]">
+                        {{ liga.clasificacion[i - 1].Ptos }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-              <!-- "Ver liga" -->
-              <div class="mt-4 flex justify-center gap-x-4">
-                <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
-                  Ver Liga Actual
-                </button>
-                <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
-                  Ver Historial de Ligas
-                </button>
+                <!-- "Ver liga" -->
+                <div class="mt-4 flex justify-center gap-x-4">
+                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                    Ver Liga Actual
+                  </button>
+                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                    Ver Historial de Ligas
+                  </button>
+                </div>
+              </div>
+
+              <!-- Si getIndicesByBotName() está vacío, mostramos el mensaje de que no participa -->
+              <div v-else>
+                <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
+                  En ninguna liga actualmente...
+                </p>
+
+                <!-- "Ver liga" -->
+                <div class="mt-4 flex justify-center gap-x-4">
+                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                    Ver Historial de Ligas
+                  </button>
+                </div>
               </div>
             </section>
           </div>
