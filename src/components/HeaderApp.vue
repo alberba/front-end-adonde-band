@@ -2,7 +2,7 @@
 import MenuIcon from '@/assets/svg/menuIcon.vue'
 import { useRoute } from 'vue-router'
 
-const props = defineProps<{ isHeading1: boolean; title: string }>()
+const props = defineProps<{ isHeading1: boolean; title?: string }>()
 const route = useRoute()
 
 const isChatPage = route.path === '/chat'
