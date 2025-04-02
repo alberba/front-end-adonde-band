@@ -8,6 +8,7 @@ import MyLeaguePage from '@/views/MyLeaguePage.vue'
 import MyBotsPage from '@/views/MyBotsPage.vue'
 import NewLeaguePage from '@/views/NewLeaguePage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
+import NewBotPage from '@/views/NewBotPage.vue'
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/myLeague', component: MyLeaguePage },
   { path: '/createLeague', component: NewLeaguePage },
   { path: '/myBots', component: MyBotsPage },
+  { path: '/createBot', component: NewBotPage },
   { path: '/register', component: RegisterPage },
 ]
 
