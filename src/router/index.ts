@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store'
 import ChatPage from '@/views/ChatPage.vue'
 import MyLeaguePage from '@/views/MyLeaguePage.vue'
 import MyBotsPage from '@/views/MyBotsPage.vue'
-
+import NewLeaguePage from '@/views/NewLeaguePage.vue'
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
@@ -14,6 +14,7 @@ const routes = [
   { path: '/profile', component: ProfileView, meta: { requiresAuth: true } },
   { path: '/chat', component: ChatPage },
   { path: '/myLeague', component: MyLeaguePage },
+  { path: '/createLeague', component: NewLeaguePage },
   { path: '/myBots', component: MyBotsPage },
 ]
 
