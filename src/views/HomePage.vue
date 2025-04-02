@@ -4,6 +4,9 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import type { Liga } from '@/types'
+
+const welcomeMessage = '¡Hola, ' + localStorage.getItem('username') + '!'
+
 const ligas: Liga[] = [
   {
     id: 1,
@@ -54,7 +57,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
 </script>
 
 <template>
-  <HeaderApp title="¡Hola, AdondeBoy!" :isHeading1="false" />
+  <HeaderApp :title="welcomeMessage" :isHeading1="false" />
 
   <main
     class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]"
