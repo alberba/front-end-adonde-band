@@ -85,12 +85,13 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
         </li>
       </ul>
 
-      <button
+      <RouterLink
+        to="/createLeague"
         class="xs:w-fit xs:gap-4 xs:text-md flex w-38.5 flex-row items-center gap-2 rounded-2xl border-2 border-dashed bg-[#d3d3d3] px-5 py-3 text-sm sm:px-10 sm:py-6 sm:text-xl dark:bg-[#3b3b3b]"
       >
         <AddIcon classList="h-6 w-6 sm:h-8 sm:w-8 fill-black dark:fill-white" />
         Añadir Liga
-      </button>
+      </RouterLink>
     </section>
     <section class="flex w-full flex-col items-center gap-4 font-semibold">
       <div class="flex w-full flex-col gap-1 text-[#9b9b9b]">
