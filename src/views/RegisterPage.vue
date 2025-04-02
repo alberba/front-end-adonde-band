@@ -9,10 +9,8 @@ const authStore = useAuthStore()
 const router = useRouter()
 function tempRedirectHome() {
   authStore.login()
-  const redirectPath = localStorage.getItem('redirectPath')
   // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
-  router.push(redirectPath || '/')
-  localStorage.removeItem('redirectPath')
+  router.push('/login')
 }
 
 const username = ref('')
