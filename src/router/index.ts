@@ -7,6 +7,7 @@ import ChatPage from '@/views/ChatPage.vue'
 import MyLeaguePage from '@/views/MyLeaguePage.vue'
 import MyBotsPage from '@/views/MyBotsPage.vue'
 import NewLeaguePage from '@/views/NewLeaguePage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
 
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/myLeague', component: MyLeaguePage },
   { path: '/createLeague', component: NewLeaguePage },
   { path: '/myBots', component: MyBotsPage },
+  { path: '/register', component: RegisterPage },
 ]
 
 const router = createRouter({
