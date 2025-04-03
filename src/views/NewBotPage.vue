@@ -50,17 +50,19 @@ async function onSubmitForm() {
     }
 
     const botData = {
-      name: nombre.value,
-      img: imageUrl.value,
-      attribute: cualidad.value,
+      nombre: nombre.value,
+      //img: imageUrl.value,
+      cualidad: cualidad.value,
       // apiUrl: apiUrl.value,
     }
 
-    // Llamada a la API - POST /api/bot
-    const response = await fetch('http://localhost:8080/api/bot', {
+    // Llamada a la API - POST para crear el bot
+    const response = await fetch('http://localhost:8080/bot/crearbot', {
       method: 'POST',
+      // Se añade el token de autorización en el header
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(botData),
     })
