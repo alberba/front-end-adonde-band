@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import FooterApp from '@/components/FooterApp.vue'
 import { ref } from 'vue'
-import { useAuthStore } from '@/store'
 import { useRouter } from 'vue-router'
 
-const authStore = useAuthStore()
-
 const router = useRouter()
-function tempRedirectHome() {
-  authStore.login()
-  // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
-  router.push('/login')
-}
 
 const username = ref('')
 const email = ref('')
@@ -45,7 +37,7 @@ const handleSubmit = async () => {
 
     const data = await response.json()
     console.log('Usuario registrado:', data)
-    tempRedirectHome()
+    router.push('/login')
   } catch (error) {
     console.error('Error al registrar el usuario:', error)
     alert('Error al registrar el usuario')

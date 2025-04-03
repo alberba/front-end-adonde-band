@@ -14,11 +14,11 @@ const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/login', component: LoginView },
   { path: '/profile', component: ProfileView, meta: { requiresAuth: true } },
-  { path: '/chat', component: ChatPage },
-  { path: '/myLeague', component: MyLeaguePage },
-  { path: '/createLeague', component: NewLeaguePage },
-  { path: '/myBots', component: MyBotsPage },
-  { path: '/createBot', component: NewBotPage },
+  { path: '/chat', component: ChatPage, meta: { requiresAuth: true } },
+  { path: '/myLeague', component: MyLeaguePage, meta: { requiresAuth: true } },
+  { path: '/createLeague', component: NewLeaguePage, meta: { requiresAuth: true } },
+  { path: '/myBots', component: MyBotsPage, meta: { requiresAuth: true } },
+  { path: '/createBot', component: NewBotPage, meta: { requiresAuth: true } },
   { path: '/register', component: RegisterPage },
 ]
 
@@ -29,10 +29,13 @@ const router = createRouter({
 
 // Guard de navegación para verificar la autenticación
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !useAuthStore().isAuthenticated) {
+  const authStore = useAuthStore()
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     localStorage.setItem('redirectPath', to.fullPath)
     next('/login')
   }
+
   next()
 })
 
