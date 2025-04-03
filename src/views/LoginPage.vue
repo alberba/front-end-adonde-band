@@ -60,16 +60,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import Swal from 'sweetalert2'
 
-const authStore = useAuthStore()
-
 const router = useRouter()
-function tempRedirectHome() {
-  authStore.login()
-  const redirectPath = localStorage.getItem('redirectPath')
-  // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
-  router.push(redirectPath || '/')
-  localStorage.removeItem('redirectPath')
-}
 
 const user = ref('')
 const password = ref('')
@@ -93,10 +84,13 @@ const handleLogin = async () => {
   } else {
     const data = await response.json()
     console.log('Usuario registrado:', data)
+
+    const authStore = useAuthStore()
+    authStore.login(data.token, data.expiresIn)
+
     // Guardar el nombre de usuario en el localStorage
     localStorage.setItem('username', user.value)
-    localStorage.setItem('token', data.token)
-    tempRedirectHome()
+    redirectHome()
   }
 }
 
@@ -118,6 +112,7 @@ const handleErrorResponse = (status: number) => {
 
   showErrorAlert(error.title, error.text)
 }
+
 const showErrorAlert = (title: string, text: string) => {
   Swal.fire({
     icon: 'error',
@@ -129,5 +124,12 @@ const showErrorAlert = (title: string, text: string) => {
     },
     buttonsStyling: false,
   })
+}
+
+function redirectHome() {
+  const redirectPath = localStorage.getItem('redirectPath')
+  // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
+  router.push(redirectPath || '/')
+  localStorage.removeItem('redirectPath')
 }
 </script>
