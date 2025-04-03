@@ -95,6 +95,7 @@ const handleLogin = async () => {
     console.log('Usuario registrado:', data)
     // Guardar el nombre de usuario en el localStorage
     localStorage.setItem('username', user.value)
+    localStorage.setItem('token', data.token)
     tempRedirectHome()
   }
 }
