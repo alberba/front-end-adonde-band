@@ -83,7 +83,6 @@ const handleLogin = async () => {
     handleErrorResponse(response.status)
   } else {
     const data = await response.json()
-    console.log('Usuario registrado:', data)
 
     const authStore = useAuthStore()
     authStore.login(data.token, data.expiresIn)
