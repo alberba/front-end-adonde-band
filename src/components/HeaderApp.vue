@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import MenuIcon from '@/assets/svg/menuIcon.vue'
+import { useAuthStore } from '@/store'
 import { useRoute } from 'vue-router'
 
 const props = defineProps<{ isHeading1: boolean; title?: string }>()
@@ -9,7 +10,7 @@ const isChatPage = route.path === '/chat'
 </script>
 
 <template>
-  <header class="flex w-full flex-row items-center justify-between px-3 sm:px-8 py-4 md:px-10">
+  <header class="flex w-full flex-row items-center justify-between px-3 py-4 sm:px-8 md:px-10">
     <div class="flex flex-row gap-2 md:gap-8">
       <slot></slot>
       <h1 v-if="props.isHeading1" class="text-xl font-semibold md:text-3xl">{{ props.title }}</h1>
@@ -38,6 +39,7 @@ const isChatPage = route.path === '/chat'
           <img src="@/assets/tempProfile.png" alt="" />
         </RouterLink>
       </div>
+      <button @click="useAuthStore().logout()">Cerrar sesión</button>
       <button class="block w-8" :class="isChatPage ? 'lg:hidden' : 'sm:hidden'">
         <MenuIcon classList="stroke-black dark:stroke-white" />
       </button>
