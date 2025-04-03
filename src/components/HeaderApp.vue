@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MenuIcon from '@/assets/svg/menuIcon.vue'
-import { useAuthStore } from '@/store'
 import { useRoute } from 'vue-router'
+import ProfileDropDown from './ProfileDropDown.vue'
 
 const props = defineProps<{ isHeading1: boolean; title?: string }>()
 const route = useRoute()
@@ -35,11 +35,8 @@ const isChatPage = route.path === '/chat'
         </RouterLink>
       </div>
       <div class="w-10 overflow-hidden rounded-full object-contain md:w-[54px]">
-        <RouterLink to="/profile">
-          <img src="@/assets/tempProfile.png" alt="" />
-        </RouterLink>
+        <ProfileDropDown />
       </div>
-      <button @click="useAuthStore().logout()">Cerrar sesión</button>
       <button class="block w-8" :class="isChatPage ? 'lg:hidden' : 'sm:hidden'">
         <MenuIcon classList="stroke-black dark:stroke-white" />
       </button>
