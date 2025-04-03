@@ -5,9 +5,9 @@ import FooterApp from '@/components/FooterApp.vue'
 import addPhoto from '@/assets/svg/addPhoto.svg'
 
 // Estado para los campos del formulario
-const nameField = ref('')
-const cualidadField = ref('')
-const apiUrlField = ref('')
+const nombre = ref('')
+const cualidad = ref('')
+const apiUrl = ref('')
 
 // Estado y referencias para la imagen
 const imageUrl = ref<string | null>(null)
@@ -40,20 +40,55 @@ function onImageClick() {
 }
 
 // Para gestionar el envío del formulario
-function onSubmitForm() {
+async function onSubmitForm() {
   try {
 
-    // Aquí podrías llamar a tu API o lógica de guardado
-
-    // Para asegurar que el usuario ha seleccionado una imagen para su bot:
+    // Verificación de que el usuario subió una imagen
     if (!imageUrl.value) {
       alert('Por favor, selecciona una imagen antes de crear el bot.')
       return
     }
 
+    const botData = {
+      name: nombre.value,
+      img: imageUrl.value,
+      attribute: cualidad.value,
+      // apiUrl: apiUrl.value,
+    }
+
+    // Llamada a la API - POST /api/bot
+    const response = await fetch('http://localhost:8080/api/bot', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(botData),
+    })
+
+    // Comprobamos si la respuesta es correcta
+    if (!response.ok) {
+
+      // Pendiente la comprobación de los distintos códigos de error
+
+      throw new Error('Error al crear el bot. Código de estado: ' + response.status)
+    }
+
+    // Mostramos la respuesta y confirmamos
+    const data = await response.json()
+    console.log('Bot creado:', data)
     alert('Bot guardado con éxito')
 
-  } catch {
+    // Limpiamos los campos del formulario
+    nombre.value = ''
+    cualidad.value = ''
+    apiUrl.value = ''
+    imageUrl.value = null
+    if (fileInputRef.value) {
+      fileInputRef.value.value = ''
+    }
+
+  } catch (error) {
+    console.error('Error al crear el bot:', error)
     alert('Ocurrió un error al guardar el bot')
   }
 }
@@ -101,7 +136,7 @@ function onSubmitForm() {
             Nombre
             <input
               id="name"
-              v-model="nameField"
+              v-model="nombre"
               type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
               placeholder="Introduce el nombre..."
@@ -114,7 +149,7 @@ function onSubmitForm() {
             Cualidad
             <input
               id="cualidad"
-              v-model="cualidadField"
+              v-model="cualidad"
               type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
               placeholder="Introduce la cualidad..."
@@ -127,7 +162,7 @@ function onSubmitForm() {
             API URL
             <input
               id="api-url"
-              v-model="apiUrlField"
+              v-model="apiUrl"
               type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
               placeholder="Introduce la URL..."
