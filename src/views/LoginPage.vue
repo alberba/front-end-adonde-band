@@ -1,61 +1,10 @@
-<script setup lang="ts">
-import FooterApp from '@/components/FooterApp.vue'
-import { useAuthStore } from '@/store'
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-
-const authStore = useAuthStore()
-
-const router = useRouter()
-function tempRedirectHome() {
-  authStore.login()
-  const redirectPath = localStorage.getItem('redirectPath')
-  // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
-  router.push(redirectPath || '/')
-  localStorage.removeItem('redirectPath')
-}
-
-const user = ref('')
-const password = ref('')
-
-const handleLogin = async () => {
-  const userData = {
-    user: user.value,
-    password: password.value,
-  }
-
-  try {
-    const response = await fetch('http://localhost:8080/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud')
-    }
-
-    const data = await response.json()
-    console.log('Usuario registrado:', data)
-    // Guardar el nombre de usuario en el localStorage
-    localStorage.setItem('username', user.value)
-    tempRedirectHome()
-  } catch (error) {
-    console.error('Error al iniciar sesión:', error)
-    alert('Error al iniciar sesión')
-  }
-}
-</script>
-
 <template>
-  <header class="px-10 flex w-full flex-row items-center justify-between py-2.5">
+  <header class="flex w-full flex-row items-center justify-between px-10 py-2.5">
     <h1 class="text-4xl font-bold md:text-[48px] lg:text-[64px]">Bienvenido a BotSports</h1>
     <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
   </header>
 
-  <main class="my-10 flex w-full justify-center">
+  <main class="my-18 flex w-full justify-center">
     <form
       action="post"
       @submit.prevent="handleLogin()"
@@ -103,3 +52,81 @@ const handleLogin = async () => {
   </main>
   <FooterApp />
 </template>
+
+<script setup lang="ts">
+import FooterApp from '@/components/FooterApp.vue'
+import { useAuthStore } from '@/store'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import Swal from 'sweetalert2'
+
+const authStore = useAuthStore()
+
+const router = useRouter()
+function tempRedirectHome() {
+  authStore.login()
+  const redirectPath = localStorage.getItem('redirectPath')
+  // Redirecciona en caso de que haya una ruta guardada, de lo contrario redirecciona a la raíz
+  router.push(redirectPath || '/')
+  localStorage.removeItem('redirectPath')
+}
+
+const user = ref('')
+const password = ref('')
+
+const handleLogin = async () => {
+  const userData = {
+    user: user.value,
+    password: password.value,
+  }
+
+  const response = await fetch('http://localhost:8080/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  })
+
+  if (!response.ok) {
+    handleErrorResponse(response.status)
+  } else {
+    const data = await response.json()
+    console.log('Usuario registrado:', data)
+    // Guardar el nombre de usuario en el localStorage
+    localStorage.setItem('username', user.value)
+    tempRedirectHome()
+  }
+}
+
+const handleErrorResponse = (status: number) => {
+  const errorMessages: Record<number, { title: string; text: string }> = {
+    401: { title: 'Error', text: 'Usuario o contraseña incorrectos' },
+    403: { title: 'Error', text: 'Acceso denegado. Contacta con el soporte' },
+    404: { title: 'Error', text: 'Usuario no encontrado' },
+    500: {
+      title: 'Error',
+      text: 'Error interno del servidor. Contacta con el soporte',
+    },
+  }
+
+  const error = errorMessages[status] || {
+    title: 'Error',
+    text: 'Error desconocido. Por favor, intenta de nuevo más tarde.',
+  }
+
+  showErrorAlert(error.title, error.text)
+}
+const showErrorAlert = (title: string, text: string) => {
+  Swal.fire({
+    icon: 'error',
+    title,
+    text,
+    customClass: {
+      confirmButton:
+        'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium transition-shadow duration-150 hover:shadow-lg',
+    },
+    buttonsStyling: false,
+  })
+}
+</script>
