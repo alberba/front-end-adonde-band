@@ -1,50 +1,3 @@
-<script setup lang="ts">
-import FooterApp from '@/components/FooterApp.vue'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-
-const handleSubmit = async () => {
-  if (password.value !== confirmPassword.value) {
-    alert('Las contraseñas no coinciden')
-    return
-  }
-
-  const userData = {
-    user: username.value,
-    email: email.value,
-    password: password.value,
-  }
-
-  try {
-    const response = await fetch('http://localhost:8080/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud')
-    }
-
-    const data = await response.json()
-    console.log('Usuario registrado:', data)
-    router.push('/login')
-  } catch (error) {
-    console.error('Error al registrar el usuario:', error)
-    alert('Error al registrar el usuario')
-  }
-}
-</script>
-
 <template>
   <header class="flex w-full flex-row items-center justify-between px-10 py-2.5">
     <h1 class="text-4xl font-bold md:text-[48px] lg:text-[64px]">Bienvenido a BotSports</h1>
@@ -119,3 +72,74 @@ const handleSubmit = async () => {
   </main>
   <FooterApp />
 </template>
+
+<script setup lang="ts">
+import FooterApp from '@/components/FooterApp.vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
+const router = useRouter()
+
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+const handleSubmit = async () => {
+  if (password.value !== confirmPassword.value) {
+    alert('Las contraseñas no coinciden')
+    return
+  }
+
+  const userData = {
+    user: username.value,
+    email: email.value,
+    password: password.value,
+  }
+
+  const response = await fetch('http://localhost:8080/auth/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  })
+
+  if (!response.ok) {
+    handleErrorResponse(response.status)
+  } else {
+    router.push('/login')
+  }
+}
+
+const handleErrorResponse = (status: number) => {
+  const errorMessages: Record<number, { title: string; text: string }> = {
+    409: { title: 'Error', text: 'El nombre de usuario o correo electrónico ya están en uso' },
+    500: {
+      title: 'Error',
+      text: 'Error interno del servidor. Contacta con el soporte',
+    },
+  }
+
+  const error = errorMessages[status] || {
+    title: 'Error',
+    text: 'Error desconocido. Por favor, intenta de nuevo más tarde.',
+  }
+
+  showErrorAlert(error.title, error.text)
+}
+
+const showErrorAlert = (title: string, text: string) => {
+  Swal.fire({
+    icon: 'error',
+    title,
+    text,
+    customClass: {
+      confirmButton:
+        'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium transition-shadow duration-150 hover:shadow-lg',
+    },
+    buttonsStyling: false,
+  })
+}
+</script>
