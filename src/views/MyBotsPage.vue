@@ -5,6 +5,14 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 import { ref, watch } from 'vue'
 import type { Liga } from '@/types'
+import { useRouter } from 'vue-router'
+
+// Para el cambio de página
+const router = useRouter()
+function goToCreateBots() {
+  // Ajusta la ruta '/createBots' a la que hayas definido en tu router.
+  router.push('/createBot')
+}
 
 // Declaración de las diferentes Ligas dónde participan mis bots:
 const ligas = ref<Liga[]>([
@@ -123,6 +131,18 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
   <HeaderApp title="Mis Bots" :is-heading1="true" />
   <main class="flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]">
     <div className="bg-[#2a2a2a] pt-4 pl-16 pr-16 pb-12 rounded-2xl mb-4">
+
+      <!-- Botón Crear Bot -->
+      <div class="mt-4 flex justify-center gap-x-4">
+        <button
+          class="flex items-center gap-2 rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
+          @click="goToCreateBots"
+        >
+          <img src="@/assets/svg/add.svg" alt="Icono" class="h-5 w-5" />
+          Crear Bot
+        </button>
+      </div>
+
       <BotoneraModo>
         <!-- Modo Clasificación -->
         <template #clasificacion>
