@@ -324,12 +324,13 @@ const decrementJornada = () => {
       <h1 class="text-left text-4xl font-bold">{{ ligaNombre }}</h1>
       <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
     </header>
-
-    <!-- Contenedor que contiene tanto el container para las jornadas como el container de encuentros -->
+    
+    
     <div class="flex w-full flex-col gap-5">
-      <!-- Container para la jornada -->
+      
       <div class="w-full bg-[#BBBBBB] p-4 dark:bg-[#525252]">
         <div class="flex items-center justify-center">
+          <!-- 
           <button @click="decrementJornada">
             <img
               src="@/assets/svg/izquierdaicon.svg"
@@ -350,40 +351,52 @@ const decrementJornada = () => {
               class="ml-2 h-6 w-6 dark:brightness-0 dark:invert dark:filter"
             />
           </button>
+          -->
+          <div class="font-bold sm:text-xl">ENCUENTROS</div>
         </div>
       </div>
-
-      <!-- Container de los encuentros -->
+      
+            <!-- Container de los encuentros -->
       <div class="-mt-5 w-full bg-[#DDDDDD] p-4 dark:bg-[#2D2D2D]">
         <table class="w-full">
           <tbody>
-            <tr
-              v-for="(encuentro, index) in jornadas[jornadaNum - 1].encuentros"
-              :key="index"
-              @click="router.push('/chat')"
-            >
-              <td
-                class="flex flex-shrink-0 items-center justify-center space-x-4 text-sm font-bold sm:text-xl"
+            <!-- Itera sobre todas las jornadas -->
+             <!-- elminar siguiente linea para poner encuentros por jornada 
+                  y no todos los encuentros a la vez    -->
+            <template v-for="(jornada, jornadaIndex) in jornadas" :key="jornadaIndex">
+
+              <!-- Itera sobre los encuentros de la jornada -->
+              <tr
+                v-for="(encuentro, index) in jornada.encuentros"
+                :key="index"
+                @click="router.push('/chat')"
               >
-                <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
-                <img
-                  :src="encuentro.equipo1.img"
-                  :alt="encuentro.equipo1.nombre"
-                  class="h-5 w-5 sm:h-10 sm:w-10"
-                />
-              </td>
-              <td class="text-center">
-                <img :src="encuentro.ganador.img" alt=" " class="h-5 w-5 sm:h-10 sm:w-10" />
-              </td>
-              <td class="flex items-center justify-center space-x-4 text-sm font-bold sm:text-xl">
-                <div>{{ encuentro.equipo2.nombre }}</div>
-                <img
-                  :src="encuentro.equipo2.img"
-                  :alt="encuentro.equipo2.nombre"
-                  class="h-5 w-5 sm:h-10 sm:w-10"
-                />
-              </td>
-            </tr>
+                <!-- Equipo 1 -->
+                <td
+                  class="flex flex-shrink-0 items-center justify-center space-x-4 text-sm font-bold sm:text-xl"
+                >
+                  <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
+                  <img
+                    :src="encuentro.equipo1.img"
+                    :alt="encuentro.equipo1.nombre"
+                    class="h-5 w-5 sm:h-10 sm:w-10"
+                  />
+                </td>
+                <!-- Icono del ganador -->
+                <td class="text-center">
+                  <img :src="encuentro.ganador.img" alt=" " class="h-5 w-5 sm:h-10 sm:w-10" />
+                </td>
+                <!-- Equipo 2 -->
+                <td class="flex items-center justify-center space-x-4 text-sm font-bold sm:text-xl">
+                  <div>{{ encuentro.equipo2.nombre }}</div>
+                  <img
+                    :src="encuentro.equipo2.img"
+                    :alt="encuentro.equipo2.nombre"
+                    class="h-5 w-5 sm:h-10 sm:w-10"
+                  />
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </div>
