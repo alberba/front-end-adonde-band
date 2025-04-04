@@ -3,6 +3,8 @@ import HeaderApp from '@/components/HeaderApp.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
+import Dropdown from '@/components/DropDown.vue' 
+
 import { ref, watch } from 'vue'
 import type { Liga } from '@/types'
 import { useRouter } from 'vue-router'
@@ -18,7 +20,7 @@ function goToCreateBots() {
 const ligas = ref<Liga[]>([
   {
     id: 1,
-    nombre: 'RBOTITO (Empatía)', // Sería más bien el nombre del Bot
+    nombre: 'Premier League ',
     imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
     finalizado: false,
     clasificacion: [
@@ -32,7 +34,7 @@ const ligas = ref<Liga[]>([
   },
   {
     id: 2,
-    nombre: 'PEPITA (Soledad)', // Sería más bien el nombre del Bot
+    nombre: 'Bundesliga', 
     imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
     finalizado: false,
     clasificacion: [
@@ -45,8 +47,8 @@ const ligas = ref<Liga[]>([
     ],
   },
   {
-    id: 2,
-    nombre: 'TUTTO_FREE (Generosidad)', // Sería más bien el nombre del Bot
+    id: 3,
+    nombre: 'Serie A', // 
     imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
     finalizado: false,
     clasificacion: [
@@ -60,11 +62,18 @@ const ligas = ref<Liga[]>([
   },
 ])
 
+
+const ligaSeleccionada = ref<Liga | null>(null);
 // Nombre del bot a buscar en la liga:
 const botName = ref('Rbotito')
 
 // Estado para mostrar/ocultar la ventana de ayuda
 const showHelpModal = ref(false)
+
+// Estado para mostrar/ocultar la ventana de elegir liga
+const ChooseLeague = ref(false)
+
+
 
 // Resumen del bot
 const resumenBot = ref({
@@ -244,7 +253,9 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                   En ninguna liga actualmente...
                 </p>
                 <div class="mt-4 flex justify-center gap-x-4">
-                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
+                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
+                      @click="ChooseLeague = true"
+                    >
                     Apuntarse
                   </button>
                 </div>
@@ -328,7 +339,59 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
       </BotoneraModo>
     </div>
   </main>
+   <!-- Modal para seleccionar liga -->
+   <div
+    v-show="ChooseLeague"
+    class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px]"
+    @click.self="ChooseLeague = false"
+  >
+    <div
+      class="w-[300px] rounded-xl bg-[#525252] p-6 text-center text-white"
+      :class="ChooseLeague ? 'scale-100' : 'scale-75'"
+    >
+      <h2 class="mb-2 text-2xl text-center font-bold">Seleccionar Liga</h2>
+      <div class="mx-0 mt-0 mb-4 h-[1px] w-full bg-[#FFFFFF]"></div>
 
+      <!-- Lista de ligas -->
+      <ul class="mx-auto rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#2D2D2D]">
+        <li
+          v-for="(liga, index) in ligas"
+          :key="liga.id"
+          :class="[
+            'cursor-pointer flex items-center p-2 rounded-md',
+            ligaSeleccionada?.id === liga.id ? 'border-2 border-blue-500' : 'border border-transparent'
+          ]"
+          @click="ligaSeleccionada = liga"
+        >
+          <img
+            :src="liga.imagePath"
+            alt="Liga"
+            class="mr-2 inline-block h-6 w-6 bg-white"
+          >
+          {{ liga.nombre }}
+        </li>
+      </ul>
+
+      <!-- Botón Apuntarse -->
+      <button
+        class="mt-2 rounded-md bg-[#06f] px-4 py-2 font-semibold text-white"
+        @click="ChooseLeague = false"
+      >
+        Apuntarse
+      </button>
+    </div>
+  </div>
+  <!-- Footer 
+   
+      <Dropdown
+          :options="ligas.map(liga => ({ name: liga.nombre, icon: liga.imagePath }))"
+          @update:selected="
+              (value) => {
+                ligaSeleccionada = ligas.find(liga => liga.nombre === value.name) || null
+              }
+            "
+        />
+      -->
   <FooterApp>
     <img
       src="@/assets/svg/ayuda.svg"
