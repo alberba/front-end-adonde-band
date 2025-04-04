@@ -129,13 +129,13 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
 
 <template>
   <HeaderApp title="Mis Bots" :is-heading1="true" />
-  <main class="flex max-w-[860px] flex-col items-center justify-center gap-5 px-10 lg:w-[860px]">
-    <div className="bg-[#2a2a2a] pt-4 pl-16 pr-16 pb-12 rounded-2xl mb-4">
+  <main class="w-full flex flex-col items-center justify-center gap-5 px-3 xs:px-8 mb-10 sm:max-w-[860px] md:px-10 lg:w-[860px]">
+    <div class="mb-4 flex w-full flex-col items-center gap-12 rounded-2xl bg-[#2a2a2a] py-5 px-3 sm:px-8 md:px-16 max-w-full ">
 
       <!-- Botón Crear Bot -->
-      <div class="mt-4 flex justify-center gap-x-4">
+      <div class="mt-4 -mb-8 flex w-full justify-center">
         <button
-          class="flex items-center gap-2 rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
+          class="flex items-center rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white gap-x-2"
           @click="goToCreateBots"
         >
           <img src="@/assets/svg/add.svg" alt="Icono" class="h-5 w-5" />
@@ -146,12 +146,12 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
       <BotoneraModo>
         <!-- Modo Clasificación -->
         <template #clasificacion>
-          <div>
+          <div class="w-full">
             <!-- Se itera sobre cada liga -->
             <section
               v-for="liga in ligas"
               :key="liga.id"
-              class="w-full pt-4 pb-4 pl-8 pr-8 mb-4"
+              class="w-full pt-4 pb-4 px-4 mb-4"
             >
               <!-- Nombre del Bot -->
               <h2 class="text-center text-[32px] font-bold text-white">
@@ -167,37 +167,37 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
               <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
 
               <p class="text-center text-[16px] text-white font-bold mb-2">
-                  Posición en la Liga Actual
+                Posición en la Liga Actual
               </p>
 
-              <!-- Si el bot tiene una posición dentro de la liga:-->
+              <!-- Si el bot tiene una posición dentro de la liga -->
               <div v-if="getIndicesByBotName(liga, botName).length">
-                <table class="mx-auto w-full max-w-[600px] border-collapse text-white">
+                <table class="mx-auto w-full table-auto border-collapse text-white">
                   <thead>
-                    <tr class="border-b border-gray-600 text-left text-sm">
-                      <th class="px-3 py-2 text-center text-[24px]">Pos</th>
-                      <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Nombre</th>
-                      <th class="px-4 py-2 text-left text-[24px] whitespace-nowrap">Cualidad</th>
-                      <th class="px-2 py-2 text-center text-[24px]">PJ</th>
-                      <th class="px-2 py-2 text-center text-[24px]">G</th>
-                      <th class="px-2 py-2 text-center text-[24px]">E</th>
-                      <th class="px-2 py-2 text-center text-[24px]">P</th>
-                      <th class="px-3 py-2 text-center text-[24px]">Ptos</th>
+                    <tr class="border-b border-gray-600 text-left">
+                      <th class="px-3 py-2 text-center sm:text-[24px] text-[18px] whitespace-nowrap">Pos</th>
+                      <th class="px-4 py-2 text-left sm:text-[24px] text-[18px] whitespace-nowrap">Nombre</th>
+                      <th class="px-4 py-2 text-left sm:text-[24px] text-[18px] whitespace-nowrap">Cualidad</th>
+                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">PJ</th>
+                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">G</th>
+                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">E</th>
+                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">P</th>
+                      <th class="px-3 py-2 text-center sm:text-[24px] text-[18px]">Ptos</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
                       v-for="i in getIndicesByBotName(liga, botName)"
                       :key="i"
-                      class="border-b border-gray-500 text-sm"
+                      class="border-b border-gray-500"
                       :class="{
-                        'font-bold text-[#FADA5E]': liga.clasificacion[i - 1].nombre === botName
+                        'font-bold text-[#FADA5E]': liga.clasificacion[i - 1].nombre.toLowerCase() === botName.toLowerCase()
                       }"
                     >
-                      <td class="px-3 py-2 text-center text-[18px]">
+                      <td class="px-3 py-2 text-center sm:text-[20px] text-[16px] whitespace-nowrap">
                         {{ liga.clasificacion[i - 1].pos }}
                       </td>
-                      <td class="px-4 py-2 text-left text-[18px] whitespace-nowrap flex items-center">
+                      <td class="px-4 py-2 text-left sm:text-[20px] text-[16px] whitespace-nowrap flex items-center">
                         <img
                           :src="liga.clasificacion[i - 1].imagen"
                           alt=""
@@ -205,30 +205,30 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                         />
                         {{ liga.clasificacion[i - 1].nombre }}
                       </td>
-                      <td class="px-4 py-2 text-left text-[20px] whitespace-nowrap">
+                      <td class="px-4 py-2 text-left sm:text-[20px] text-[16px] whitespace-nowrap">
                         {{ liga.clasificacion[i - 1].cualidad }}
                       </td>
-                      <td class="px-2 py-2 text-center text-[20px]">
+                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
                         {{ liga.clasificacion[i - 1].PJ }}
                       </td>
-                      <td class="px-2 py-2 text-center text-[20px]">
+                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
                         {{ liga.clasificacion[i - 1].G }}
                       </td>
-                      <td class="px-2 py-2 text-center text-[20px]">
+                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
                         {{ liga.clasificacion[i - 1].E }}
                       </td>
-                      <td class="px-2 py-2 text-center text-[20px]">
+                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
                         {{ liga.clasificacion[i - 1].P }}
                       </td>
-                      <td class="px-3 py-2 text-center text-[20px]">
+                      <td class="px-3 py-2 text-center sm:text-[20px] text-[16px]">
                         {{ liga.clasificacion[i - 1].Ptos }}
                       </td>
                     </tr>
                   </tbody>
                 </table>
 
-                <!-- "Ver liga" -->
-                <div class="mt-4 flex justify-center gap-x-4">
+                <!-- Botones "Ver Liga Actual" y "Ver Historial de Ligas" -->
+                <div class="mt-6 flex flex-wrap justify-center gap-x-4">
                   <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
                     Ver Liga Actual
                   </button>
@@ -238,13 +238,11 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                 </div>
               </div>
 
-              <!-- Si getIndicesByBotName() está vacío, mostramos el mensaje de que no participa -->
+              <!-- Si no participa en la liga -->
               <div v-else>
                 <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
                   En ninguna liga actualmente...
                 </p>
-
-                <!-- Botones -->
                 <div class="mt-4 flex justify-center gap-x-4">
                   <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
                     Apuntarse
@@ -262,33 +260,21 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
 
         <!-- Modo Resumen -->
         <template #resumen>
-          <div>
-            <!-- Se itera sobre cada liga -->
+          <div class="w-full">
             <section
               v-for="liga in ligas"
               :key="liga.id"
-              class="w-full pt-4 pb-4 pl-8 pr-8 mb-4"
+              class="w-full pt-4 pb-4 px-4 mb-4"
             >
-              <!-- Nombre del Bot -->
               <h2 class="text-center text-[32px] font-bold text-white">
                 {{ liga.nombre.split(' (')[0] }}
               </h2>
-
-              <!-- Cualidad del Bot -->
               <h3 class="text-center text-[32px] font-semibold text-white">
                 ({{ liga.nombre.split(' (')[1]?.replace(')', '') }})
               </h3>
-
-              <!-- Línea Separadora -->
               <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
-
-              <!-- Calculamos el resumen "al vuelo" para el botName actual -->
-              <div v-if="(resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0) && getIndicesByBotName(liga, botName).length">                <!-- Mostramos las estadísticas -->
-
-                <!-- Mostramos las estadísticas -->
-                <div class="mt-2 flex items-center justify-center gap-12 text-white">
-
-                  <!-- Empates -->
+              <div v-if="(resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0) && getIndicesByBotName(liga, botName).length">
+                <div class="mt-2 flex flex-col sm:flex-row items-center justify-center gap-12 text-white">
                   <div class="flex flex-col items-center">
                     <div class="mt-4 text-[32px] font-bold">
                       {{ resumenBot.empates }}
@@ -298,8 +284,6 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                       Empate
                     </div>
                   </div>
-
-                  <!-- Victorias -->
                   <div class="flex flex-col items-center -mt-4">
                     <div class="text-[48px] font-bold">
                       {{ resumenBot.victorias }}
@@ -309,8 +293,6 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                       Victorias
                     </div>
                   </div>
-
-                  <!-- Derrotas -->
                   <div class="flex flex-col items-center">
                     <div class="mt-4 text-[32px] font-bold">
                       {{ resumenBot.derrotas }}
@@ -321,8 +303,6 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                     </div>
                   </div>
                 </div>
-
-                <!-- Ligas Jugadas -->
                 <p class="mt-4 text-[24px] font-semibold text-white text-center">Ligas Jugadas</p>
                 <div class="mt-3 flex flex-wrap items-center justify-center gap-6">
                   <ButtonLeague
@@ -332,23 +312,16 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                   />
                 </div>
               </div>
-
-              <!-- Si no ha jugado en ninguna liga, mostramos un mensaje -->
               <div v-else>
-
                 <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
                   No ha jugado en ninguna liga...
                 </p>
-
                 <div class="mt-4 flex justify-center gap-x-4">
                   <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
                     Apuntarse
                   </button>
                 </div>
-
               </div>
-
-
             </section>
           </div>
         </template>
@@ -357,7 +330,6 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
   </main>
 
   <FooterApp>
-    <!-- Ícono de ayuda -->
     <img
       src="@/assets/svg/ayuda.svg"
       alt="Ayuda"
@@ -366,7 +338,7 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
     />
   </FooterApp>
 
-  <!-- Modal para la gestión de la ayuda -->
+  <!-- Modal de ayuda -->
   <div
     v-show="showHelpModal"
     class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px]"
