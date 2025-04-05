@@ -98,7 +98,7 @@ const handleSubmit = async () => {
     password: password.value,
   }
 
-  const response = await fetch('http://localhost:8080/auth/signup', {
+  const response = await fetch('http://localhost:8080/api/v0/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
