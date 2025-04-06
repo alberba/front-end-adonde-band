@@ -346,29 +346,35 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
     @click.self="ChooseLeague = false"
   >
     <div
-      class="w-[300px] rounded-xl bg-[#525252] p-6 text-center text-white"
+      class="w-[570px] rounded-xl bg-[#1D1D1D] p-6 text-center text-white"
       :class="ChooseLeague ? 'scale-100' : 'scale-75'"
     >
       <h2 class="mb-2 text-2xl text-center font-bold">Seleccionar Liga</h2>
       <div class="mx-0 mt-0 mb-4 h-[1px] w-full bg-[#FFFFFF]"></div>
 
-      <!-- Lista de ligas -->
-      <ul class="mx-auto rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#2D2D2D]">
+            <!-- Lista de ligas -->
+      <ul class="mx-auto  rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#353535]">
         <li
           v-for="(liga, index) in ligas"
           :key="liga.id"
           :class="[
             'cursor-pointer flex items-center p-2 rounded-md',
+            
             ligaSeleccionada?.id === liga.id ? 'border-2 border-blue-500' : 'border border-transparent'
           ]"
           @click="ligaSeleccionada = liga"
         >
-          <img
-            :src="liga.imagePath"
-            alt="Liga"
-            class="mr-2 inline-block h-6 w-6 bg-white"
-          >
-          {{ liga.nombre }}
+      
+          <div class="flex items-center w-full">
+            <img
+              :src="liga.imagePath"
+              alt="Liga"
+              class="mr-2 h-16 w-16 bg-white object-contain rounded-md p-2"
+            />
+            <span class="text-lg font-semibold text-black dark:text-white">
+              {{ liga.nombre }}
+            </span>
+          </div>
         </li>
       </ul>
 
