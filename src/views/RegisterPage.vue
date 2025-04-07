@@ -94,7 +94,7 @@ const handleSubmit = async () => {
 
   const userData = {
     user: username.value,
-    email: email.value,
+    mail: email.value,
     password: password.value,
   }
 
