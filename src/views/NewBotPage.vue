@@ -4,6 +4,7 @@ import HeaderApp from '@/components/HeaderApp.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import addPhoto from '@/assets/svg/addPhoto.svg'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 // Para el cambio de página
 const router = useRouter()
@@ -50,7 +51,6 @@ function onImageClick() {
 // Para gestionar el envío del formulario
 async function onSubmitForm() {
   try {
-
     // Verificación de que el usuario subió una imagen
     if (!imageUrl.value) {
       alert('Por favor, selecciona una imagen antes de crear el bot.')
@@ -58,26 +58,25 @@ async function onSubmitForm() {
     }
 
     const botData = {
-      nombre: nombre.value,
-      //img: imageUrl.value,
-      cualidad: cualidad.value,
-      // apiUrl: apiUrl.value,
+      name: nombre.value,
+      urlImage: imageUrl.value,
+      description: cualidad.value,
+      endpoint: apiUrl.value,
     }
 
     // Llamada a la API - POST para crear el bot
-    const response = await fetch('http://localhost:8080/bot/crearbot', {
+    const response = await fetch('http://localhost:8080/api/v0/bot', {
       method: 'POST',
       // Se añade el token de autorización en el header
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(botData),
     })
 
     // Comprobamos si la respuesta es correcta
     if (!response.ok) {
-
       // Pendiente la comprobación de los distintos códigos de error
 
       throw new Error('Error al crear el bot. Código de estado: ' + response.status)
@@ -86,7 +85,16 @@ async function onSubmitForm() {
     // Mostramos la respuesta y confirmamos
     const data = await response.json()
     console.log('Bot creado:', data)
-    alert('Bot guardado con éxito')
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: 'Bot creado correctamente',
+      customClass: {
+        confirmButton:
+          'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium transition-shadow duration-150 hover:shadow-lg',
+      },
+      buttonsStyling: false,
+    })
 
     // Limpiamos los campos del formulario
     nombre.value = ''
@@ -96,7 +104,6 @@ async function onSubmitForm() {
     if (fileInputRef.value) {
       fileInputRef.value.value = ''
     }
-
   } catch (error) {
     console.error('Error al crear el bot:', error)
     alert('Ocurrió un error al guardar el bot')
@@ -107,7 +114,8 @@ async function onSubmitForm() {
 <template>
   <HeaderApp title="Mis Bots" :is-heading1="true" />
   <main
-    class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]">
+    class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]"
+  >
     <header class="m-3 flex w-full flex-col gap-2">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-4xl font-bold">Nuevo Bot</h1>
@@ -116,56 +124,83 @@ async function onSubmitForm() {
     </header>
 
     <div class="mb-4 flex w-full flex-col items-center gap-12 rounded-2xl bg-[#2a2a2a] py-5">
-
       <!-- Imagen del Bot -->
       <div class="relative cursor-pointer" @click="onImageClick">
-        <img :src="imageUrl ? imageUrl : addPhoto" alt="Imagen del Bot"
-          class="h-[150px] w-[150px] rounded-lg border-2 border-gray-500 shadow-lg transition-transform duration-300 ease-in-out hover:scale-105" />
-        <input ref="fileInputRef" type="file" accept="image/*" class="hidden" @change="onFileChange" />
+        <img
+          :src="imageUrl ? imageUrl : addPhoto"
+          alt="Imagen del Bot"
+          class="h-[150px] w-[150px] rounded-lg border-2 border-gray-500 shadow-lg transition-transform duration-300 ease-in-out hover:scale-105"
+        />
+        <input
+          ref="fileInputRef"
+          type="file"
+          accept="image/*"
+          class="hidden"
+          @change="onFileChange"
+        />
       </div>
 
       <!-- Formulario -->
-      <form @submit.prevent="onSubmitForm"
-        class="flex w-full flex-col items-center gap-8 rounded-md px-18 font-bold text-white">
+      <form
+        @submit.prevent="onSubmitForm"
+        class="flex w-full flex-col items-center gap-8 rounded-md px-18 font-bold text-white"
+      >
         <fieldset class="mb-4 grid w-full grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2">
-
           <!-- Nombre -->
           <label for="name" class="flex flex-col">
             Nombre
-            <input id="name" v-model="nombre" type="text"
+            <input
+              id="name"
+              v-model="nombre"
+              type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
-              placeholder="Introduce el nombre..." required />
+              placeholder="Introduce el nombre..."
+              required
+            />
           </label>
 
           <!-- Cualidad -->
           <label for="cualidad" class="flex flex-col">
             Cualidad
-            <input id="cualidad" v-model="cualidad" type="text"
+            <input
+              id="cualidad"
+              v-model="cualidad"
+              type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
-              placeholder="Introduce la cualidad..." required />
+              placeholder="Introduce la cualidad..."
+              required
+            />
           </label>
 
           <!-- API URL -->
           <label for="api-url" class="flex flex-col sm:col-span-2">
             API URL
-            <input id="api-url" v-model="apiUrl" type="text"
+            <input
+              id="api-url"
+              v-model="apiUrl"
+              type="text"
               class="w-full rounded-xl bg-[#c1c1c1] p-2.5 text-sm placeholder:text-[#878787] dark:bg-[#4e4e4e]"
-              placeholder="Introduce la URL..." required />
+              placeholder="Introduce la URL..."
+              required
+            />
           </label>
         </fieldset>
 
-
         <!-- Botón para crear un bot -->
-        <button type="submit" class="rounded-full bg-[#06f] px-6 py-2 -mt-4 text-[16px] font-bold text-white">
+        <button
+          type="submit"
+          class="-mt-4 rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
+        >
           Crear Bot
         </button>
 
         <!-- Botón para volver a mis bots -->
-        <button class="rounded-full bg-[#06f] px-6 py-2 -mt-3 mb-2 text-[16px] font-bold text-white"
-          @click="goToMyBots">
+        <button
+          class="-mt-3 mb-2 rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
+          @click="goToMyBots"
+        >
           Volver a Mis Bots
         </button>
-
       </form>
     </div>
   </main>
