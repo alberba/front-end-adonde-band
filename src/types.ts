@@ -19,9 +19,9 @@ export interface Liga {
 }
 
 export interface Mensaje {
-  id: number
-  texto: string
-  imgPath: string
+  text: string
+  botId: number
+  time: number
 }
 
 export interface Combate {

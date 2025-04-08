@@ -312,10 +312,12 @@ const decrementJornada = () => {
     jornadaNum.value--
   }
 }
+
+const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
 </script>
 
 <template>
-  <HeaderApp title="¡Hola, AdondeBoy!" :is-heading1="false" />
+  <HeaderApp :title="titleHeader" :is-heading1="false" />
   <main
     class="mb-15 flex w-full flex-col items-center justify-center gap-5 px-4 sm:px-10 lg:w-[960px]"
   >
@@ -324,13 +326,11 @@ const decrementJornada = () => {
       <h1 class="text-left text-4xl font-bold">{{ ligaNombre }}</h1>
       <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
     </header>
-    
-    
+
     <div class="flex w-full flex-col gap-5">
-      
       <div class="w-full bg-[#BBBBBB] p-4 dark:bg-[#525252]">
         <div class="flex items-center justify-center">
-          <!-- 
+          <!--
           <button @click="decrementJornada">
             <img
               src="@/assets/svg/izquierdaicon.svg"
@@ -355,21 +355,22 @@ const decrementJornada = () => {
           <div class="font-bold sm:text-xl">ENCUENTROS</div>
         </div>
       </div>
-      
-            <!-- Container de los encuentros -->
+
+      <!-- Container de los encuentros -->
       <div class="-mt-5 w-full bg-[#DDDDDD] p-4 dark:bg-[#2D2D2D]">
         <table class="w-full">
           <tbody>
             <!-- Itera sobre todas las jornadas -->
-             <!-- elminar siguiente linea para poner encuentros por jornada 
+            <!-- elminar siguiente linea para poner encuentros por jornada
                   y no todos los encuentros a la vez    -->
             <template v-for="(jornada, jornadaIndex) in jornadas" :key="jornadaIndex">
-
               <!-- Itera sobre los encuentros de la jornada -->
+              <!-- TODO: Cambiar el 1 del router push a un matchId-->
               <tr
                 v-for="(encuentro, index) in jornada.encuentros"
+                class="cursor-pointer"
                 :key="index"
-                @click="router.push('/chat')"
+                @click="router.push('/match/1')"
               >
                 <!-- Equipo 1 -->
                 <td

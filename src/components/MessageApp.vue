@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-const props = defineProps<{ id: number; imgPath: string }>()
+const props = defineProps<{ id: number; imgPath: string[] }>()
 
-const isTextLeft = props.id % 2 === 0
-const bgColor = !isTextLeft
-  ? 'bg-[#06f] text-white'
-  : 'bg-[#e3e3e3] dark:bg-[#606060]'
+const isTextLeft = props.id % 2 !== 0
+const imgPath = props.id % 2 !== 0 ? props.imgPath[0] : props.imgPath[1]
+const bgColor = !isTextLeft ? 'bg-[#06f] text-white' : 'bg-[#e3e3e3] dark:bg-[#606060]'
 const radiusClass = ['rounded-3xl', !isTextLeft ? 'rounded-br-none' : 'rounded-bl-none']
 
 function getAssetUrl(fileName: string) {
@@ -16,9 +15,9 @@ function getAssetUrl(fileName: string) {
   <div class="flex items-end gap-2" :class="isTextLeft ? 'justify-start' : 'justify-end'">
     <img
       v-if="isTextLeft"
-      :src="getAssetUrl(props.imgPath)"
+      :src="getAssetUrl(imgPath)"
       alt="Profile"
-      class="w-6 sm:w-8 rounded-full object-contain"
+      class="w-6 rounded-full object-contain sm:w-8"
     />
     <div
       :class="[bgColor, radiusClass]"
@@ -29,9 +28,9 @@ function getAssetUrl(fileName: string) {
     </div>
     <img
       v-if="!isTextLeft"
-      :src="getAssetUrl(props.imgPath)"
+      :src="getAssetUrl(imgPath)"
       alt="Profile"
-      class="w-6 sm:w-8 rounded-full object-contain"
+      class="w-6 rounded-full object-contain sm:w-8"
     />
   </div>
 </template>
