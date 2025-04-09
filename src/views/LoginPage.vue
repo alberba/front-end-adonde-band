@@ -89,6 +89,9 @@ const handleLogin = async () => {
 
     // Guardar el nombre de usuario en el localStorage
     localStorage.setItem('username', user.value)
+    // TODO: Descomentar la siguiente línea cuando la API siga el Contrato
+    // localstorage.setItem('userId', data.userId)
+    // localstorage.setItem('user', data.user)
     redirectHome()
   }
 }
