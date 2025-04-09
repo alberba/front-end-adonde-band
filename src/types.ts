@@ -25,9 +25,9 @@ export interface Mensaje {
 }
 
 export interface Combate {
-  id: number
-  //ligaId: number;
-  finished: boolean
-  fighter1: string
-  fighter2: string
+  matchId: number
+  state: "pendiente" | "en curso" | "finalizado"
+  result: 1 | 2 | 3
+  fighters: [string, string]
+  roundNumber: number
 }

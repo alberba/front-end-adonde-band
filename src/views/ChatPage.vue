@@ -40,7 +40,7 @@ const mensajes: Mensaje[] = [
 
 const imgPaths = ['Logo_CM.png', 'tempProfile.png']
 
-// TODO: Descomentar cuando se tenga la API
+// TODO: Descomentar cuando se tenga la API de mensajes
 // const route = useRoute()
 // const matchId = route.params.matchId as string
 
