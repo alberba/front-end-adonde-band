@@ -50,38 +50,36 @@ function onImageClick() {
 
 // Para gestionar el envío del formulario
 async function onSubmitForm() {
-  try {
-    // Verificación de que el usuario subió una imagen
-    if (!imageUrl.value) {
-      alert('Por favor, selecciona una imagen antes de crear el bot.')
-      return
-    }
 
-    const botData = {
-      name: nombre.value,
-      urlImage: imageUrl.value,
-      description: cualidad.value,
-      endpoint: apiUrl.value,
-    }
+  // Verificación de que el usuario subió una imagen
+  if (!imageUrl.value) {
+    alert('Por favor, selecciona una imagen antes de crear el bot.')
+    return
+  }
 
-    // Llamada a la API - POST para crear el bot
-    const response = await fetch('http://localhost:8080/api/v0/bot', {
-      method: 'POST',
-      // Se añade el token de autorización en el header
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(botData),
-    })
+  const botData = {
+    name: nombre.value,
+    urlImage: imageUrl.value,
+    description: cualidad.value,
+    endpoint: apiUrl.value,
+  }
 
-    // Comprobamos si la respuesta es correcta
-    if (!response.ok) {
-      // Pendiente la comprobación de los distintos códigos de error
+  // Llamada a la API - POST para crear el bot
+  const response = await fetch('http://localhost:8080/api/v0/bot', {
+    method: 'POST',
+    // Se añade el token de autorización en el header
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify(botData),
+  })
 
-      throw new Error('Error al crear el bot. Código de estado: ' + response.status)
-    }
-
+  // Comprobamos si la respuesta es correcta
+  if (!response.ok) {
+    // Pendiente la comprobación de los distintos códigos de error
+    handleErrorResponse(response.status)
+  } else {
     // Mostramos la respuesta y confirmamos
     const data = await response.json()
     console.log('Bot creado:', data)
@@ -104,10 +102,41 @@ async function onSubmitForm() {
     if (fileInputRef.value) {
       fileInputRef.value.value = ''
     }
-  } catch (error) {
-    console.error('Error al crear el bot:', error)
-    alert('Ocurrió un error al guardar el bot')
   }
+}
+
+function handleErrorResponse(status: number) {
+  const errorMessages: Record<number, { title: string; text: string }> = {
+    401: { title: 'Error', text: 'No autorizado' },
+    403: { title: 'Error', text: 'Acceso denegado' },
+    404: { title: 'Error', text: 'Bot no encontrado' },
+    409: { title: 'Error', text: 'Conflicto. Bot ya existente' },
+    500: {
+      title: 'Error',
+      text: 'Error interno del servidor. Contacta con el soporte',
+    },
+  }
+
+  const error = errorMessages[status] || {
+    title: 'Error',
+    text: 'Error desconocido. Por favor, intenta de nuevo más tarde.',
+  }
+
+  // Mostramos el error correspondiente
+  showErrorAlert(error.title, error.text)
+}
+
+function showErrorAlert(title: string, text: string) {
+  Swal.fire({
+    icon: 'error',
+    title,
+    text,
+    customClass: {
+      confirmButton:
+        'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium transition-shadow duration-150 hover:shadow-lg',
+    },
+    buttonsStyling: false,
+  })
 }
 </script>
 
