@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import DrawIcon from '@/assets/svg/clasificacion/DrawIcon.vue'
+import WinIcon from '@/assets/svg/clasificacion/WinIcon.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
-import type { ParticipationResponse } from '@/types'
-import { ref } from 'vue'
+import type { ParticipationResponse, Combate } from '@/types'
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
 // import type { Combate, Equipo } from '@/types'
@@ -195,149 +196,143 @@ const clasificacion: ParticipationResponse[] = [
 const ligaNombre = 'LaLiga EA Sports'
 
 // Ejemplo de datos de jornadas con encuentros
-const jornadas = ref([
+const combates: Combate[] = [
   {
-    encuentros: [
-      {
-        equipo1: {
-          nombre: 'Real Madrid',
-          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
-        },
-        equipo2: {
-          nombre: 'Barcelona',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: { nombre: 'Atletico', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        equipo2: {
-          nombre: 'Sevilla',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: { nombre: 'Betis', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-        equipo2: {
-          nombre: 'Valencia',
-          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Villarreal',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-    ],
+    matchId: 1,
+    state: 'finalizado',
+    result: 1,
+    fighters: ['Real Madrid', 'Barcelona'],
+    roundNumber: 1,
   },
   {
-    encuentros: [
-      {
-        equipo1: { nombre: 'Celta', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        equipo2: {
-          nombre: 'Almeria',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Osasuna',
-          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Granada',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Cadiz', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Rayo Vallecano',
-          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Girona', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-    ],
+    matchId: 2,
+    state: 'en curso',
+    result: 1,
+    fighters: ['Atletico', 'Sevilla'],
+    roundNumber: 1,
   },
   {
-    encuentros: [
-      {
-        equipo1: {
-          nombre: 'Barcelona',
-          img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Atletico', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Sevilla',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Betis', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-      },
-      {
-        equipo1: { nombre: 'Valencia', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        equipo2: {
-          nombre: 'Villarreal',
-          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Real Madrid',
-          img: new URL('@/assets/svg/gay.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Getafe', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-      },
-    ],
+    matchId: 3,
+    state: 'finalizado',
+    result: 2,
+    fighters: ['Betis', 'Valencia'],
+    roundNumber: 1,
   },
   {
-    encuentros: [
-      {
-        equipo1: { nombre: 'Girona', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        equipo2: { nombre: 'Mallorca', img: new URL('@/assets/svg/sky.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-      },
-      {
-        equipo1: {
-          nombre: 'Almeria',
-          img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href,
-        },
-        equipo2: { nombre: 'Celta', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-      },
-      {
-        equipo1: { nombre: 'Granada', img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-        equipo2: { nombre: 'Osasuna', img: new URL('@/assets/svg/arg.svg', import.meta.url).href },
-        ganador: { img: new URL('@/assets/svg/gay.svg', import.meta.url).href },
-      },
-      {
-        equipo1: { nombre: 'Cadiz', img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-        equipo2: {
-          nombre: 'Rayo Vallecano',
-          img: new URL('@/assets/svg/sky.svg', import.meta.url).href,
-        },
-        ganador: { img: new URL('@/assets/svg/lesvi.svg', import.meta.url).href },
-      },
-    ],
+    matchId: 4,
+    state: 'finalizado',
+    result: 1,
+    fighters: ['Villarreal', 'Getafe'],
+    roundNumber: 1,
   },
-])
+  {
+    matchId: 5,
+    state: 'en curso',
+    result: 1,
+    fighters: ['Celta', 'Almeria'],
+    roundNumber: 1,
+  },
+  {
+    matchId: 6,
+    state: 'finalizado',
+    result: 2,
+    fighters: ['Osasuna', 'Mallorca'],
+    roundNumber: 1,
+  },
+  {
+    matchId: 7,
+    state: 'en curso',
+    result: 1,
+    fighters: ['Granada', 'Cadiz'],
+    roundNumber: 1,
+  },
+  {
+    matchId: 8,
+    state: 'finalizado',
+    result: 1,
+    fighters: ['Rayo Vallecano', 'Girona'],
+    roundNumber: 1,
+  },
+  {
+    matchId: 9,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Barcelona', 'Atletico'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 10,
+    state: 'pendiente',
+    result: 2,
+    fighters: ['Sevilla', 'Betis'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 11,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Valencia', 'Villarreal'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 12,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Real Madrid', 'Getafe'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 13,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Girona', 'Mallorca'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 14,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Almeria', 'Celta'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 15,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Granada', 'Osasuna'],
+    roundNumber: 2,
+  },
+  {
+    matchId: 16,
+    state: 'pendiente',
+    result: 1,
+    fighters: ['Cadiz', 'Rayo Vallecano'],
+    roundNumber: 2,
+  },
+]
+
+const jornadas = combates.reduce(
+  (acc, combate) => {
+    const round = combate.roundNumber
+    if (!acc[round]) {
+      acc[round] = []
+    }
+    acc[round].push(combate)
+    return acc
+  },
+  {} as Record<number, Combate[]>
+)
+
+console.log(hola())
+
+function hola() {
+  for (const [jornada, numJornada] of Object.entries(jornadas)) {
+    console.log(jornada)
+    numJornada.forEach((encuentro) => {
+      console.log(encuentro)
+    })
+  }
+}
 const misBots = ['Equipo 1', 'Equipo 3', 'Equipo 5'] // Ejemplo de equipos
 
 const esMiBot = (nombreEquipo: string) => {
@@ -410,37 +405,48 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
             <!-- Itera sobre todas las jornadas -->
             <!-- elminar siguiente linea para poner encuentros por jornada
                   y no todos los encuentros a la vez    -->
-            <template v-for="(jornada, jornadaIndex) in jornadas" :key="jornadaIndex">
+            <template v-for="[numJornada, jornada] of Object.entries(jornadas)" :key="numJornada">
               <!-- Itera sobre los encuentros de la jornada -->
               <!-- TODO: Cambiar el 1 del router push a un matchId-->
               <tr
-                v-for="(encuentro, index) in jornada.encuentros"
-                class="cursor-pointer"
-                :key="index"
+                v-for="(encuentro, index) in jornada"
+                class="flex h-12 w-full cursor-pointer items-center justify-center gap-8"
+                :key="Number(numJornada) * 100 + index"
                 @click="router.push('/match/1')"
               >
                 <!-- Equipo 1 -->
-                <td
-                  class="flex flex-shrink-0 items-center justify-center space-x-4 text-sm font-bold sm:text-xl"
-                >
-                  <div class="text-center">{{ encuentro.equipo1.nombre }}</div>
-                  <img
-                    :src="encuentro.equipo1.img"
-                    :alt="encuentro.equipo1.nombre"
-                    class="h-5 w-5 sm:h-10 sm:w-10"
+                <td class="mr-10 flex w-75 justify-end gap-2.5 sm:text-xl">
+                  <WinIcon
+                    v-if="encuentro.result === 1 && encuentro.state === 'finalizado'"
+                    classList="h-[27px] w-[27px]"
                   />
+                  <div class="text-center">{{ encuentro.fighters[0] }}</div>
                 </td>
                 <!-- Icono del ganador -->
-                <td class="text-center">
-                  <img :src="encuentro.ganador.img" alt=" " class="h-5 w-5 sm:h-10 sm:w-10" />
+                <td>
+                  <DrawIcon
+                    v-if="encuentro.result === 2 && encuentro.state === 'finalizado'"
+                    classList="h-5 w-5 sm:h-10 sm:w-21"
+                  />
+                  <div
+                    v-else-if="encuentro.state === 'en curso'"
+                    class="flex w-21 justify-center rounded-lg bg-red-500 px-2 py-1 text-sm font-bold"
+                  >
+                    EN VIVO
+                  </div>
+                  <div
+                    class="flex h-5 w-5 items-center justify-center text-xl sm:h-10 sm:w-21"
+                    v-else
+                  >
+                    vs
+                  </div>
                 </td>
                 <!-- Equipo 2 -->
-                <td class="flex items-center justify-center space-x-4 text-sm font-bold sm:text-xl">
-                  <div>{{ encuentro.equipo2.nombre }}</div>
-                  <img
-                    :src="encuentro.equipo2.img"
-                    :alt="encuentro.equipo2.nombre"
-                    class="h-5 w-5 sm:h-10 sm:w-10"
+                <td class="ml-10 flex w-75 justify-start gap-2.5 sm:text-xl">
+                  <div>{{ encuentro.fighters[1] }}</div>
+                  <WinIcon
+                    v-if="encuentro.result === 3 && encuentro.state === 'finalizado'"
+                    classList="h-5 w-5 sm:h-10 sm:w-10"
                   />
                 </td>
               </tr>
