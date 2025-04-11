@@ -10,8 +10,7 @@ import { ref } from 'vue'
 
 // const loadMatches = async () => {
 //   const response = await fetch(
-// TODO: Alomejor cambiamos la ruta de la web a /leagueId/matchId
-//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}`,
+//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}/match`,
 //     {
 //       method: 'GET',
 //       headers: {

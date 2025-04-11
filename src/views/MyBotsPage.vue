@@ -5,7 +5,7 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 
 import { ref, watch } from 'vue'
-import type { Liga } from '@/types'
+import type { Liga, ParticipationResponse } from '@/types'
 import { useRouter } from 'vue-router'
 
 // Para el cambio de página
@@ -18,17 +18,7 @@ function goToCreateBots() {
 // Declaración de las diferentes Ligas dónde participan mis bots:
 const clasificaciones: Record<
   string,
-  {
-    pos: number
-    nombre: string
-    cualidad: string
-    imagen: string
-    PJ: number
-    G: number
-    E: number
-    P: number
-    Ptos: number
-  }[]
+  ParticipationResponse[]
 > = {
   premierLeague: [
     {
