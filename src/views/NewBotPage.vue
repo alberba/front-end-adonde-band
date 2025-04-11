@@ -91,7 +91,7 @@ function onFileChange(event: Event) {
 
   const file = files[0]
 
-  // Verificar que sea un tipo MIME de imagen
+  // Verificar que sea una imagen
   if (!file.type.startsWith('image/')) {
     Swal.fire({
       icon: 'error',
