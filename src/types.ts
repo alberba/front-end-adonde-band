@@ -1,4 +1,4 @@
-export interface Equipo {
+export interface ParticipationResponse {
   pos: number
   nombre: string
   cualidad: string
@@ -8,6 +8,17 @@ export interface Equipo {
   E: number
   P: number
   Ptos: number
+}
+
+export interface Bot {
+  pos: number
+  nombre: string
+  cualidad: string
+  imagen: string
+  PJ?: number
+  G: number
+  E: number
+  P: number
 }
 
 export interface Liga {

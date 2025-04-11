@@ -2,16 +2,17 @@
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
+import type { ParticipationResponse } from '@/types'
 import { ref } from 'vue'
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
+// import type { Combate, Equipo } from '@/types'
 
 // const matches = ref<Combate[]>([])
 
 // const loadMatches = async () => {
 //   const response = await fetch(
-// TODO: Alomejor cambiamos la ruta de la web a /leagueId/matchId
-//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}`,
+//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}/match`,
 //     {
 //       method: 'GET',
 //       headers: {
@@ -34,148 +35,162 @@ import { ref } from 'vue'
 // })
 
 // Ejemplo de datos de clasificación
-const clasificacion = ref([
+const clasificacion: ParticipationResponse[] = [
   {
     pos: 1,
-    equipo: 'Equipo 1',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 1',
     PJ: 10,
     G: 6,
     E: 2,
     P: 2,
     Ptos: 20,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 2,
-    equipo: 'Equipo 2',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 2',
     PJ: 10,
     G: 5,
     E: 3,
     P: 2,
     Ptos: 18,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 3,
-    equipo: 'Equipo 3',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 3',
     PJ: 10,
     G: 5,
     E: 2,
     P: 3,
     Ptos: 17,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 4,
-    equipo: 'Equipo 4',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 4',
     PJ: 10,
     G: 4,
     E: 4,
     P: 2,
     Ptos: 16,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 5,
-    equipo: 'Equipo 5',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 5',
     PJ: 10,
     G: 4,
     E: 3,
     P: 3,
     Ptos: 15,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 6,
-    equipo: 'Equipo 6',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 6',
     PJ: 10,
     G: 4,
     E: 2,
     P: 4,
     Ptos: 14,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 7,
-    equipo: 'Equipo 7',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 7',
     PJ: 10,
     G: 3,
     E: 4,
     P: 3,
     Ptos: 13,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 8,
-    equipo: 'Equipo 8',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 8',
     PJ: 10,
     G: 3,
     E: 3,
     P: 4,
     Ptos: 12,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 9,
-    equipo: 'Equipo 9',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 9',
     PJ: 10,
     G: 3,
     E: 2,
     P: 5,
     Ptos: 11,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 10,
-    equipo: 'Equipo 10',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 10',
     PJ: 10,
     G: 2,
     E: 4,
     P: 4,
     Ptos: 10,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 11,
-    equipo: 'Equipo 11',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 11',
     PJ: 10,
     G: 2,
     E: 3,
     P: 5,
     Ptos: 9,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 12,
-    equipo: 'Equipo 12',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 12',
     PJ: 10,
     G: 2,
     E: 2,
     P: 6,
     Ptos: 8,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 13,
-    equipo: 'Equipo 13',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 13',
     PJ: 10,
     G: 1,
     E: 4,
     P: 5,
     Ptos: 7,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
   {
     pos: 14,
-    equipo: 'Equipo 14',
+    cualidad: 'Soberbia',
+    nombre: 'Equipo 14',
     PJ: 10,
     G: 1,
     E: 3,
     P: 6,
     Ptos: 6,
-    img: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
   },
-])
+]
 
 const ligaNombre = 'LaLiga EA Sports'
 
@@ -465,28 +480,28 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
           <!-- Cuerpo de la tabla -->
           <tbody>
             <tr v-for="(equipo, index) in clasificacion" :key="index" class="border-t sm:text-xl">
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-16 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.pos }}
               </td>
               <td
-                :class="['flex items-center gap-1 p-1', esMiBot(equipo.equipo) ? 'font-bold' : '']"
+                :class="['flex items-center gap-1 p-1', esMiBot(equipo.nombre) ? 'font-bold' : '']"
               >
-                <img :src="equipo.img" alt=" " class="h-6 w-6 lg:h-8 lg:w-8" />
-                {{ equipo.equipo }}
+                <img :src="equipo.imagen" alt=" " class="h-6 w-6 lg:h-8 lg:w-8" />
+                {{ equipo.nombre }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.PJ }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.G }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.E }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.P }}
               </td>
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.equipo) ? 'font-bold' : '']">
+              <td :class="['w-16 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
                 {{ equipo.Ptos }}
               </td>
             </tr>
