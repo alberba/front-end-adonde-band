@@ -3,6 +3,35 @@ import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
 import { ref } from 'vue'
+// TODO: Descomentar cuando se tenga la API de partidos de una liga
+// import { onMounted } from 'vue'
+
+// const matches = ref<Combate[]>([])
+
+// const loadMatches = async () => {
+//   const response = await fetch(
+// TODO: Alomejor cambiamos la ruta de la web a /leagueId/matchId
+//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//       },
+//     }
+//   )
+
+//   if (!response.ok) {
+//     alert('Error al cargar los partidos. Por favor, inténtalo de nuevo.')
+//   } else {
+//     const data = await response.json()
+//     matches.value = data
+//   }
+// }
+
+// onMounted(() => {
+//   loadMatches()
+// })
 
 // Ejemplo de datos de clasificación
 const clasificacion = ref([
@@ -149,8 +178,7 @@ const clasificacion = ref([
 ])
 
 const ligaNombre = 'LaLiga EA Sports'
-const jornadaNum = ref(1)
-const jornadaMax = 12
+
 // Ejemplo de datos de jornadas con encuentros
 const jornadas = ref([
   {
@@ -301,17 +329,21 @@ const esMiBot = (nombreEquipo: string) => {
   return misBots.includes(nombreEquipo)
 }
 
-const incrementJornada = () => {
-  if (jornadaNum.value < jornadaMax) {
-    jornadaNum.value++
-  }
-}
+// TODO: Verificar si sigue siendo necesario
+// const jornadaNum = ref(1)
+// const jornadaMax = 12
 
-const decrementJornada = () => {
-  if (jornadaNum.value > 1) {
-    jornadaNum.value--
-  }
-}
+// const incrementJornada = () => {
+//   if (jornadaNum.value < jornadaMax) {
+//     jornadaNum.value++
+//   }
+// }
+
+// const decrementJornada = () => {
+//   if (jornadaNum.value > 1) {
+//     jornadaNum.value--
+//   }
+// }
 
 const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
 </script>
