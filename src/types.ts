@@ -11,11 +11,14 @@ export interface Equipo {
 }
 
 export interface Liga {
-  id: number
-  nombre: string
-  imagePath: string
-  finalizado: boolean
-  clasificacion: Equipo[]
+  leagueId: number
+  state: "pendiente" | "en curso" | "finalizado"
+  name: string
+  urlImagen: string
+  user: number
+  rounds: number
+  matchTime: number
+  bots: number[]
 }
 
 export interface Mensaje {

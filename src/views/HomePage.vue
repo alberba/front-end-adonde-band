@@ -9,51 +9,42 @@ const welcomeMessage = '¡Hola, ' + localStorage.getItem('username') + '!'
 
 const ligas: Liga[] = [
   {
-    id: 1,
-    nombre: 'LaLiga EA Sports',
-    imagePath:
+    leagueId: 1,
+    state: 'pendiente',
+    name: 'LaLiga EA Sports',
+    urlImagen:
       'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.fifplay.com%2Fimg%2Fpublic%2Flaliga-logo.png&f=1&nofb=1&ipt=23bde28a17fadd8e4ab36893c3247fc039ddf921d0d8245eaa26b64d017074ce&ipo=images',
-    finalizado: false,
-    clasificacion: [
-      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-    ],
+    user: 101,
+    rounds: 38,
+    matchTime: 90,
+    bots: [1, 2, 3],
   },
   {
-    id: 2,
-    nombre: 'Bundesliga',
-    imagePath:
+    leagueId: 2,
+    state: 'finalizado',
+    name: 'Bundesliga',
+    urlImagen:
       'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
-    finalizado: true,
-    clasificacion: [
-      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-    ],
+    user: 102,
+    rounds: 34,
+    matchTime: 90,
+    bots: [4, 5, 6],
   },
   {
-    id: 3,
-    nombre: 'Premier League',
-    imagePath:
+    leagueId: 3,
+    state: 'pendiente',
+    name: 'Premier League',
+    urlImagen:
       'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
-    finalizado: false,
-    clasificacion: [
-      { pos: 1, equipo: 'MisterX', PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, equipo: 'MisterY', PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, equipo: 'Carlos', PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, equipo: 'AdondeBoy', PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, equipo: 'Ramiro', PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-    ],
+    user: 103,
+    rounds: 38,
+    matchTime: 90,
+    bots: [7, 8, 9],
   },
 ]
 
-const ligasEnCurso = ligas.filter((liga) => !liga.finalizado)
-const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
+const ligasEnCurso = ligas.filter((liga) => liga.state === 'pendiente')
+const ligasFinalizadas = ligas.filter((liga) => liga.state === 'finalizado')
 </script>
 
 <template>
@@ -83,7 +74,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       </div>
 
       <ul class="flex flex-wrap justify-center gap-x-8 gap-y-5">
-        <li v-for="liga in ligasEnCurso" :key="liga.id" class="w-fit">
+        <li v-for="liga in ligasEnCurso" :key="liga.leagueId" class="w-fit">
           <ButtonLeague :liga="liga" />
         </li>
       </ul>
@@ -103,7 +94,7 @@ const ligasFinalizadas = ligas.filter((liga) => liga.finalizado)
       </div>
 
       <ul class="flex flex-wrap justify-center gap-8">
-        <li v-for="liga in ligasFinalizadas" :key="liga.id" class="w-fit">
+        <li v-for="liga in ligasFinalizadas" :key="liga.leagueId" class="w-fit">
           <ButtonLeague :liga="liga" />
         </li>
       </ul>
