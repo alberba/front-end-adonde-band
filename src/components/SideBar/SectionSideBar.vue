@@ -2,7 +2,8 @@
 import ButtonChat from './ButtonChat.vue'
 import type { Combate } from '@/types'
 
-const props = defineProps<{ title: string; combates?: Combate[]; classListButtonChat?: string }>()
+const props = defineProps<{ title: string; matches?: Combate[]; classListButtonChat?: string }>()
+console.log('Matches:', props.matches)
 </script>
 
 <template>
@@ -11,8 +12,12 @@ const props = defineProps<{ title: string; combates?: Combate[]; classListButton
       <h4 class="text-[#9b9b9b] dark:text-[#a8a8a8]">{{ props.title }}</h4>
       <div class="border-b border-[#9b9b9b]"></div>
     </div>
-    <ButtonChat v-for="combate in props.combates" :key="combate.id" :classList="props.classListButtonChat">
-      {{ combate.fighter1 }} vs {{ combate.fighter2 }}
+    <ButtonChat
+      v-for="match in props.matches"
+      :key="match.matchId"
+      :classList="props.classListButtonChat"
+    >
+      {{ match.fighters[0] }} vs {{ match.fighters[1] }}
     </ButtonChat>
   </section>
 </template>

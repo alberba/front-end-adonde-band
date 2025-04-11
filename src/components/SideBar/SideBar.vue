@@ -3,73 +3,113 @@ import type { Combate } from '@/types'
 import SectionSideBar from './SectionSideBar.vue'
 import ToggleSideBarIcon from '@/assets/svg/ToggleSideBarIcon.vue'
 import { ref } from 'vue'
+// TODO: Descomentar cuando se tenga la API de mensajes
+// import { onMounted } from 'vue'
 
-const combates: Combate[] = [
+// const matches = ref<Combate[]>([])
+
+// const loadMatches = async () => {
+//   const response = await fetch(
+// TODO: Alomejor cambiamos la ruta de la web a /leagueId/matchId
+//     `http://localhost:8080/api/v0/league/${localStorage.getItem('league')}`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//       },
+//     }
+//   )
+
+//   if (!response.ok) {
+//     alert('Error al cargar los mensajes. Por favor, inténtalo de nuevo.')
+//   } else {
+//     const data = await response.json()
+//     matches.value = data
+//   }
+// }
+
+// onMounted(() => {
+//   loadMatches()
+// })
+
+const matches: Combate[] = [
   {
-    id: 1,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: true,
+    matchId: 1,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'finalizado',
+    result: 1,
+    roundNumber: 24,
   },
   {
-    id: 2,
-    fighter1: 'Educación',
-    fighter2: 'Simpatía',
-    finished: true,
+    matchId: 2,
+    fighters: ['Educación', 'Simpatía'],
+    state: 'finalizado',
+    result: 1,
+    roundNumber: 24,
   },
   {
-    id: 3,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: false,
+    matchId: 3,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 4,
-    fighter1: 'Educación',
-    fighter2: 'Simpatía',
-    finished: false,
+    matchId: 4,
+    fighters: ['Educación', 'Simpatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 5,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: false,
+    matchId: 5,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 6,
-    fighter1: 'Educación',
-    fighter2: 'Simpatía',
-    finished: false,
+    matchId: 6,
+    fighters: ['Educación', 'Simpatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 7,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: false,
+    matchId: 7,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 8,
-    fighter1: 'Educación',
-    fighter2: 'Simpatía',
-    finished: false,
+    matchId: 8,
+    fighters: ['Educación', 'Simpatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 9,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: false,
+    matchId: 9,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 10,
-    fighter1: 'Educación',
-    fighter2: 'Simpatía',
-    finished: false,
+    matchId: 10,
+    fighters: ['Educación', 'Simpatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
   {
-    id: 11,
-    fighter1: 'Soberbia',
-    fighter2: 'Empatía',
-    finished: false,
+    matchId: 11,
+    fighters: ['Soberbia', 'Empatía'],
+    state: 'en curso',
+    result: 2,
+    roundNumber: 24,
   },
 ]
 
@@ -100,12 +140,12 @@ const toggleDarkMode = () => {
     <div class="flex flex-col gap-2.5 overflow-y-auto">
       <SectionSideBar
         title="Finalizado"
-        :combates="combates.filter((combate) => combate.finished)"
+        :matches="matches.filter((match) => match.state === 'finalizado')"
         classListButtonChat="w-full sm:w-fit text-[24px] sm:text-[20px]"
       />
       <SectionSideBar
         title="En Progreso"
-        :combates="combates.filter((combate) => !combate.finished)"
+        :matches="matches.filter((match) => match.state !== 'finalizado')"
         classListButtonChat="w-full sm:w-fit text-[24px] sm:text-[20px]"
       />
     </div>
