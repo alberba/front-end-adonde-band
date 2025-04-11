@@ -4,9 +4,10 @@ import FooterApp from '@/components/FooterApp.vue'
 import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import type { Liga, ParticipationResponse } from '@/types'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 // Para el cambio de página
 const router = useRouter()
@@ -14,6 +15,231 @@ function goToCreateBots() {
   // Ajusta la ruta '/createBots' a la que hayas definido en tu router.
   router.push('/createBot')
 }
+
+// Definimos las interfaces de respuesta para la gestión de los bots:
+// - id: Es el identificador del bot
+interface BotSummaryResponse {
+  id: number
+  name: string
+  description: string
+}
+
+interface BotResponse {
+  botId: number
+  name: string
+  description: string
+  urlImage: string
+  nWins: number
+  nLosses: number
+  nDraws: number
+}
+
+// Variables para almacenar los datos de los bots:
+const botSummaries = ref<BotSummaryResponse[]>([])
+const botsDetails = ref<BotResponse[]>([])
+
+// Identificador del usuario (esto vendría del LocalStorage al hacer el login):
+// Pendiente de mirar como hacerlo de momento este es de ejemplo.
+const userId = localStorage.getItem('userId') || 'Angelito'
+
+
+// Función para obtener el listado de bots del usuario
+async function loadBotSummaries() {
+
+  // Se hace una llamada a la API para obtener el listado de bots del usuario
+  const response = await fetch(
+    `http://localhost:8080/api/v0/bot/${userId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    // Manejo de errores según el código de estado
+    handleErrorResponse(response.status)
+
+  } else {
+    // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable botSummaries
+    const data: BotSummaryResponse[] = await response.json()
+    botSummaries.value = data
+  }
+}
+
+// Función para obtener el detalle de cada bot de la lista
+async function loadBotDetails() {
+  // Se recorre cada bot de la lista
+  for (const botsummary of botSummaries.value) {
+
+    // Se hace una llamada a la API para obtener el detalle de cada bot
+    const response = await fetch(
+      `http://localhost:8080/api/v0/bot/${botsummary.id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
+
+    if (!response.ok) {
+      // Manejo de errores según el código de estado
+      handleErrorResponse(response.status)
+
+    } else {
+      // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable botDetails
+      const data: BotResponse = await response.json()
+      botsDetails.value.push(data)
+    }
+  }
+}
+
+// Función principal para cargar los datos de los bots de un usuario
+async function loadBotsData() {
+  // Se obtiene la lista de bots:
+  await loadBotSummaries()
+
+  // A continuación, se obtienen los detalles de cada bot
+  await loadBotDetails()
+}
+
+// Para asegurar que los datos se cargan al iniciar el componente
+onMounted(() => {
+  loadBotsData()
+})
+
+function handleErrorResponse(status: number) {
+  const errorMessages: Record<number, { title: string; text: string }> = {
+    401: { title: 'Error', text: 'No autorizado' },
+    404: { title: 'Error', text: 'Listado de bots no encontrado' },
+    408: { title: 'Error', text: 'Tiempo de espera agotado' },
+    500: { title: 'Error', text: 'Error interno del servidor. Contacta con el soporte' }
+  }
+
+  const error = errorMessages[status] || { title: 'Error', text: 'Error desconocido. Por favor, intenta de nuevo más tarde.' }
+  showErrorAlert(error.title, error.text)
+}
+
+function showErrorAlert(title: string, text: string) {
+  Swal.fire({
+    icon: 'error',
+    title,
+    text,
+    customClass: {
+      confirmButton: 'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium'
+    },
+    buttonsStyling: false
+  })
+}
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Simulamos una respuesta de la API con dos bots
+botSummaries.value = [
+    { id: 1, name: 'Bot A', description: 'Valentía' },
+    { id: 2, name: 'Bot B', description: 'Empatía' }
+  ]
+
+botsDetails.value = [
+    {
+      botId: 1,
+      name: 'Bot A',
+      description: 'Valentía',
+      urlImage: 'https://www.biospheresustainable.com/assets/arxius/e7a4c74a9304fde3454e87f76f7cc726.png',
+      nWins: 10,
+      nLosses: 5,
+      nDraws: 2,
+    },
+    {
+      botId: 2,
+      name: 'Bot B',
+      description: 'Empatía',
+      urlImage: 'https://www.biospheresustainable.com/assets/arxius/7acec8002648e59ca4f9d9674faec7c8.png',
+      nWins: 8,
+      nLosses: 7,
+      nDraws: 2,
+    },
+  ]
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Estado para el bot seleccionado
+const selectedBot = ref<BotResponse | null>(null)
+
+// Funciones para abrir y cerrar el menú de edición
+function openEditMenu(bot: BotResponse) {
+  // Se copia el bot seleccionado para editarlo
+  selectedBot.value = { ...bot }
+}
+function closeEditMenu() {
+  selectedBot.value = null
+}
+
+// Función para guardar los cambios del bot y actualizarlo mediante la API
+async function saveBotChanges() {
+
+  // Se verifica que haya un bot seleccionado para editar
+  if (selectedBot.value) {
+
+    // Creamos el objeto con los datos que se enviarán a la API
+    const updateData = {
+      name: selectedBot.value.name,
+      description: selectedBot.value.description,
+      urlImagen: selectedBot.value.urlImage,
+      endpoint: ''
+    };
+
+    // Se llama a la API con el método PUT para actualizar el bot.
+    const response = await fetch(`http://localhost:8080/api/v0/bot/${selectedBot.value.botId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updateData)
+    });
+
+    if (!response.ok) {
+      // Manejo de errores según el código de estado
+      handleErrorResponse(response.status);
+
+    } else {
+      // Si la llamada fue exitosa:
+      const updatedBot = await response.json();
+
+      // Se busca el índice del bot actualizado dentro del array local.
+      const botIndex = botsDetails.value.findIndex(
+        (bot) => bot.botId === selectedBot.value!.botId
+      );
+
+      // Se actualiza el bot en el array con los datos recibidos de la API.
+      if (botIndex !== -1) {
+        botsDetails.value[botIndex] = updatedBot;
+      }
+
+      // Posiblemente esto se podría quitar al comprobar que se cambia correctamente
+      Swal.fire({
+        icon: 'success',
+        title: 'Bot actualizado',
+        text: 'El bot se ha actualizado correctamente'
+      });
+
+      closeEditMenu();
+    }
+  }
+}
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 
 // Declaración de las diferentes Ligas dónde participan mis bots:
 const clasificaciones: Record<
@@ -457,6 +683,77 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
         <!-- Modo Resumen -->
         <template #resumen>
           <div class="w-full">
+            <section
+              v-for="bot in botsDetails"
+              :key="bot.botId"
+              class="mb-4 w-full px-4 pt-4 pb-4"
+            >
+              <!-- Contenedor principal -->
+              <div class="flex flex-col gap-4 p-4 rounded-lg sm:flex-row">
+                <!-- Contenedor del texto (nombre y cualidad) -->
+                <div class="flex flex-col justify-center text-center sm:text-left">
+                  <h2 class="text-[32px] font-bold text-center text-white">
+                    {{ bot.name.toUpperCase() }}
+                  </h2>
+                  <h3 class="text-[24px] font-semibold text-center text-white">
+                    ({{ bot.description }})
+                  </h3>
+                </div>
+
+                <!-- Contenedor de la imagen -->
+                <div
+                  class="flex items-center justify-center cursor-pointer"
+                  @click="openEditMenu(bot)"
+                >
+                  <img
+                    :src="bot.urlImage"
+                    alt="Imagen del Bot"
+                    class="h-[200px] w-[200px] rounded-lg border-2 border-gray-500 shadow-lg transition-transform duration-300 ease-in-out hover:scale-105"
+                  />
+                </div>
+              </div>
+
+              <!-- Línea separadora -->
+              <div class="mx-auto mt-1 mb-4 h-[2px] w-full bg-gray-500"></div>
+
+              <!-- Contenedor de estadísticas -->
+              <div
+                class="mt-2 flex flex-row items-center justify-center gap-12 text-white"
+              >
+
+                <!-- Empates -->
+                <div class="flex flex-col items-center">
+                  <div class="mt-4 text-[32px] font-bold">
+                    {{ bot.nDraws }}
+                  </div>
+                  <div class="mb-1 h-[1px] w-8 bg-white"></div>
+                  <div class="text-[20px] font-semibold">Empates</div>
+                </div>
+
+                <!-- Victorias -->
+                <div class="-mt-4 flex flex-col items-center">
+                  <div class="text-[48px] font-bold">
+                    {{ bot.nWins }}
+                  </div>
+                  <div class="-mt-2 mb-1 h-[1px] w-8 bg-white"></div>
+                  <div class="text-[24px] font-semibold">Victorias</div>
+                </div>
+
+                <!-- Derrotas -->
+                <div class="flex flex-col items-center">
+                  <div class="mt-4 text-[32px] font-bold">
+                    {{ bot.nLosses }}
+                  </div>
+                  <div class="mb-1 h-[1px] w-8 bg-white"></div>
+                  <div class="text-[20px] font-semibold">Derrotas</div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </template>
+
+        <!-- Resumen del Bot - Anterior Versión
+          <div class="w-full">
             <section v-for="liga in ligas" :key="liga.leagueId" class="mb-4 w-full px-4 pt-4 pb-4">
               <h2 class="text-center text-[32px] font-bold text-white">
                 {{ liga.name.split(' (')[0] }}
@@ -517,10 +814,65 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
               </div>
             </section>
           </div>
-        </template>
+        </template>-->
       </BotoneraModo>
     </div>
   </main>
+
+  <!-- Menú flotante para editar -->
+  <div
+    v-if="selectedBot"
+    class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px] bg-black/30"
+  >
+    <div class="w-[400px] rounded-lg bg-[#2a2a2a] p-6 text-white">
+      <h2 class="mb-4 text-center text-2xl font-bold">Modificar Bot</h2>
+      <form @submit.prevent="saveBotChanges">
+        <div class="mb-4">
+          <label for="bot-name" class="block text-sm font-semibold">Nombre</label>
+          <input
+            id="bot-name"
+            v-model="selectedBot.name"
+            type="text"
+            class="w-full rounded-lg bg-[#4e4e4e] p-2 text-white"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="bot-description" class="block text-sm font-semibold">Descripción</label>
+          <input
+            id="bot-description"
+            v-model="selectedBot.description"
+            type="text"
+            class="w-full rounded-lg bg-[#4e4e4e] p-2 text-white"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="bot-image" class="block text-sm font-semibold">URL de la Imagen</label>
+          <input
+            id="bot-image"
+            v-model="selectedBot.urlImage"
+            type="text"
+            class="w-full rounded-lg bg-[#4e4e4e] p-2 text-white"
+          />
+        </div>
+        <div class="flex justify-center gap-4">
+          <button
+            type="button"
+            class="rounded-lg bg-gray-500 px-4 py-2 text-white"
+            @click="closeEditMenu"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="rounded-lg bg-[#06f] px-4 py-2 text-white"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal para seleccionar liga -->
   <div
     v-show="ChooseLeague"
