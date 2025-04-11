@@ -3,7 +3,6 @@ import HeaderApp from '@/components/HeaderApp.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
-import Dropdown from '@/components/DropDown.vue' 
 
 import { ref, watch } from 'vue'
 import type { Liga } from '@/types'
@@ -17,53 +16,230 @@ function goToCreateBots() {
 }
 
 // Declaración de las diferentes Ligas dónde participan mis bots:
-const ligas = ref<Liga[]>([
+const clasificaciones: Record<
+  string,
   {
-    id: 1,
-    nombre: 'Premier League ',
-    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
-    finalizado: false,
-    clasificacion: [
-      { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "",  PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, nombre: 'MisterY', cualidad: 'Sinceridad', imagen: "", PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, nombre: 'C3PO', cualidad: 'Soledad', imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href, PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, nombre: 'Rbotito', cualidad: 'Empatia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, nombre: 'Ramingo', cualidad: 'Envidia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-      // ...
-    ],
-  },
-  {
-    id: 2,
-    nombre: 'Bundesliga', 
-    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
-    finalizado: false,
-    clasificacion: [
-      { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "", PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, nombre: 'MisterY', cualidad: 'Sinceridad', imagen: "", PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, nombre: 'Luris', cualidad: 'Soledad', imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href, PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, nombre: 'Rbotito', cualidad: 'Empatia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, nombre: 'Ramingo', cualidad: 'Envidia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-      // ...
-    ],
-  },
-  {
-    id: 3,
-    nombre: 'Serie A', // 
-    imagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
-    finalizado: false,
-    clasificacion: [
-      { pos: 1, nombre: 'MisterX', cualidad: 'Valentía', imagen: "", PJ: 2, G: 1, E: 1, P: 0, Ptos: 4 },
-      { pos: 2, nombre: 'MisterY', cualidad: 'Sinceridad', imagen: "", PJ: 2, G: 1, E: 0, P: 1, Ptos: 3 },
-      { pos: 3, nombre: 'C3PO', cualidad: 'Soledad', imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href, PJ: 3, G: 2, E: 1, P: 0, Ptos: 7 },
-      { pos: 4, nombre: 'Tutto_Free', cualidad: 'Generosidad', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 3, G: 2, E: 0, P: 1, Ptos: 6 },
-      { pos: 5, nombre: 'Ramingo', cualidad: 'Envidia', imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href, PJ: 4, G: 1, E: 2, P: 1, Ptos: 5 },
-      // ...
-    ],
-  },
-])
+    pos: number
+    nombre: string
+    cualidad: string
+    imagen: string
+    PJ: number
+    G: number
+    E: number
+    P: number
+    Ptos: number
+  }[]
+> = {
+  premierLeague: [
+    {
+      pos: 1,
+      nombre: 'MisterX',
+      cualidad: 'Valentía',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 1,
+      P: 0,
+      Ptos: 4,
+    },
+    {
+      pos: 2,
+      nombre: 'MisterY',
+      cualidad: 'Sinceridad',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 0,
+      P: 1,
+      Ptos: 3,
+    },
+    {
+      pos: 3,
+      nombre: 'C3PO',
+      cualidad: 'Soledad',
+      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 1,
+      P: 0,
+      Ptos: 7,
+    },
+    {
+      pos: 4,
+      nombre: 'Rbotito',
+      cualidad: 'Empatia',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 0,
+      P: 1,
+      Ptos: 6,
+    },
+    {
+      pos: 5,
+      nombre: 'Ramingo',
+      cualidad: 'Envidia',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 4,
+      G: 1,
+      E: 2,
+      P: 1,
+      Ptos: 5,
+    },
+  ],
+  bundesliga: [
+    {
+      pos: 1,
+      nombre: 'MisterX',
+      cualidad: 'Valentía',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 1,
+      P: 0,
+      Ptos: 4,
+    },
+    {
+      pos: 2,
+      nombre: 'MisterY',
+      cualidad: 'Sinceridad',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 0,
+      P: 1,
+      Ptos: 3,
+    },
+    {
+      pos: 3,
+      nombre: 'Luris',
+      cualidad: 'Soledad',
+      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 1,
+      P: 0,
+      Ptos: 7,
+    },
+    {
+      pos: 4,
+      nombre: 'Rbotito',
+      cualidad: 'Empatia',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 0,
+      P: 1,
+      Ptos: 6,
+    },
+    {
+      pos: 5,
+      nombre: 'Ramingo',
+      cualidad: 'Envidia',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 4,
+      G: 1,
+      E: 2,
+      P: 1,
+      Ptos: 5,
+    },
+  ],
+  serieA: [
+    {
+      pos: 1,
+      nombre: 'MisterX',
+      cualidad: 'Valentía',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 1,
+      P: 0,
+      Ptos: 4,
+    },
+    {
+      pos: 2,
+      nombre: 'MisterY',
+      cualidad: 'Sinceridad',
+      imagen: '',
+      PJ: 2,
+      G: 1,
+      E: 0,
+      P: 1,
+      Ptos: 3,
+    },
+    {
+      pos: 3,
+      nombre: 'C3PO',
+      cualidad: 'Soledad',
+      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 1,
+      P: 0,
+      Ptos: 7,
+    },
+    {
+      pos: 4,
+      nombre: 'Tutto_Free',
+      cualidad: 'Generosidad',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 3,
+      G: 2,
+      E: 0,
+      P: 1,
+      Ptos: 6,
+    },
+    {
+      pos: 5,
+      nombre: 'Ramingo',
+      cualidad: 'Envidia',
+      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
+      PJ: 4,
+      G: 1,
+      E: 2,
+      P: 1,
+      Ptos: 5,
+    },
+  ],
+}
 
+const ligas: Liga[] = [
+  {
+    leagueId: 1,
+    state: 'pendiente',
+    name: 'Premier League',
+    urlImagen:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
+    user: 101,
+    rounds: 38,
+    matchTime: 90,
+    bots: [1, 2, 3, 4, 5],
+  },
+  {
+    leagueId: 2,
+    state: 'pendiente',
+    name: 'Bundesliga',
+    urlImagen:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
+    user: 102,
+    rounds: 34,
+    matchTime: 90,
+    bots: [1, 2, 3, 4, 5],
+  },
+  {
+    leagueId: 3,
+    state: 'pendiente',
+    name: 'Serie A',
+    urlImagen:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
+    user: 103,
+    rounds: 38,
+    matchTime: 90,
+    bots: [1, 2, 3, 4, 5],
+  },
+]
 
-const ligaSeleccionada = ref<Liga | null>(null);
+const ligaSeleccionada = ref<Liga | null>(null)
 // Nombre del bot a buscar en la liga:
 const botName = ref('Rbotito')
 
@@ -72,8 +248,6 @@ const showHelpModal = ref(false)
 
 // Estado para mostrar/ocultar la ventana de elegir liga
 const ChooseLeague = ref(false)
-
-
 
 // Resumen del bot
 const resumenBot = ref({
@@ -88,10 +262,10 @@ function getBotSummary(botName: string) {
   let totalG = 0
   let totalE = 0
   let totalP = 0
-  const ligasJugadas: Liga[] = []  // Ahora es un arreglo de Liga
+  const ligasJugadas: Liga[] = [] // Ahora es un arreglo de Liga
 
-  ligas.value.forEach((liga) => {
-    const row = liga.clasificacion.find(
+  ligas.forEach((liga) => {
+    const row = clasificaciones[toCamelCase(liga.name)]?.find(
       (item) => item.nombre.toLowerCase() === botName.toLowerCase()
     )
     if (row) {
@@ -111,6 +285,10 @@ function getBotSummary(botName: string) {
   }
 }
 
+function toCamelCase(str: string) {
+  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase())
+}
+
 // Actualizar el resumen cada vez que cambie el nombre del bot
 watch(botName, () => {
   getBotSummary(botName.value)
@@ -121,10 +299,13 @@ getBotSummary(botName.value)
 
 function getIndicesByBotName(league: Liga, name: string): number[] {
   // Buscamos la posición en la clasificación:
-  const index = league.clasificacion.findIndex(item => item.nombre.toLowerCase() === name.toLowerCase())
+  const classification = clasificaciones[toCamelCase(league.name)]
+  const index = classification?.findIndex(
+    (item) => item.nombre.toLowerCase() === name.toLowerCase()
+  )
 
   // Si el bot no está en la clasificación, devolvemos []
-  if (index === -1) {
+  if (index === -1 || index === undefined) {
     return []
   }
 
@@ -132,19 +313,22 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
   const indices = [posBot - 1, posBot, posBot + 1]
 
   // Filtramos para quedarnos solo con índices válidos
-  return indices.filter(i => i > 0 && i <= league.clasificacion.length)
+  return indices.filter((i) => i > 0 && i <= classification.length)
 }
 </script>
 
 <template>
   <HeaderApp title="Mis Bots" :is-heading1="true" />
-  <main class="w-full flex flex-col items-center justify-center gap-5 px-3 xs:px-8 mb-10 sm:max-w-[860px] md:px-10 lg:w-[860px]">
-    <div class="mb-4 flex w-full flex-col items-center gap-12 rounded-2xl bg-[#2a2a2a] py-5 px-3 sm:px-8 md:px-16 max-w-full ">
-
+  <main
+    class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center gap-5 px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]"
+  >
+    <div
+      class="mb-4 flex w-full max-w-full flex-col items-center gap-12 rounded-2xl bg-[#2a2a2a] px-3 py-5 sm:px-8 md:px-16"
+    >
       <!-- Botón Crear Bot -->
       <div class="mt-4 -mb-8 flex w-full justify-center">
         <button
-          class="flex items-center rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white gap-x-2"
+          class="flex items-center gap-x-2 rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
           @click="goToCreateBots"
         >
           <img src="@/assets/svg/add.svg" alt="Icono" class="h-5 w-5" />
@@ -157,25 +341,21 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
         <template #clasificacion>
           <div class="w-full">
             <!-- Se itera sobre cada liga -->
-            <section
-              v-for="liga in ligas"
-              :key="liga.id"
-              class="w-full pt-4 pb-4 px-4 mb-4"
-            >
+            <section v-for="liga in ligas" :key="liga.leagueId" class="mb-4 w-full px-4 pt-4 pb-4">
               <!-- Nombre del Bot -->
               <h2 class="text-center text-[32px] font-bold text-white">
-                {{ liga.nombre.split(' (')[0] }}
+                {{ liga.name.split(' (')[0] }}
               </h2>
 
               <!-- Cualidad del Bot -->
               <h3 class="text-center text-[32px] font-semibold text-white">
-                ({{ liga.nombre.split(' (')[1]?.replace(')', '') }})
+                ({{ liga.name.split(' (')[1]?.replace(')', '') }})
               </h3>
 
               <!-- Línea Separadora -->
               <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
 
-              <p class="text-center text-[16px] text-white font-bold mb-2">
+              <p class="mb-2 text-center text-[16px] font-bold text-white">
                 Posición en la Liga Actual
               </p>
 
@@ -184,14 +364,22 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                 <table class="mx-auto w-full table-auto border-collapse text-white">
                   <thead>
                     <tr class="border-b border-gray-600 text-left">
-                      <th class="px-3 py-2 text-center sm:text-[24px] text-[18px] whitespace-nowrap">Pos</th>
-                      <th class="px-4 py-2 text-left sm:text-[24px] text-[18px] whitespace-nowrap">Nombre</th>
-                      <th class="px-4 py-2 text-left sm:text-[24px] text-[18px] whitespace-nowrap">Cualidad</th>
-                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">PJ</th>
-                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">G</th>
-                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">E</th>
-                      <th class="px-2 py-2 text-center sm:text-[24px] text-[18px]">P</th>
-                      <th class="px-3 py-2 text-center sm:text-[24px] text-[18px]">Ptos</th>
+                      <th
+                        class="px-3 py-2 text-center text-[18px] whitespace-nowrap sm:text-[24px]"
+                      >
+                        Pos
+                      </th>
+                      <th class="px-4 py-2 text-left text-[18px] whitespace-nowrap sm:text-[24px]">
+                        Nombre
+                      </th>
+                      <th class="px-4 py-2 text-left text-[18px] whitespace-nowrap sm:text-[24px]">
+                        Cualidad
+                      </th>
+                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">PJ</th>
+                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">G</th>
+                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">E</th>
+                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">P</th>
+                      <th class="px-3 py-2 text-center text-[18px] sm:text-[24px]">Ptos</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -200,37 +388,43 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
                       :key="i"
                       class="border-b border-gray-500"
                       :class="{
-                        'font-bold text-[#FADA5E]': liga.clasificacion[i - 1].nombre.toLowerCase() === botName.toLowerCase()
+                        'font-bold text-[#FADA5E]':
+                          clasificaciones[toCamelCase(liga.name)][i - 1].nombre.toLowerCase() ===
+                          botName.toLowerCase(),
                       }"
                     >
-                      <td class="px-3 py-2 text-center sm:text-[20px] text-[16px] whitespace-nowrap">
-                        {{ liga.clasificacion[i - 1].pos }}
+                      <td
+                        class="px-3 py-2 text-center text-[16px] whitespace-nowrap sm:text-[20px]"
+                      >
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].pos }}
                       </td>
-                      <td class="px-4 py-2 text-left sm:text-[20px] text-[16px] whitespace-nowrap flex items-center">
+                      <td
+                        class="flex items-center px-4 py-2 text-left text-[16px] whitespace-nowrap sm:text-[20px]"
+                      >
                         <img
-                          :src="liga.clasificacion[i - 1].imagen"
+                          :src="clasificaciones[toCamelCase(liga.name)][i - 1].imagen"
                           alt=""
                           class="mr-2"
                         />
-                        {{ liga.clasificacion[i - 1].nombre }}
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].nombre }}
                       </td>
-                      <td class="px-4 py-2 text-left sm:text-[20px] text-[16px] whitespace-nowrap">
-                        {{ liga.clasificacion[i - 1].cualidad }}
+                      <td class="px-4 py-2 text-left text-[16px] whitespace-nowrap sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].cualidad }}
                       </td>
-                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
-                        {{ liga.clasificacion[i - 1].PJ }}
+                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].PJ }}
                       </td>
-                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
-                        {{ liga.clasificacion[i - 1].G }}
+                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].G }}
                       </td>
-                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
-                        {{ liga.clasificacion[i - 1].E }}
+                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].E }}
                       </td>
-                      <td class="px-2 py-2 text-center sm:text-[20px] text-[16px]">
-                        {{ liga.clasificacion[i - 1].P }}
+                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].P }}
                       </td>
-                      <td class="px-3 py-2 text-center sm:text-[20px] text-[16px]">
-                        {{ liga.clasificacion[i - 1].Ptos }}
+                      <td class="px-3 py-2 text-center text-[16px] sm:text-[20px]">
+                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].Ptos }}
                       </td>
                     </tr>
                   </tbody>
@@ -249,13 +443,14 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
 
               <!-- Si no participa en la liga -->
               <div v-else>
-                <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
+                <p class="mt-6 mb-6 text-center text-[16px] font-bold text-[#8D8D8D]">
                   En ninguna liga actualmente...
                 </p>
                 <div class="mt-4 flex justify-center gap-x-4">
-                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
-                      @click="ChooseLeague = true"
-                    >
+                  <button
+                    class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
+                    @click="ChooseLeague = true"
+                  >
                     Apuntarse
                   </button>
                 </div>
@@ -272,59 +467,56 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
         <!-- Modo Resumen -->
         <template #resumen>
           <div class="w-full">
-            <section
-              v-for="liga in ligas"
-              :key="liga.id"
-              class="w-full pt-4 pb-4 px-4 mb-4"
-            >
+            <section v-for="liga in ligas" :key="liga.leagueId" class="mb-4 w-full px-4 pt-4 pb-4">
               <h2 class="text-center text-[32px] font-bold text-white">
-                {{ liga.nombre.split(' (')[0] }}
+                {{ liga.name.split(' (')[0] }}
               </h2>
               <h3 class="text-center text-[32px] font-semibold text-white">
-                ({{ liga.nombre.split(' (')[1]?.replace(')', '') }})
+                ({{ liga.name.split(' (')[1]?.replace(')', '') }})
               </h3>
               <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
-              <div v-if="(resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0) && getIndicesByBotName(liga, botName).length">
-                <div class="mt-2 flex flex-col sm:flex-row items-center justify-center gap-12 text-white">
+              <div
+                v-if="
+                  resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0 &&
+                  getIndicesByBotName(liga, botName).length
+                "
+              >
+                <div
+                  class="mt-2 flex flex-col items-center justify-center gap-12 text-white sm:flex-row"
+                >
                   <div class="flex flex-col items-center">
                     <div class="mt-4 text-[32px] font-bold">
                       {{ resumenBot.empates }}
                     </div>
                     <div class="mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[20px] font-semibold">
-                      Empate
-                    </div>
+                    <div class="text-[20px] font-semibold">Empate</div>
                   </div>
-                  <div class="flex flex-col items-center -mt-4">
+                  <div class="-mt-4 flex flex-col items-center">
                     <div class="text-[48px] font-bold">
                       {{ resumenBot.victorias }}
                     </div>
                     <div class="-mt-2 mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[24px] font-semibold">
-                      Victorias
-                    </div>
+                    <div class="text-[24px] font-semibold">Victorias</div>
                   </div>
                   <div class="flex flex-col items-center">
                     <div class="mt-4 text-[32px] font-bold">
                       {{ resumenBot.derrotas }}
                     </div>
                     <div class="mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[20px] font-semibold">
-                      Derrotas
-                    </div>
+                    <div class="text-[20px] font-semibold">Derrotas</div>
                   </div>
                 </div>
-                <p class="mt-4 text-[24px] font-semibold text-white text-center">Ligas Jugadas</p>
+                <p class="mt-4 text-center text-[24px] font-semibold text-white">Ligas Jugadas</p>
                 <div class="mt-3 flex flex-wrap items-center justify-center gap-6">
                   <ButtonLeague
                     v-for="liga in resumenBot.ligasJugadas"
-                    :key="liga.id"
+                    :key="liga.leagueId"
                     :liga="liga"
                   />
                 </div>
               </div>
               <div v-else>
-                <p class="text-center text-[16px] text-[#8D8D8D] font-bold mb-6 mt-6">
+                <p class="mt-6 mb-6 text-center text-[16px] font-bold text-[#8D8D8D]">
                   No ha jugado en ninguna liga...
                 </p>
                 <div class="mt-4 flex justify-center gap-x-4">
@@ -339,8 +531,8 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
       </BotoneraModo>
     </div>
   </main>
-   <!-- Modal para seleccionar liga -->
-   <div
+  <!-- Modal para seleccionar liga -->
+  <div
     v-show="ChooseLeague"
     class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px]"
     @click.self="ChooseLeague = false"
@@ -349,30 +541,31 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
       class="w-[570px] rounded-xl bg-[#1D1D1D] p-6 text-center text-white"
       :class="ChooseLeague ? 'scale-100' : 'scale-75'"
     >
-      <h2 class="mb-2 text-2xl text-center font-bold">Seleccionar Liga</h2>
+      <h2 class="mb-2 text-center text-2xl font-bold">Seleccionar Liga</h2>
       <div class="mx-0 mt-0 mb-4 h-[1px] w-full bg-[#FFFFFF]"></div>
 
-            <!-- Lista de ligas -->
-      <ul class="mx-auto  rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#353535]">
+      <!-- Lista de ligas -->
+      <ul class="mx-auto rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#353535]">
         <li
-          v-for="(liga, index) in ligas"
-          :key="liga.id"
+          v-for="liga in ligas"
+          :key="liga.leagueId"
           :class="[
-            'cursor-pointer flex items-center p-2 rounded-md',
-            
-            ligaSeleccionada?.id === liga.id ? 'border-2 border-blue-500' : 'border border-transparent'
+            'flex cursor-pointer items-center rounded-md p-2',
+
+            ligaSeleccionada?.leagueId === liga.leagueId
+              ? 'border-2 border-blue-500'
+              : 'border border-transparent',
           ]"
           @click="ligaSeleccionada = liga"
         >
-      
-          <div class="flex items-center w-full">
+          <div class="flex w-full items-center">
             <img
-              :src="liga.imagePath"
+              :src="liga.urlImagen"
               alt="Liga"
-              class="mr-2 h-16 w-16 bg-white object-contain rounded-md p-2"
+              class="mr-2 h-16 w-16 rounded-md bg-white object-contain p-2"
             />
             <span class="text-lg font-semibold text-black dark:text-white">
-              {{ liga.nombre }}
+              {{ liga.name }}
             </span>
           </div>
         </li>
@@ -387,13 +580,13 @@ function getIndicesByBotName(league: Liga, name: string): number[] {
       </button>
     </div>
   </div>
-  <!-- Footer 
-   
+  <!-- Footer
+
       <Dropdown
-          :options="ligas.map(liga => ({ name: liga.nombre, icon: liga.imagePath }))"
+          :options="ligas.map(liga => ({ name: liga.name, icon: liga.urlImagen }))"
           @update:selected="
               (value) => {
-                ligaSeleccionada = ligas.find(liga => liga.nombre === value.name) || null
+                ligaSeleccionada = ligas.find(liga => liga.name === value.name) || null
               }
             "
         />
