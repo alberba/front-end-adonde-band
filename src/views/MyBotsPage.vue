@@ -5,7 +5,7 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 
 import { ref, watch, onMounted } from 'vue'
-import type { Liga, ParticipationResponse } from '@/types'
+import type { Liga } from '@/types'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 
@@ -103,6 +103,9 @@ async function loadBotsData() {
   // Se obtiene la lista de bots:
   await loadBotSummaries()
 
+  // A continuación, se obtiene el resumen de clasificación de cada bot
+  await loadBotLeagueSummaries() // (Quizá tendría que ir aquí)
+
   // A continuación, se obtienen los detalles de cada bot
   await loadBotDetails()
 }
@@ -110,6 +113,7 @@ async function loadBotsData() {
 // Para asegurar que los datos se cargan al iniciar el componente
 onMounted(() => {
   loadBotsData()
+  //loadBotLeagueSummaries()
 })
 
 function handleErrorResponse(status: number) {
@@ -236,6 +240,286 @@ async function saveBotChanges() {
     }
   }
 }
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Estructura de una liga
+interface LeagueResponse {
+  leagueId: number;
+  state: string;
+  name: string;
+  urlImagen: string;
+  user: number;
+  rounds: number;
+  matchTime: number;
+  bots: number[];
+}
+
+// Estructura de la respuesta de clasificación de una liga
+interface ParticipationResponse {
+  botId: number;
+  name: string;
+  points: number;
+  position: number;
+  nWins: number;
+  nDraws: number;
+  nLosses: number;
+}
+
+// Para representar lo que se quiere guardar para cada bot
+interface BotLeagueSummary {
+  botId: number;
+  league: LeagueResponse;
+  classification: ParticipationResponse[]; // [Pos - 1][Pos][Pos + 1]
+}
+
+// Para almacenar la información de clasificación en liga de cada bot
+const botLeagueSummaries = ref<BotLeagueSummary[]>([]);
+
+// Función para cargar todas las ligas
+async function loadAllLeagues() {
+
+  // Se hace una llamada a la API para obtener el listado de todas las ligas
+  const response = await fetch(`http://localhost:8080/api/v0/league`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  if (!response.ok) {
+    // Manejo de errores según el código de estado
+    handleErrorResponse(response.status);
+
+  } else {
+    // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leagues
+    const leagues: LeagueResponse[] = await response.json();
+    return leagues;
+  }
+}
+
+// Función para encontrar la liga en la que participa un bot
+function findLeagueForBot(leagues: LeagueResponse[], botId: number) {
+  return leagues.find(league => league.state === 'IN_PROCESS' && league.bots.includes(botId));
+}
+
+// Función para cargar la clasificación completa de una liga
+async function getLeagueLeaderboard(leagueId: number) {
+
+  // Se hace una llamada a la API para obtener la clasificación de una liga
+  const response = await fetch(`http://localhost:8080/api/v0/league/${leagueId}/leaderboard`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  if (!response.ok) {
+    // Manejo de errores según el código de estado
+    handleErrorResponse(response.status);
+  } else {
+    // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leaderboard
+    const leaderboard: ParticipationResponse[] = await response.json();
+    return leaderboard;
+  }
+}
+
+// Función para extraer las posiciones superior, actual e inferior del bot en la clasificación
+function extractPositions(leaderboard: ParticipationResponse[], bot: BotResponse) {
+
+  // Buscamos el índice del bot en la clasificación:
+  const index = leaderboard.findIndex(entry =>
+    entry.botId === bot.botId || entry.name.toLowerCase() === bot.name.toLowerCase()
+  );
+
+  // Si no se encuentra el bot en la clasificación (aunque nunca debería pasar):
+  if (index === -1) {
+    return [];
+  }
+
+  // Definimos el rango: buscamos desde index - 1 a index + 1.
+  const start = Math.max(index - 1, 0);
+  const end = Math.min(index + 1, leaderboard.length - 1);
+
+  // Devolvemos la clasificación filtrada para mostrar solo las posiciones que nos interesan:
+  return leaderboard.filter((_, i) => i >= start && i <= end);
+}
+
+// Función para cargar el resumen de liga de cada bot
+async function loadBotLeagueSummaries() {
+  try {
+
+    // Se cargan todas las ligas:
+    const allLeagues = await loadAllLeagues();
+
+    // Se recorre cada bot en la lista
+    for (const bot of botsDetails.value) {
+
+      // Busca en las ligas las que estén en IN_PROCESS y contengan este bot
+      const leagueFound = allLeagues ? findLeagueForBot(allLeagues, bot.botId) : undefined;
+
+      if (leagueFound) {
+
+        // Se obtiene la clasificación de la liga encontrada:
+        const leaderboard = await getLeagueLeaderboard(leagueFound.leagueId);
+
+        // Se extraen las posiciones superior, actual e inferior del bot en la clasificación:
+        const posicionesClasi = leaderboard ? extractPositions(leaderboard, bot) : [];
+
+        if (posicionesClasi.length > 0) {
+          botLeagueSummaries.value.push({
+            botId: bot.botId,
+            league: leagueFound,
+            classification: posicionesClasi,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error al cargar los datos de ligas y clasificaciones:', error);
+    /*
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No se pudieron cargar los datos de las ligas y clasificaciones.',
+      customClass: {
+        confirmButton:
+          'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium transition-shadow duration-150 hover:shadow-lg',
+      },
+      buttonsStyling: false,
+    });
+    */
+  }
+}
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Simulación de la respuesta de la API para pruebas
+const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
+  {
+    botId: 1,
+    league: {
+      leagueId: 1,
+      state: 'IN_PROCESS',
+      name: 'Premier League',
+      urlImagen: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
+      user: 101,
+      rounds: 38,
+      matchTime: 90,
+      bots: [1],
+    },
+    classification: [
+      {
+        botId: 100,
+        name: "Other1",
+        points: 30,
+        position: 1,
+        nWins: 10,
+        nDraws: 0,
+        nLosses: 0,
+      },
+      {
+        botId: 1,
+        name: "Bot A",
+        points: 28,
+        position: 2,
+        nWins: 9,
+        nDraws: 1,
+        nLosses: 2,
+      },
+      {
+        botId: 101,
+        name: "Other2",
+        points: 26,
+        position: 3,
+        nWins: 8,
+        nDraws: 2,
+        nLosses: 3,
+      }
+    ]
+  },
+  {
+    botId: 2,
+    league: {
+      leagueId: 2,
+      state: 'IN_PROCESS',
+      name: 'Bundesliga',
+      urlImagen: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
+      user: 102,
+      rounds: 34,
+      matchTime: 90,
+      bots: [2],
+    },
+    classification: [
+      {
+        botId: 105,
+        name: "Other6",
+        points: 33,
+        position: 2,
+        nWins: 10,
+        nDraws: 3,
+        nLosses: 2,
+      },
+      {
+        botId: 2,
+        name: "Bot B",
+        points: 31,
+        position: 3,
+        nWins: 9,
+        nDraws: 4,
+        nLosses: 3,
+      },
+      {
+        botId: 106,
+        name: "Other7",
+        points: 29,
+        position: 4,
+        nWins: 8,
+        nDraws: 4,
+        nLosses: 4,
+      }
+    ]
+  },
+  {
+    botId: 3,
+    league: {
+      leagueId: 3,
+      state: 'IN_PROCESS',
+      name: 'Serie A',
+      urlImagen: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Serie_A.svg/225px-Serie_A.svg.png',
+      user: 103,
+      rounds: 38,
+      matchTime: 90,
+      bots: [3],
+    },
+    classification: [
+      {
+        botId: 3,
+        name: "Bot C",
+        points: 40,
+        position: 1,
+        nWins: 13,
+        nDraws: 1,
+        nLosses: 1,
+      },
+      {
+        botId: 108,
+        name: "Other9",
+        points: 38,
+        position: 2,
+        nWins: 12,
+        nDraws: 2,
+        nLosses: 1,
+      }
+    ]
+  }
+]);
 
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
