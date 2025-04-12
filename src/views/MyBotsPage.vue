@@ -401,6 +401,14 @@ async function loadBotLeagueSummaries() {
 // ------------------------------------------------------------------------------------------
 
 // Simulación de la respuesta de la API para pruebas
+
+const botsDetailsTest = ref<BotResponse[]>([
+  { botId: 1, name: 'Bot A', description: 'Valentía', urlImage: 'https://example.com/botA.png', nWins: 10, nLosses: 5, nDraws: 2 },
+  { botId: 2, name: 'Bot B', description: 'Empatía', urlImage: 'https://example.com/botB.png', nWins: 8, nLosses: 7, nDraws: 2 },
+  { botId: 3, name: 'Bot C', description: 'Curiosidad', urlImage: 'https://example.com/botC.png', nWins: 12, nLosses: 3, nDraws: 1 },
+  { botId: 4, name: 'Bot D', description: 'Silencio', urlImage: 'https://example.com/botD.png', nWins: 5, nLosses: 10, nDraws: 3 } // Este bot NO participa en liga
+]);
+
 const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
   {
     botId: 1,
