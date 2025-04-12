@@ -4,7 +4,11 @@ import WinIcon from '@/assets/svg/clasificacion/WinIcon.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
-import type { ParticipationResponse, Combate } from '@/types'
+import type { ParticipationResponse, Combate, Liga } from '@/types'
+import Swal from 'sweetalert2'
+import { ref } from 'vue'
+
+
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
 // import type { Combate, Equipo } from '@/types'
@@ -31,9 +35,121 @@ import type { ParticipationResponse, Combate } from '@/types'
 //   }
 // }
 
+// // Para la gestión de la liga y su clasificación completa
+// interface CompleteLeagueSummary {
+//   league: Liga;
+//   classification: ParticipationResponse[];
+// }
+
+// // Para guardar múltiples ligas completas
+// const completeLeagueSummaries = ref<CompleteLeagueSummary[]>([]);
+
+// // Función para cargar una liga en base a su ID
+// async function loadLeague(leagueId: number) {
+
+//   // Se hace una llamada a la API para obtener la liga
+//   const response = await fetch(`http://localhost:8080/api/v0/league/${leagueId}`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`,
+//     },
+//   });
+
+//   if (!response.ok) {
+//     // Manejo de errores según el código de estado
+//     handleErrorResponse(response.status);
+
+//   } else {
+//     // Si la respuesta es exitosa, se parsea a JSON y se devuelve el objeto LeagueResponseDTO
+//     const league: Liga = await response.json();
+//     return league;
+//   }
+// }
+
+// // Función para obtener la clasificación completa de una liga en base a su ID
+// async function loadLeaderboard(leagueId: number) {
+
+//   const response = await fetch(`http://localhost:8080/api/v0/league/${leagueId}/leaderboard`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//   });
+
+//   if (!response.ok) {
+//     // Manejo de errores según el código de estado
+//     handleErrorResponse(response.status);
+
+//   } else {
+//     // Si la respuesta es exitosa, se parsea a JSON y se devuelve el objeto ParticipationResponseDTO[]
+//     const leaderboard: ParticipationResponse[] = await response.json();
+//     return leaderboard;
+//   }
+// }
+
+// // Función para cargar y almacenar la liga y su clasificación completa
+// async function loadAndStoreLeague(leagueId: number): Promise<void> {
+//   try {
+
+//     // Llamada para cargar la liga
+//     const leagueResponse = await loadLeague(leagueId);
+
+//     if (!leagueResponse) {
+//       throw new Error(`Error al cargar la liga con ID ${leagueId}`);
+//     }
+
+//     // Llamada para cargar la clasificación de la liga
+//     const leaderboardResponse = await loadLeaderboard(leagueId);
+
+//     if (!leaderboardResponse) {
+//       throw new Error(`Error al cargar la clasificación de la liga con ID ${leagueId}`);
+//     }
+
+//     // Se crea el objeto que contiene toda la información de la liga y su leaderboard
+//     const leagueSummary: CompleteLeagueSummary = {
+//       league: leagueResponse,
+//       classification: leaderboardResponse,
+//     };
+
+//     // Se agrega  a la lista de ligas completas
+//     completeLeagueSummaries.value.push(leagueSummary);
+
+//   } catch (error) {
+//     console.error('Error al cargar y almacenar la liga completa:', error);
+//   }
+// }
+
+// function handleErrorResponse(status: number) {
+//   const errorMessages: Record<number, { title: string; text: string }> = {
+//     400: { title: 'Error', text: 'Solicitud incorrecta' },
+//     401: { title: 'Error', text: 'No autorizado' },
+//     404: { title: 'Error', text: 'Liga o Clasificación no encontrada' },
+//     408: { title: 'Error', text: 'Tiempo de espera agotado' },
+//     500: { title: 'Error', text: 'Error interno del servidor. Contacta con el soporte' }
+//   }
+
+//   const error = errorMessages[status] || { title: 'Error', text: 'Error desconocido. Por favor, intenta de nuevo más tarde.' }
+//   showErrorAlert(error.title, error.text)
+// }
+
+// function showErrorAlert(title: string, text: string) {
+//   Swal.fire({
+//     icon: 'error',
+//     title,
+//     text,
+//     customClass: {
+//       confirmButton: 'bg-[#06f] cursor-pointer text-white rounded border-0 text-base px-4 py-2 shadow-md font-medium'
+//     },
+//     buttonsStyling: false
+//   })
+// }
+
 // onMounted(() => {
 //   loadMatches()
 // })
+
 
 // Ejemplo de datos de clasificación
 const clasificacion: ParticipationResponse[] = [
