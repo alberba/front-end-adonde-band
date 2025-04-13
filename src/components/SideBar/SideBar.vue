@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { Combate } from '@/types'
+import type { Match } from '@/types'
 import SectionSideBar from './SectionSideBar.vue'
 import ToggleSideBarIcon from '@/assets/svg/ToggleSideBarIcon.vue'
 import { ref } from 'vue'
 // TODO: Descomentar cuando se tenga la API de mensajes
 // import { onMounted } from 'vue'
 
-// const matches = ref<Combate[]>([])
+// const matches = ref<Match[]>([])
 
 // const loadMatches = async () => {
 //   const response = await fetch(
@@ -32,7 +32,7 @@ import { ref } from 'vue'
 //   loadMatches()
 // })
 
-const matches: Combate[] = [
+const matches: Match[] = [
   {
     matchId: 1,
     fighters: ['Soberbia', 'Empatía'],

@@ -5,7 +5,7 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 
 import { ref, watch, onMounted } from 'vue'
-import type { Liga } from '@/types'
+import type { League } from '@/types'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 
@@ -711,7 +711,7 @@ const clasificaciones: Record<
   ],
 }
 
-const ligas: Liga[] = [
+const ligas: League[] = [
   {
     leagueId: 1,
     state: 'pendiente',
@@ -747,7 +747,7 @@ const ligas: Liga[] = [
   },
 ]
 
-const ligaSeleccionada = ref<Liga | null>(null)
+const ligaSeleccionada = ref<League | null>(null)
 // Nombre del bot a buscar en la liga:
 const botName = ref('Rbotito')
 
@@ -762,7 +762,7 @@ const resumenBot = ref({
   victorias: 0,
   empates: 0,
   derrotas: 0,
-  ligasJugadas: [] as Liga[],
+  ligasJugadas: [] as League[],
 })
 
 // Función para calcular el resumen del bot
@@ -770,7 +770,7 @@ function getBotSummary(botName: string) {
   let totalG = 0
   let totalE = 0
   let totalP = 0
-  const ligasJugadas: Liga[] = [] // Ahora es un arreglo de Liga
+  const ligasJugadas: League[] = [] // Ahora es un arreglo de Liga
 
   ligas.forEach((liga) => {
     const row = clasificaciones[toCamelCase(liga.name)]?.find(
@@ -805,7 +805,7 @@ watch(botName, () => {
 // Calcular el resumen al iniciar
 getBotSummary(botName.value)
 
-function getIndicesByBotName(league: Liga, name: string): number[] {
+function getIndicesByBotName(league: League, name: string): number[] {
   // Buscamos la posición en la clasificación:
   const classification = clasificaciones[toCamelCase(league.name)]
   const index = classification?.findIndex(

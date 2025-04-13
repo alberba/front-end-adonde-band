@@ -1,4 +1,4 @@
-export interface ParticipationResponse {
+export interface Participation {
   pos: number
   nombre: string
   cualidad: string
@@ -21,7 +21,7 @@ export interface Bot {
   P: number
 }
 
-export interface Liga {
+export interface League {
   leagueId: number
   state: "pendiente" | "en curso" | "finalizado"
   name: string
@@ -32,13 +32,13 @@ export interface Liga {
   bots: number[]
 }
 
-export interface Mensaje {
+export interface Message {
   text: string
   botId: number
   time: number
 }
 
-export interface Combate {
+export interface Match {
   matchId: number
   state: "pendiente" | "en curso" | "finalizado"
   result: 1 | 2 | 3

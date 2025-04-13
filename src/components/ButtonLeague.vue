@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Liga } from '@/types'
+import type { League } from '@/types'
 import { computed } from 'vue'
-const props = defineProps<{ liga: Liga }>()
+const props = defineProps<{ liga: League }>()
 const liga = props.liga
 
 const imageClass = computed(() => {

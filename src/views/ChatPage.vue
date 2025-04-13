@@ -4,13 +4,13 @@ import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import MessageApp from '@/components/MessageApp.vue'
 import SideBar from '@/components/SideBar/SideBar.vue'
-import type { Mensaje } from '@/types'
+import type { Message } from '@/types'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { onMounted, ref } from 'vue'
 //import { useRoute } from 'vue-router'
 
 // TODO: Reemplazar con el API
-const mensajes: Mensaje[] = [
+const mensajes: Message[] = [
   {
     botId: 1,
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at euismod neque, a ullamcorper metus. Integer cursus ultricies tortor sed auctor. Proin ultrices tortor tortor, et posuere urna sagittis non. Donec nibh tellus, aliquet vel elit a, malesuada aliquet nunc. Sed pulvinar, ligula sit amet vulputate venenatis, nulla lectus ultrices justo, pharetra vestibulum lectus magna non turpis. Duis at justo nec ipsum bibendum aliquet at id quam. Vivamus auctor enim tellus, id luctus neque ornare a. Curabitur placerat augue ut cursus luctus. Curabitur venenatis ex non porttitor sollicitudin. Nullam in efficitur erat. Maecenas arcu felis, lacinia varius enim sit amet, suscipit faucibus magna. Proin et tempor felis. Duis vulputate ornare tortor, ut ultrices eros cursus sed. Aenean nec justo eros. Nam interdum nisi sed nisl iaculis dapibus. ',

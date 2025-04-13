@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ButtonChat from './ButtonChat.vue'
-import type { Combate } from '@/types'
+import type { Match } from '@/types'
 
-const props = defineProps<{ title: string; matches?: Combate[]; classListButtonChat?: string }>()
+const props = defineProps<{ title: string; matches?: Match[]; classListButtonChat?: string }>()
 console.log('Matches:', props.matches)
 </script>
 
