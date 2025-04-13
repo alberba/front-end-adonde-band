@@ -8,7 +8,6 @@ import type { Participation, Match, League } from '@/types'
 import Swal from 'sweetalert2'
 import { ref } from 'vue'
 
-
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
 // import type { Match, Participation } from '@/types'
@@ -149,7 +148,6 @@ import { ref } from 'vue'
 // onMounted(() => {
 //   loadMatches()
 // })
-
 
 // Ejemplo de datos de clasificación
 const clasificacion: Participation[] = [
@@ -439,16 +437,6 @@ const jornadas = combates.reduce(
   {} as Record<number, Match[]>
 )
 
-console.log(hola())
-
-function hola() {
-  for (const [jornada, numJornada] of Object.entries(jornadas)) {
-    console.log(jornada)
-    numJornada.forEach((encuentro) => {
-      console.log(encuentro)
-    })
-  }
-}
 const misBots = ['Equipo 1', 'Equipo 3', 'Equipo 5'] // Ejemplo de equipos
 
 const esMiBot = (nombreEquipo: string) => {
@@ -472,6 +460,9 @@ const esMiBot = (nombreEquipo: string) => {
 // }
 
 const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
+
+const userIdApi = 0
+const userId = Number(localStorage.getItem('userId') || '0')
 </script>
 
 <template>
@@ -481,7 +472,14 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
   >
     <!-- Contenedor pequeño que incluye solo el header -->
     <header class="m-3 flex w-full flex-col gap-3">
-      <h1 class="text-left text-4xl font-bold">{{ ligaNombre }}</h1>
+      <div class="flex flex-row justify-between">
+        <h1 class="text-left text-4xl font-bold">{{ ligaNombre }}</h1>
+        <div class="flex flex-row gap-4 font-bold text-xl" v-if="userId == userIdApi">
+          <button class="cursor-pointer px-4.5 py-3 bg-[#06f] rounded-3xl">Empezar Liga</button>
+          <button class="cursor-pointer px-4.5 py-3 bg-[#06f] rounded-3xl">Configuración</button>
+        </div>
+      </div>
+
       <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
     </header>
 
