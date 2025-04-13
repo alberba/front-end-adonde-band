@@ -1,24 +1,23 @@
 export interface Participation {
-  pos: number
-  nombre: string
-  cualidad: string
-  imagen: string
-  PJ: number
-  G: number
-  E: number
-  P: number
-  Ptos: number
+  botId: number
+  name: string
+  points: number
+  position: number
+  nWins: number
+  nDraws: number
+  nLosses: number
+  nMatches?: number
 }
 
 export interface Bot {
-  pos: number
-  nombre: string
-  cualidad: string
-  imagen: string
+  botId: number
+  name: string
+  description: string
+  urlImage: string
   PJ?: number
-  G: number
-  E: number
-  P: number
+  nWins: number
+  nLosses: number
+  nDraws: number
 }
 
 export interface League {
@@ -44,4 +43,18 @@ export interface Match {
   result: 1 | 2 | 3
   fighters: [string, string]
   roundNumber: number
+}
+
+// Interfaz para la gestión de los bots:
+// - id: Es el identificador del bot
+export interface BotSummary{
+  id: number
+  name: string
+  description: string
+}
+
+export interface BotLeagueSummary {
+  botId: number;
+  league: League;
+  classification: Participation[]; // [Pos - 1][Pos][Pos + 1]
 }

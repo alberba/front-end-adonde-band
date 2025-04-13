@@ -5,7 +5,7 @@ import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
 
 import { ref, watch, onMounted } from 'vue'
-import type { League } from '@/types'
+import type { Bot, League, Participation, BotSummary, BotLeagueSummary } from '@/types'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 
@@ -16,27 +16,9 @@ function goToCreateBots() {
   router.push('/createBot')
 }
 
-// Definimos las interfaces de respuesta para la gestión de los bots:
-// - id: Es el identificador del bot
-interface BotSummaryResponse {
-  id: number
-  name: string
-  description: string
-}
-
-interface BotResponse {
-  botId: number
-  name: string
-  description: string
-  urlImage: string
-  nWins: number
-  nLosses: number
-  nDraws: number
-}
-
 // Variables para almacenar los datos de los bots:
-const botSummaries = ref<BotSummaryResponse[]>([])
-const botsDetails = ref<BotResponse[]>([])
+const botSummaries = ref<BotSummary[]>([])
+const botsDetails = ref<Bot[]>([])
 
 // Identificador del usuario (esto vendría del LocalStorage al hacer el login):
 // Pendiente de mirar como hacerlo de momento este es de ejemplo.
@@ -64,7 +46,7 @@ async function loadBotSummaries() {
 
   } else {
     // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable botSummaries
-    const data: BotSummaryResponse[] = await response.json()
+    const data: BotSummary[] = await response.json()
     botSummaries.value = data
   }
 }
@@ -92,7 +74,7 @@ async function loadBotDetails() {
 
     } else {
       // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable botDetails
-      const data: BotResponse = await response.json()
+      const data: Bot = await response.json()
       botsDetails.value.push(data)
     }
   }
@@ -176,10 +158,10 @@ botsDetails.value = [
 // ------------------------------------------------------------------------------------------
 
 // Estado para el bot seleccionado
-const selectedBot = ref<BotResponse | null>(null)
+const selectedBot = ref<Bot | null>(null)
 
 // Funciones para abrir y cerrar el menú de edición
-function openEditMenu(bot: BotResponse) {
+function openEditMenu(bot: Bot) {
   // Se copia el bot seleccionado para editarlo
   selectedBot.value = { ...bot }
 }
@@ -245,35 +227,11 @@ async function saveBotChanges() {
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
-// Estructura de una liga
-interface LeagueResponse {
-  leagueId: number;
-  state: string;
-  name: string;
-  urlImagen: string;
-  user: number;
-  rounds: number;
-  matchTime: number;
-  bots: number[];
-}
-
-// Estructura de la respuesta de clasificación de una liga
-interface ParticipationResponse {
-  botId: number;
-  name: string;
-  points: number;
-  position: number;
-  nWins: number;
-  nDraws: number;
-  nLosses: number;
-}
-
-// Para representar lo que se quiere guardar para cada bot
-interface BotLeagueSummary {
-  botId: number;
-  league: LeagueResponse;
-  classification: ParticipationResponse[]; // [Pos - 1][Pos][Pos + 1]
-}
+// Estructura de una liga                                        -  Interfaz League
+// Estructura de un bot                                          -  Interfaz Bot
+// Estructura de una posición de clasificación de una liga       -  Interfaz Participation
+// Estructura de un resumen de bot                               -  Interfaz BotSummary
+// Estructura de clasificación resumida de los bots en una liga  -  Interfaz BotLeagueSummary
 
 // Para almacenar la información de clasificación en liga de cada bot
 const botLeagueSummaries = ref<BotLeagueSummary[]>([]);
@@ -296,14 +254,14 @@ async function loadAllLeagues() {
 
   } else {
     // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leagues
-    const leagues: LeagueResponse[] = await response.json();
+    const leagues: League[] = await response.json();
     return leagues;
   }
 }
 
 // Función para encontrar la liga en la que participa un bot
-function findLeagueForBot(leagues: LeagueResponse[], botId: number) {
-  return leagues.find(league => league.state === 'IN_PROCESS' && league.bots.includes(botId));
+function findLeagueForBot(leagues: League[], botId: number) {
+  return leagues.find(league => league.state === 'en curso' && league.bots.includes(botId));
 }
 
 // Función para cargar la clasificación completa de una liga
@@ -323,13 +281,13 @@ async function getLeagueLeaderboard(leagueId: number) {
     handleErrorResponse(response.status);
   } else {
     // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leaderboard
-    const leaderboard: ParticipationResponse[] = await response.json();
+    const leaderboard: Participation[] = await response.json();
     return leaderboard;
   }
 }
 
 // Función para extraer las posiciones superior, actual e inferior del bot en la clasificación
-function extractPositions(leaderboard: ParticipationResponse[], bot: BotResponse) {
+function extractPositions(leaderboard: Participation[], bot: Bot) {
 
   // Buscamos el índice del bot en la clasificación:
   const index = leaderboard.findIndex(entry =>
@@ -402,7 +360,7 @@ async function loadBotLeagueSummaries() {
 
 // Simulación de la respuesta de la API para pruebas
 
-const botsDetailsTest = ref<BotResponse[]>([
+const botsDetailsTest = ref<Bot[]>([
   { botId: 1, name: 'Bot A', description: 'Valentía', urlImage: 'https://example.com/botA.png', nWins: 10, nLosses: 5, nDraws: 2 },
   { botId: 2, name: 'Bot B', description: 'Empatía', urlImage: 'https://example.com/botB.png', nWins: 8, nLosses: 7, nDraws: 2 },
   { botId: 3, name: 'Bot C', description: 'Curiosidad', urlImage: 'https://example.com/botC.png', nWins: 12, nLosses: 3, nDraws: 1 },
@@ -414,7 +372,7 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
     botId: 1,
     league: {
       leagueId: 1,
-      state: 'IN_PROCESS',
+      state: 'en curso',
       name: 'Premier League',
       urlImagen: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png',
       user: 101,
@@ -456,7 +414,7 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
     botId: 2,
     league: {
       leagueId: 2,
-      state: 'IN_PROCESS',
+      state: 'en curso',
       name: 'Bundesliga',
       urlImagen: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png',
       user: 102,
@@ -498,7 +456,7 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
     botId: 3,
     league: {
       leagueId: 3,
-      state: 'IN_PROCESS',
+      state: 'en curso',
       name: 'Serie A',
       urlImagen: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Serie_A.svg/225px-Serie_A.svg.png',
       user: 103,
@@ -533,10 +491,112 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
+// Función para obtener un bot completo por su id
+async function loadOneBot(botId: number) {
+
+  // Se hace una llamada a la API para obtener el detalle de un bot
+  const response = await fetch(`http://localhost:8080/api/v0/bot/${botId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  if (!response.ok) {
+    // Manejo de errores según el código de estado
+    handleErrorResponse(response.status);
+
+  } else {
+    // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable botData
+    const botData: Bot = await response.json();
+    return botData;
+  }
+}
+
+// Función para apuntar un bot a una liga
+async function apuntarseLiga(botId: number) {
+
+  // Se obtiene la información del bot que se quiere apuntar a la liga
+  const bot = await loadOneBot(botId);
+
+  console.log('Bot a apuntar:', bot);
+
+  if (bot) {
+    selectedBot.value = bot;
+    ChooseLeague.value = true;
+  }
+}
+
+// Función para obtener la liga seleccionada
+async function loadSelectedLeague() {
+
+  if (!ligaSeleccionada.value) return null;
+
+  const leagueId = ligaSeleccionada.value.leagueId;
+
+  // Se hace una llamada a la API para obtener la información de la liga seleccionada
+  const response = await fetch(`http://localhost:8080/api/v0/league/${leagueId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  if (!response.ok) {
+    handleErrorResponse(response.status);
+  } else {
+    // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leagueData
+    const leagueData: League = await response.json();
+
+    // Actualizamos la liga seleccionada si es necesario
+    ligaSeleccionada.value = leagueData;
+
+    return leagueData;
+  }
+}
+
+// Función para registrar el bot en la liga seleccionada
+async function registerBotToSelectedLeague() {
+
+  const league = await loadSelectedLeague();
+
+  // Si no hay liga seleccionada o no hay bot seleccionado, no hacemos nada
+  if (!league || !selectedBot.value) return;
+
+  // Se hace una llamada a la API para registrar el bot en la liga seleccionada
+    const response = await fetch(`http://localhost:8080/api/v0/league/${league.leagueId}/bot`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ botId: selectedBot.value.botId }),
+    });
+
+    if (!response.ok) {
+      // Manejo de errores según el código de estado
+      handleErrorResponse(response.status);
+    }
+    // Si la inscripción es exitosa se puede notificar al usuario
+    Swal.fire({
+      icon: 'success',
+      title: 'Bot inscrito',
+      text: 'El bot se ha inscrito en la liga correctamente.',
+    });
+
+    // Se cierra el modal después de la inscripción
+    ChooseLeague.value = false;
+}
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
 // Declaración de las diferentes Ligas dónde participan mis bots:
 const clasificaciones: Record<
   string,
-  ParticipationResponse[]
+  Participation[]
 > = {
   premierLeague: [
     {
@@ -957,7 +1017,7 @@ function getIndicesByBotName(league: League, name: string): number[] {
                 <div class="mt-4 flex justify-center gap-x-4">
                   <button
                     class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
-                    @click="ChooseLeague = true"
+                    @click="apuntarseLiga(botsDetails[1].botId)"
                   >
                     Apuntarse
                   </button>
@@ -1043,70 +1103,6 @@ function getIndicesByBotName(league: League, name: string): number[] {
             </section>
           </div>
         </template>
-
-        <!-- Resumen del Bot - Anterior Versión
-          <div class="w-full">
-            <section v-for="liga in ligas" :key="liga.leagueId" class="mb-4 w-full px-4 pt-4 pb-4">
-              <h2 class="text-center text-[32px] font-bold text-white">
-                {{ liga.name.split(' (')[0] }}
-              </h2>
-              <h3 class="text-center text-[32px] font-semibold text-white">
-                ({{ liga.name.split(' (')[1]?.replace(')', '') }})
-              </h3>
-              <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
-              <div
-                v-if="
-                  resumenBot.victorias + resumenBot.empates + resumenBot.derrotas > 0 &&
-                  getIndicesByBotName(liga, botName).length
-                "
-              >
-                <div
-                  class="mt-2 flex flex-col items-center justify-center gap-12 text-white sm:flex-row"
-                >
-                  <div class="flex flex-col items-center">
-                    <div class="mt-4 text-[32px] font-bold">
-                      {{ resumenBot.empates }}
-                    </div>
-                    <div class="mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[20px] font-semibold">Empate</div>
-                  </div>
-                  <div class="-mt-4 flex flex-col items-center">
-                    <div class="text-[48px] font-bold">
-                      {{ resumenBot.victorias }}
-                    </div>
-                    <div class="-mt-2 mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[24px] font-semibold">Victorias</div>
-                  </div>
-                  <div class="flex flex-col items-center">
-                    <div class="mt-4 text-[32px] font-bold">
-                      {{ resumenBot.derrotas }}
-                    </div>
-                    <div class="mb-1 h-[1px] w-8 bg-white"></div>
-                    <div class="text-[20px] font-semibold">Derrotas</div>
-                  </div>
-                </div>
-                <p class="mt-4 text-center text-[24px] font-semibold text-white">Ligas Jugadas</p>
-                <div class="mt-3 flex flex-wrap items-center justify-center gap-6">
-                  <ButtonLeague
-                    v-for="liga in resumenBot.ligasJugadas"
-                    :key="liga.leagueId"
-                    :liga="liga"
-                  />
-                </div>
-              </div>
-              <div v-else>
-                <p class="mt-6 mb-6 text-center text-[16px] font-bold text-[#8D8D8D]">
-                  No ha jugado en ninguna liga...
-                </p>
-                <div class="mt-4 flex justify-center gap-x-4">
-                  <button class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black">
-                    Apuntarse
-                  </button>
-                </div>
-              </div>
-            </section>
-          </div>
-        </template>-->
       </BotoneraModo>
     </div>
   </main>
@@ -1185,22 +1181,13 @@ function getIndicesByBotName(league: League, name: string): number[] {
           :key="liga.leagueId"
           :class="[
             'flex cursor-pointer items-center rounded-md p-2',
-
-            ligaSeleccionada?.leagueId === liga.leagueId
-              ? 'border-2 border-blue-500'
-              : 'border border-transparent',
+            ligaSeleccionada?.leagueId === liga.leagueId ? 'border-2 border-blue-500' : 'border border-transparent'
           ]"
           @click="ligaSeleccionada = liga"
         >
           <div class="flex w-full items-center">
-            <img
-              :src="liga.urlImagen"
-              alt="Liga"
-              class="mr-2 h-16 w-16 rounded-md bg-white object-contain p-2"
-            />
-            <span class="text-lg font-semibold text-black dark:text-white">
-              {{ liga.name }}
-            </span>
+            <img :src="liga.urlImagen" alt="Liga" class="mr-2 h-16 w-16 rounded-md bg-white object-contain p-2" />
+            <span class="text-lg font-semibold text-black dark:text-white">{{ liga.name }}</span>
           </div>
         </li>
       </ul>
@@ -1208,7 +1195,7 @@ function getIndicesByBotName(league: League, name: string): number[] {
       <!-- Botón Apuntarse -->
       <button
         class="mt-2 rounded-md bg-[#06f] px-4 py-2 font-semibold text-white"
-        @click="ChooseLeague = false"
+        @click="registerBotToSelectedLeague"
       >
         Apuntarse
       </button>
