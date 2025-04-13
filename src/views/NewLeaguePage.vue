@@ -4,18 +4,77 @@ import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import { ref } from 'vue'
 
-interface Option {
-  name: string
-  icon: string
-}
-
-const options = ref<Option[]>([
-  { name: 'Empatía (Adonde Boy)', icon: '🏳️‍⚧️' },
-  { name: 'Educación (Carlos)', icon: '🇦🇷' },
-  { name: 'Soberbia (Rama)', icon: '🏳️‍🌈' },
+// TODO: Eliminar cuando se funcione la API para crear una liga (ABB-82)
+const options = ref<BotTemp[]>([
+  {
+    id: 0,
+    name: 'Adonde Boy',
+    description: 'Empatía',
+    urlImage: 'src/assets/svg/arg.svg',
+  },
+  { id: 1, name: 'Carlos', description: 'Educacion', urlImage: 'src/assets/svg/arg.svg' },
+  { id: 2, name: 'Rama', description: 'Soberbia', urlImage: 'src/assets/svg/arg.svg' },
 ])
 
-const selectedBots = ref<Option[]>([])
+// TODO: Cambiar cuando se haya hecho la Tarea ABB-134
+interface BotTemp {
+  id: number
+  name: string
+  description: string
+  urlImage: string
+}
+
+// TODO: Descomentar cuando se funcione la API para crear una liga (ABB-82)
+// interface BotSummary {
+//   id: number
+//   name: string
+//   description: string
+// }
+
+// const options = ref<BotTemp[]>()
+
+// const getAllBotsSummary = async () => {
+//   const response = await fetch('http://localhost:3000/api/v0/bot', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+
+//   if (!response.ok) {
+//     console.error('Error fetching bots:', response.statusText)
+//     return []
+//   } else {
+//     const data = await response.json()
+
+//     const botsDetails = await Promise.all(
+//       data.map(async (bot: BotSummary) => {
+//         const botResponse = await fetch(`http://localhost:3000/api/v0/bot/${bot.name}`, {
+//           method: 'GET',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//         })
+
+//         if (!botResponse.ok) {
+//           console.error('Error fetching bot details:', botResponse.statusText)
+//           return null
+//         }
+//         const botData = await botResponse.json()
+
+//         return {
+//           id: botData.id,
+//           name: botData.name,
+//           description: botData.description,
+//           urlImage: botData.urlImage,
+//         }
+//       })
+//     )
+//     options.value = botsDetails.filter((bot) => bot !== null)
+//   }
+// }
+
+const selectedBots = ref<BotTemp[]>([])
 </script>
 
 <template>
