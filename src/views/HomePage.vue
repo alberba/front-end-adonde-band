@@ -45,9 +45,101 @@ const ligas: League[] = [
 
 const ligasEnCurso = ligas.filter((liga) => liga.state === 'pendiente')
 const ligasFinalizadas = ligas.filter((liga) => liga.state === 'finalizado')
+/*
+import { ref, onMounted } from 'vue'
+import AddIcon from '@/assets/svg/AddIcon.vue'
+import ButtonLeague from '@/components/ButtonLeague.vue'
+import FooterApp from '@/components/FooterApp.vue'
+import HeaderApp from '@/components/HeaderApp.vue'
+import type { League } from '@/types'
+
+const welcomeMessage = '¡Hola, ' + localStorage.getItem('username') + '!'
+const userId = parseInt(localStorage.getItem('userId') || '0')
+const token = localStorage.getItem('token')
+
+const ligasPendientes = ref<League[]>([])
+const ligasEnJuego = ref<League[]>([])
+const ligasFinalizadas = ref<League[]>([])
+
+async function loadLeagues() {
+  const response = await fetch(`http://localhost:8080/api/v0/league`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    handleErrorResponse(response.status)
+  } else {
+    const data: League[] = await response.json()
+    ligasPendientes.value = data.filter((l) => l.state === 'pendiente')
+    ligasEnJuego.value = data.filter((l) => l.state === 'in_process')
+    ligasFinalizadas.value = data.filter((l) => l.state === 'finalizado')
+  }
+}
+
+function handleErrorResponse(status: number) {
+  if (status === 401) alert('No autorizado')
+  else alert('Error al obtener las ligas')
+}
+
+onMounted(loadLeagues)
+*/
 </script>
 
+
 <template>
+     <!-- 
+  <HeaderApp :title="welcomeMessage" :isHeading1="false" />
+
+  <main class="mb-10 flex w-full flex-col items-center px-3 sm:max-w-[860px]">
+    <header class="m-3 w-full">
+      <h1 class="text-4xl font-bold">Mis Ligas</h1>
+      <div class="h-0 w-full border mt-2"></div>
+    </header>
+
+     
+    <section class="w-full mb-8">
+      <h2 class="text-xl text-[#9b9b9b] mb-2">Pendientes</h2>
+      <ul class="flex flex-wrap justify-center gap-6">
+        <li v-for="liga in ligasPendientes" :key="liga.leagueId">
+          <ButtonLeague :liga="liga" />
+        </li>
+      </ul>
+      <RouterLink
+        to="/createLeague"
+        class="mt-4 inline-flex items-center gap-2 rounded-2xl border-2 border-dashed bg-[#d3d3d3] px-5 py-3 text-sm dark:bg-[#3b3b3b]"
+      >
+        <AddIcon classList="h-6 w-6 fill-black dark:fill-white" />
+        Añadir Liga
+      </RouterLink>
+    </section>
+
+    
+    <section class="w-full mb-8">
+      <h2 class="text-xl text-[#9b9b9b] mb-2">En juego</h2>
+      <ul class="flex flex-wrap justify-center gap-6">
+        <li v-for="liga in ligasEnJuego" :key="liga.leagueId">
+          <ButtonLeague :liga="liga" />
+        </li>
+      </ul>
+    </section>
+
+    
+    <section class="w-full mb-8">
+      <h2 class="text-xl text-[#9b9b9b] mb-2">Finalizadas</h2>
+      <ul class="flex flex-wrap justify-center gap-6">
+        <li v-for="liga in ligasFinalizadas" :key="liga.leagueId">
+          <ButtonLeague :liga="liga" />
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <FooterApp />
+  -->
   <HeaderApp :title="welcomeMessage" :isHeading1="false" />
 
   <main
