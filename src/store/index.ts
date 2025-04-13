@@ -11,8 +11,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     login(token: string, expiresIn: number) {
       this.token = token
-      //this.expiresAt = expiresIn
-      this.expiresAt = Date.now() + expiresIn * 1000
+      this.expiresAt = expiresIn
 
       localStorage.setItem('token', token)
       localStorage.setItem('expiresAt', this.expiresAt.toString())
