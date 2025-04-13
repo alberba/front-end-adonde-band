@@ -88,10 +88,9 @@ const handleLogin = async () => {
     authStore.login(data.token, data.expiresIn)
 
     // Guardar el nombre de usuario en el localStorage
-    localStorage.setItem('username', user.value)
     // TODO: Descomentar la siguiente línea cuando la API siga el Contrato
-    // localstorage.setItem('userId', data.userId)
-    // localstorage.setItem('user', data.user)
+    // localStorage.setItem('userId', data.userId)
+    localStorage.setItem('user', data.user)
     redirectHome()
   }
 }
@@ -100,7 +99,6 @@ const handleErrorResponse = (status: number) => {
   const errorMessages: Record<number, { title: string; text: string }> = {
     401: { title: 'Error', text: 'Usuario o contraseña incorrectos' },
     403: { title: 'Error', text: 'Acceso denegado. Contacta con el soporte' },
-    404: { title: 'Error', text: 'Usuario no encontrado' },
     500: {
       title: 'Error',
       text: 'Error interno del servidor. Contacta con el soporte',
