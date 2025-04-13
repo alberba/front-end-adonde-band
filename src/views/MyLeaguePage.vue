@@ -8,12 +8,67 @@ import type { Participation, Match, League } from '@/types'
 import Swal from 'sweetalert2'
 import { ref } from 'vue'
 
-
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
 // import type { Match, Participation } from '@/types'
+//import { ref, onMounted } from 'vue'
+//import { useRoute } from 'vue-router'
+//import type { League } from '@/types'
 
 // const matches = ref<Match[]>([])
+
+
+/*
+const route = useRoute()
+const leagueId = route.params.id as string
+const token = localStorage.getItem('token')
+const userId = parseInt(localStorage.getItem('userId') || '0')
+
+const league = ref<League | null>(null)
+
+async function loadLeague() {
+  const response = await fetch(`http://localhost:8080/api/v0/league/${leagueId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    handleErrorResponse(response.status)
+  } else {
+    league.value = await response.json()
+  }
+}
+
+async function startLeague() {
+  if (!league.value) return
+
+  const response = await fetch(
+    `http://localhost:8080/api/v0/league/${league.value.leagueId}/start`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    handleErrorResponse(response.status)
+  } else {
+    alert('¡Liga iniciada correctamente!')
+    loadLeague()
+  }
+}
+
+function handleErrorResponse(status: number) {
+  if (status === 401) alert('No autorizado')
+  else alert('Error al procesar la solicitud')
+}
+*/
 
 // const loadMatches = async () => {
 //   const response = await fetch(
@@ -148,6 +203,7 @@ import { ref } from 'vue'
 
 // onMounted(() => {
 //   loadMatches()
+//   loadLeague()
 // })
 
 
@@ -457,6 +513,9 @@ const esMiBot = (nombreEquipo: string) => {
 // }
 
 const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
+
+const userIdApi = 0
+const userId = Number(localStorage.getItem('userId') || '0')
 </script>
 
 <template>
@@ -466,9 +525,32 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
   >
     <!-- Contenedor pequeño que incluye solo el header -->
     <header class="m-3 flex w-full flex-col gap-3">
-      <h1 class="text-left text-4xl font-bold">{{ ligaNombre }}</h1>
-      <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
-    </header>
+  <div class="flex flex-row justify-between">
+    <h1 class="text-left text-4xl font-bold">{{ league?.name }}</h1>
+
+    <!-- Mostrar botones solo si el user es el owner -->
+    <div class="flex flex-row gap-4 font-bold text-xl" v-if="userId === league?.user">
+      <!-- Mostrar botón solo si la liga está pendiente -->
+      <button
+        v-if="league?.state === 'pendiente'"
+        class="cursor-pointer px-4.5 py-3 bg-[#06f] text-white rounded-3xl"
+        @click="startLeague"
+      >
+        Empezar Liga
+      </button>
+
+      <!-- Redirigir a configuración (puedes cambiar la ruta) -->
+      <RouterLink
+        :to="`/league/${league?.leagueId}/config`"
+        class="cursor-pointer px-4.5 py-3 bg-[#06f] text-white rounded-3xl"
+      >
+        Configuración
+      </RouterLink>
+    </div>
+  </div>
+
+  <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
+</header>
 
     <div class="flex w-full flex-col gap-5">
       <div class="w-full bg-[#BBBBBB] p-4 dark:bg-[#525252]">
