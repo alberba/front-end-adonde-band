@@ -4,16 +4,16 @@ import WinIcon from '@/assets/svg/clasificacion/WinIcon.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
-import type { ParticipationResponse, Combate, Liga } from '@/types'
+import type { Participation, Match, League } from '@/types'
 import Swal from 'sweetalert2'
 import { ref } from 'vue'
 
 
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
-// import type { Combate, Equipo } from '@/types'
+// import type { Match, Participation } from '@/types'
 
-// const matches = ref<Combate[]>([])
+// const matches = ref<Match[]>([])
 
 // const loadMatches = async () => {
 //   const response = await fetch(
@@ -37,8 +37,8 @@ import { ref } from 'vue'
 
 // // Para la gestión de la liga y su clasificación completa
 // interface CompleteLeagueSummary {
-//   league: Liga;
-//   classification: ParticipationResponse[];
+//   league: League;
+//   classification: Participation[];
 // }
 
 // // Para guardar múltiples ligas completas
@@ -62,7 +62,7 @@ import { ref } from 'vue'
 
 //   } else {
 //     // Si la respuesta es exitosa, se parsea a JSON y se devuelve el objeto LeagueResponseDTO
-//     const league: Liga = await response.json();
+//     const league: League = await response.json();
 //     return league;
 //   }
 // }
@@ -84,7 +84,7 @@ import { ref } from 'vue'
 
 //   } else {
 //     // Si la respuesta es exitosa, se parsea a JSON y se devuelve el objeto ParticipationResponseDTO[]
-//     const leaderboard: ParticipationResponse[] = await response.json();
+//     const leaderboard: Participation[] = await response.json();
 //     return leaderboard;
 //   }
 // }
@@ -152,7 +152,7 @@ import { ref } from 'vue'
 
 
 // Ejemplo de datos de clasificación
-const clasificacion: ParticipationResponse[] = [
+const clasificacion: Participation[] = [
   {
     pos: 1,
     cualidad: 'Soberbia',
@@ -312,7 +312,7 @@ const clasificacion: ParticipationResponse[] = [
 const ligaNombre = 'LaLiga EA Sports'
 
 // Ejemplo de datos de jornadas con encuentros
-const combates: Combate[] = [
+const combates: Match[] = [
   {
     matchId: 1,
     state: 'finalizado',
@@ -436,7 +436,7 @@ const jornadas = combates.reduce(
     acc[round].push(combate)
     return acc
   },
-  {} as Record<number, Combate[]>
+  {} as Record<number, Match[]>
 )
 
 console.log(hola())

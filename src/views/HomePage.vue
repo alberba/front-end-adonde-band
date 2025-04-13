@@ -3,11 +3,11 @@ import AddIcon from '@/assets/svg/AddIcon.vue'
 import ButtonLeague from '@/components/ButtonLeague.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
-import type { Liga } from '@/types'
+import type { League } from '@/types'
 
 const welcomeMessage = '¡Hola, ' + localStorage.getItem('username') + '!'
 
-const ligas: Liga[] = [
+const ligas: League[] = [
   {
     leagueId: 1,
     state: 'pendiente',
