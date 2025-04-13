@@ -151,163 +151,148 @@ import { ref } from 'vue'
 // })
 
 
-// Ejemplo de datos de clasificación
 const clasificacion: Participation[] = [
   {
-    pos: 1,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 1',
-    PJ: 10,
-    G: 6,
-    E: 2,
-    P: 2,
-    Ptos: 20,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 1,
+    name: 'Bot 1',
+    points: 20,
+    position: 1,
+    nWins: 6,
+    nDraws: 2,
+    nLosses: 2,
+    nMatches: 10,
   },
   {
-    pos: 2,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 2',
-    PJ: 10,
-    G: 5,
-    E: 3,
-    P: 2,
-    Ptos: 18,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 2,
+    name: 'Bot 2',
+    points: 18,
+    position: 2,
+    nWins: 5,
+    nDraws: 3,
+    nLosses: 2,
+    nMatches: 10,
   },
   {
-    pos: 3,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 3',
-    PJ: 10,
-    G: 5,
-    E: 2,
-    P: 3,
-    Ptos: 17,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 3,
+    name: 'Bot 3',
+    points: 17,
+    position: 3,
+    nWins: 5,
+    nDraws: 2,
+    nLosses: 3,
+    nMatches: 10,
   },
   {
-    pos: 4,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 4',
-    PJ: 10,
-    G: 4,
-    E: 4,
-    P: 2,
-    Ptos: 16,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 4,
+    name: 'Bot 4',
+    points: 16,
+    position: 4,
+    nWins: 4,
+    nDraws: 4,
+    nLosses: 2,
+    nMatches: 10,
   },
   {
-    pos: 5,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 5',
-    PJ: 10,
-    G: 4,
-    E: 3,
-    P: 3,
-    Ptos: 15,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 5,
+    name: 'Bot 5',
+    points: 15,
+    position: 5,
+    nWins: 4,
+    nDraws: 3,
+    nLosses: 3,
+    nMatches: 10,
   },
   {
-    pos: 6,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 6',
-    PJ: 10,
-    G: 4,
-    E: 2,
-    P: 4,
-    Ptos: 14,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 6,
+    name: 'Bot 6',
+    points: 14,
+    position: 6,
+    nWins: 4,
+    nDraws: 2,
+    nLosses: 4,
+    nMatches: 10,
   },
   {
-    pos: 7,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 7',
-    PJ: 10,
-    G: 3,
-    E: 4,
-    P: 3,
-    Ptos: 13,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 7,
+    name: 'Bot 7',
+    points: 13,
+    position: 7,
+    nWins: 3,
+    nDraws: 4,
+    nLosses: 3,
+    nMatches: 10,
   },
   {
-    pos: 8,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 8',
-    PJ: 10,
-    G: 3,
-    E: 3,
-    P: 4,
-    Ptos: 12,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 8,
+    name: 'Bot 8',
+    points: 12,
+    position: 8,
+    nWins: 3,
+    nDraws: 3,
+    nLosses: 4,
+    nMatches: 10,
   },
   {
-    pos: 9,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 9',
-    PJ: 10,
-    G: 3,
-    E: 2,
-    P: 5,
-    Ptos: 11,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 9,
+    name: 'Bot 9',
+    points: 11,
+    position: 9,
+    nWins: 3,
+    nDraws: 2,
+    nLosses: 5,
+    nMatches: 10,
   },
   {
-    pos: 10,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 10',
-    PJ: 10,
-    G: 2,
-    E: 4,
-    P: 4,
-    Ptos: 10,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 10,
+    name: 'Bot 10',
+    points: 10,
+    position: 10,
+    nWins: 2,
+    nDraws: 4,
+    nLosses: 4,
+    nMatches: 10,
   },
   {
-    pos: 11,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 11',
-    PJ: 10,
-    G: 2,
-    E: 3,
-    P: 5,
-    Ptos: 9,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 11,
+    name: 'Bot 11',
+    points: 9,
+    position: 11,
+    nWins: 2,
+    nDraws: 3,
+    nLosses: 5,
+    nMatches: 10,
   },
   {
-    pos: 12,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 12',
-    PJ: 10,
-    G: 2,
-    E: 2,
-    P: 6,
-    Ptos: 8,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 12,
+    name: 'Bot 12',
+    points: 8,
+    position: 12,
+    nWins: 2,
+    nDraws: 2,
+    nLosses: 6,
+    nMatches: 10,
   },
   {
-    pos: 13,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 13',
-    PJ: 10,
-    G: 1,
-    E: 4,
-    P: 5,
-    Ptos: 7,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 13,
+    name: 'Bot 13',
+    points: 7,
+    position: 13,
+    nWins: 1,
+    nDraws: 4,
+    nLosses: 5,
+    nMatches: 10,
   },
   {
-    pos: 14,
-    cualidad: 'Soberbia',
-    nombre: 'Equipo 14',
-    PJ: 10,
-    G: 1,
-    E: 3,
-    P: 6,
-    Ptos: 6,
-    imagen: new URL('@/assets/svg/arg.svg', import.meta.url).href,
+    botId: 14,
+    name: 'Bot 14',
+    points: 6,
+    position: 14,
+    nWins: 1,
+    nDraws: 3,
+    nLosses: 6,
+    nMatches: 10,
   },
-]
+];
 
 const ligaNombre = 'LaLiga EA Sports'
 
@@ -449,7 +434,7 @@ function hola() {
     })
   }
 }
-const misBots = ['Equipo 1', 'Equipo 3', 'Equipo 5'] // Ejemplo de equipos
+const misBots = ['Bot 1', 'Bot 3', 'Bot 5'] // Ejemplo de Bots de un usuario
 
 const esMiBot = (nombreEquipo: string) => {
   return misBots.includes(nombreEquipo)
@@ -590,7 +575,7 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
           <thead class="sticky top-0 bg-[#DDDDDD] dark:bg-[#2D2D2D]">
             <tr class="gap-8 sm:text-2xl">
               <th class="w-16 px-1 py-2 font-bold sm:px-3 md:px-6">Pos</th>
-              <th class="w-72 p-2 text-left font-bold">Equipo</th>
+              <th class="w-72 p-2 text-left font-bold">Nombre</th>
               <th class="w-8 px-1 py-2 font-bold sm:px-3 md:px-6">PJ</th>
               <th class="w-8 px-1 py-2 font-bold sm:px-3 md:px-6">G</th>
               <th class="w-8 px-1 py-2 font-bold sm:px-3 md:px-6">E</th>
@@ -602,29 +587,29 @@ const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
           <!-- Cuerpo de la tabla -->
           <tbody>
             <tr v-for="(equipo, index) in clasificacion" :key="index" class="border-t sm:text-xl">
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.pos }}
+              <td :class="['w-16 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.position }}
               </td>
               <td
-                :class="['flex items-center gap-1 p-1', esMiBot(equipo.nombre) ? 'font-bold' : '']"
+                :class="['flex items-center gap-1 p-1', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']"
               >
-                <img :src="equipo.imagen" alt=" " class="h-6 w-6 lg:h-8 lg:w-8" />
-                {{ equipo.nombre }}
+                <!--<img :src="equipo.imagen" alt=" " class="h-6 w-6 lg:h-8 lg:w-8" />-->
+                {{ equipo.name }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.PJ }}
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.nMatches }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.G }}
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.nWins }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.E }}
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.nDraws }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.P }}
+              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.nLosses }}
               </td>
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.nombre) ? 'font-bold' : '']">
-                {{ equipo.Ptos }}
+              <td :class="['w-16 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+                {{ equipo.points }}
               </td>
             </tr>
           </tbody>
