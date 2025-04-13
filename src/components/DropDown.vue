@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-interface Option {
+// TODO: Cambiar cuando se haya hecho la Tarea ABB-134
+interface BotTemp {
+  id: number
   name: string
-  icon: string
+  description: string
+  urlImage: string
 }
 
 const isOpen = ref(false)
-const selectedOptions = ref<Option[]>([])
+const selectedOptions = ref<BotTemp[]>([])
 const search = ref('')
 const dropdownContainer = ref()
 
 const props = defineProps<{
-  options: { name: string; icon: string }[]
+  options: BotTemp[]
 }>()
 const emit = defineEmits(['update:selected'])
 
-const options = ref<Option[]>(props.options)
+const options = ref<BotTemp[]>(props.options)
 
 const toggleDropdown = () => {
   if (!isOpen.value) {
@@ -31,7 +34,7 @@ const closeDropdown = (event: FocusEvent) => {
   }
 }
 
-const toggleOption = (option: Option) => {
+const toggleOption = (option: BotTemp) => {
   const index = selectedOptions.value.findIndex((item) => item.name === option.name)
   if (index === -1) {
     selectedOptions.value.push(option)
@@ -41,7 +44,7 @@ const toggleOption = (option: Option) => {
   emit('update:selected', selectedOptions.value)
 }
 
-const isSelected = (option: Option) => {
+const isSelected = (option: BotTemp) => {
   return selectedOptions.value.some((item) => item.name === option.name)
 }
 
@@ -71,9 +74,9 @@ const filteredOptions = computed(() => {
       <div
         v-for="option in selectedOptions"
         :key="option.name"
-        class="flex gap-1 rounded-lg bg-[#4e4e4e] px-2 py-1 text-sm"
+        class="flex flex-row gap-1 rounded-lg bg-[#4e4e4e] px-2 py-1 text-sm"
       >
-        {{ option.icon }} {{ option.name }}
+        <img :src="option.urlImage" alt="" srcset="" /> {{ option.description }} ({{ option.name }})
         <button class="" @click.stop="toggleOption(option)">X</button>
       </div>
       <input
@@ -87,9 +90,12 @@ const filteredOptions = computed(() => {
 
     <div v-show="isOpen" class="flex flex-col gap-1 px-3 py-1.5">
       <template v-if="hasFilteredOptions">
-        <div class="" v-for="(option, index) in filteredOptions" :key="option.name">
-          <input type="checkbox" :checked="isSelected(option)" @change="toggleOption(option)" />
-          {{ option.icon }} {{ option.name }}
+        <div v-for="(option, index) in filteredOptions" :key="option.name">
+          <div class="flex flex-row gap-2">
+            <input type="checkbox" :checked="isSelected(option)" @change="toggleOption(option)" />
+            <img :src="option.urlImage" alt="" srcset="" /> {{ option.description }} ({{ option.name }})
+          </div>
+
           <div
             v-if="index !== filteredOptions.length - 1"
             class="mt-1 w-full border-b border-[#666]"
