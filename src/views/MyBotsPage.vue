@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import HeaderApp from '@/components/HeaderApp.vue'
 import FooterApp from '@/components/FooterApp.vue'
-import ButtonLeague from '@/components/ButtonLeague.vue'
 import BotoneraModo from '@/components/BotoneraModo.vue'
+// import ButtonLeague from '@/components/ButtonLeague.vue'
 
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import type { Bot, League, Participation, BotSummary, BotLeagueSummary } from '@/types'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
@@ -128,14 +128,14 @@ function showErrorAlert(title: string, text: string) {
 
 // Simulamos una respuesta de la API con dos bots
 botSummaries.value = [
-    { id: 1, name: 'Bot A', description: 'Valentía' },
+    { id: 1, name: 'Rbotito', description: 'Valentía' },
     { id: 2, name: 'Bot B', description: 'Empatía' }
   ]
 
 botsDetails.value = [
     {
       botId: 1,
-      name: 'Bot A',
+      name: 'Rbotito',
       description: 'Valentía',
       urlImage: 'https://www.biospheresustainable.com/assets/arxius/e7a4c74a9304fde3454e87f76f7cc726.png',
       nWins: 10,
@@ -361,10 +361,15 @@ async function loadBotLeagueSummaries() {
 // Simulación de la respuesta de la API para pruebas
 
 const botsDetailsTest = ref<Bot[]>([
-  { botId: 1, name: 'Bot A', description: 'Valentía', urlImage: 'https://example.com/botA.png', nWins: 10, nLosses: 5, nDraws: 2 },
+
+  // Estos bots SÍ participan en ligas
+  { botId: 1, name: 'Rbotito', description: 'Valentía', urlImage: 'https://example.com/botA.png', nWins: 10, nLosses: 5, nDraws: 2 },
   { botId: 2, name: 'Bot B', description: 'Empatía', urlImage: 'https://example.com/botB.png', nWins: 8, nLosses: 7, nDraws: 2 },
   { botId: 3, name: 'Bot C', description: 'Curiosidad', urlImage: 'https://example.com/botC.png', nWins: 12, nLosses: 3, nDraws: 1 },
-  { botId: 4, name: 'Bot D', description: 'Silencio', urlImage: 'https://example.com/botD.png', nWins: 5, nLosses: 10, nDraws: 3 } // Este bot NO participa en liga
+
+  // Estos bots NO participan en niguna liga
+  { botId: 4, name: 'Bot D', description: 'Silencio', urlImage: 'https://example.com/botD.png', nWins: 5, nLosses: 10, nDraws: 3 },
+  { botId: 5, name: 'Bot E', description: 'Generosidad', urlImage: 'https://example.com/botE.png', nWins: 15, nLosses: 2, nDraws: 1 }
 ]);
 
 const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
@@ -382,8 +387,8 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
     },
     classification: [
       {
-        botId: 100,
-        name: "Other1",
+        botId: 2,
+        name: "Bot B",
         points: 30,
         position: 1,
         nWins: 10,
@@ -392,7 +397,7 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
       },
       {
         botId: 1,
-        name: "Bot A",
+        name: "Rbotito",
         points: 28,
         position: 2,
         nWins: 9,
@@ -400,8 +405,8 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
         nLosses: 2,
       },
       {
-        botId: 101,
-        name: "Other2",
+        botId: 3,
+        name: "Bot C",
         points: 26,
         position: 3,
         nWins: 8,
@@ -487,11 +492,24 @@ const botLeagueSummariesTest = ref<BotLeagueSummary[]>([
   }
 ]);
 
+// Obtener los bots que NO están en ninguna liga
+const botsNotInLeague = computed(() => {
+  return botsDetailsTest.value.filter(
+    bot => !botLeagueSummariesTest.value.some(summary => summary.botId === bot.botId)
+  );
+});
+
+// Método de ayuda para obtener un bot por su id, lo usaremos para mostrar la imagen o descripción si fuera necesario.
+const getBotById = (id: number) => {
+  return botsDetailsTest.value.find(bot => bot.botId === id) || null;
+};
+
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
 // Función para obtener un bot completo por su id
+/*
 async function loadOneBot(botId: number) {
 
   // Se hace una llamada a la API para obtener el detalle de un bot
@@ -512,11 +530,16 @@ async function loadOneBot(botId: number) {
     const botData: Bot = await response.json();
     return botData;
   }
-}
+}*/
 
 // Función para apuntar un bot a una liga
 async function apuntarseLiga(botId: number) {
 
+  console.log('Bot con id', botId, 'quiere apuntarse a una liga');
+  ChooseLeague.value = true;
+
+  // Comentamos todo esto porque la llamada a la API no funciona
+  /*
   // Se obtiene la información del bot que se quiere apuntar a la liga
   const bot = await loadOneBot(botId);
 
@@ -526,9 +549,11 @@ async function apuntarseLiga(botId: number) {
     selectedBot.value = bot;
     ChooseLeague.value = true;
   }
+  */
 }
 
 // Función para obtener la liga seleccionada
+/*
 async function loadSelectedLeague() {
 
   if (!ligaSeleccionada.value) return null;
@@ -554,11 +579,21 @@ async function loadSelectedLeague() {
 
     return leagueData;
   }
-}
+}*/
 
 // Función para registrar el bot en la liga seleccionada
 async function registerBotToSelectedLeague() {
 
+  console.log('Registrando bot en la liga seleccionada');
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Inscripción en Liga',
+    text: 'Inscribiendo el bot en la liga seleccionada...',
+  });
+
+  // Comentamos esto porque la llamada a la API aún no funciona
+  /*
   const league = await loadSelectedLeague();
 
   // Si no hay liga seleccionada o no hay bot seleccionado, no hacemos nada
@@ -585,6 +620,8 @@ async function registerBotToSelectedLeague() {
       text: 'El bot se ha inscrito en la liga correctamente.',
     });
 
+    */
+
     // Se cierra el modal después de la inscripción
     ChooseLeague.value = false;
 }
@@ -593,184 +630,7 @@ async function registerBotToSelectedLeague() {
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
-// Declaración de las diferentes Ligas dónde participan mis bots:
-const clasificaciones: Record<
-  string,
-  Participation[]
-> = {
-  premierLeague: [
-    {
-      pos: 1,
-      nombre: 'MisterX',
-      cualidad: 'Valentía',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 1,
-      P: 0,
-      Ptos: 4,
-    },
-    {
-      pos: 2,
-      nombre: 'MisterY',
-      cualidad: 'Sinceridad',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 0,
-      P: 1,
-      Ptos: 3,
-    },
-    {
-      pos: 3,
-      nombre: 'C3PO',
-      cualidad: 'Soledad',
-      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 1,
-      P: 0,
-      Ptos: 7,
-    },
-    {
-      pos: 4,
-      nombre: 'Rbotito',
-      cualidad: 'Empatia',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 0,
-      P: 1,
-      Ptos: 6,
-    },
-    {
-      pos: 5,
-      nombre: 'Ramingo',
-      cualidad: 'Envidia',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 4,
-      G: 1,
-      E: 2,
-      P: 1,
-      Ptos: 5,
-    },
-  ],
-  bundesliga: [
-    {
-      pos: 1,
-      nombre: 'MisterX',
-      cualidad: 'Valentía',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 1,
-      P: 0,
-      Ptos: 4,
-    },
-    {
-      pos: 2,
-      nombre: 'MisterY',
-      cualidad: 'Sinceridad',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 0,
-      P: 1,
-      Ptos: 3,
-    },
-    {
-      pos: 3,
-      nombre: 'Luris',
-      cualidad: 'Soledad',
-      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 1,
-      P: 0,
-      Ptos: 7,
-    },
-    {
-      pos: 4,
-      nombre: 'Rbotito',
-      cualidad: 'Empatia',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 0,
-      P: 1,
-      Ptos: 6,
-    },
-    {
-      pos: 5,
-      nombre: 'Ramingo',
-      cualidad: 'Envidia',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 4,
-      G: 1,
-      E: 2,
-      P: 1,
-      Ptos: 5,
-    },
-  ],
-  serieA: [
-    {
-      pos: 1,
-      nombre: 'MisterX',
-      cualidad: 'Valentía',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 1,
-      P: 0,
-      Ptos: 4,
-    },
-    {
-      pos: 2,
-      nombre: 'MisterY',
-      cualidad: 'Sinceridad',
-      imagen: '',
-      PJ: 2,
-      G: 1,
-      E: 0,
-      P: 1,
-      Ptos: 3,
-    },
-    {
-      pos: 3,
-      nombre: 'C3PO',
-      cualidad: 'Soledad',
-      imagen: new URL('@/assets/svg/spain.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 1,
-      P: 0,
-      Ptos: 7,
-    },
-    {
-      pos: 4,
-      nombre: 'Tutto_Free',
-      cualidad: 'Generosidad',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 3,
-      G: 2,
-      E: 0,
-      P: 1,
-      Ptos: 6,
-    },
-    {
-      pos: 5,
-      nombre: 'Ramingo',
-      cualidad: 'Envidia',
-      imagen: new URL('@/assets/svg/argentina.svg', import.meta.url).href,
-      PJ: 4,
-      G: 1,
-      E: 2,
-      P: 1,
-      Ptos: 5,
-    },
-  ],
-}
-
+// Simulación de ligas para pruebas (Modal para elegir liga a la que apuntarse)
 const ligas: League[] = [
   {
     leagueId: 1,
@@ -807,9 +667,8 @@ const ligas: League[] = [
   },
 ]
 
+// Estado para almacenar la liga seleccionada
 const ligaSeleccionada = ref<League | null>(null)
-// Nombre del bot a buscar en la liga:
-const botName = ref('Rbotito')
 
 // Estado para mostrar/ocultar la ventana de ayuda
 const showHelpModal = ref(false)
@@ -817,72 +676,9 @@ const showHelpModal = ref(false)
 // Estado para mostrar/ocultar la ventana de elegir liga
 const ChooseLeague = ref(false)
 
-// Resumen del bot
-const resumenBot = ref({
-  victorias: 0,
-  empates: 0,
-  derrotas: 0,
-  ligasJugadas: [] as League[],
-})
-
-// Función para calcular el resumen del bot
-function getBotSummary(botName: string) {
-  let totalG = 0
-  let totalE = 0
-  let totalP = 0
-  const ligasJugadas: League[] = [] // Ahora es un arreglo de Liga
-
-  ligas.forEach((liga) => {
-    const row = clasificaciones[toCamelCase(liga.name)]?.find(
-      (item) => item.nombre.toLowerCase() === botName.toLowerCase()
-    )
-    if (row) {
-      totalG += row.G
-      totalE += row.E
-      totalP += row.P
-      // Agregamos la liga completa
-      ligasJugadas.push(liga)
-    }
-  })
-
-  resumenBot.value = {
-    victorias: totalG,
-    empates: totalE,
-    derrotas: totalP,
-    ligasJugadas,
-  }
-}
-
-function toCamelCase(str: string) {
+/*function toCamelCase(str: string) {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase())
-}
-
-// Actualizar el resumen cada vez que cambie el nombre del bot
-watch(botName, () => {
-  getBotSummary(botName.value)
-})
-
-// Calcular el resumen al iniciar
-getBotSummary(botName.value)
-
-function getIndicesByBotName(league: League, name: string): number[] {
-  // Buscamos la posición en la clasificación:
-  const classification = clasificaciones[toCamelCase(league.name)]
-  const index = classification?.findIndex(
-    (item) => item.nombre.toLowerCase() === name.toLowerCase()
-  )
-
-  // Si el bot no está en la clasificación, devolvemos []
-  if (index === -1 || index === undefined) {
-    return []
-  }
-
-  const posBot = index + 1
-  const indices = [posBot - 1, posBot, posBot + 1]
-
-  // Filtramos para quedarnos solo con índices válidos
-  return indices.filter((i) => i > 0 && i <= classification.length)
-}
+}*/
 </script>
 
 <template>
@@ -908,125 +704,120 @@ function getIndicesByBotName(league: League, name: string): number[] {
         <!-- Modo Clasificación -->
         <template #clasificacion>
           <div class="w-full">
-            <!-- Se itera sobre cada liga -->
-            <section v-for="liga in ligas" :key="liga.leagueId" class="mb-4 w-full px-4 pt-4 pb-4">
-              <!-- Nombre del Bot -->
-              <h2 class="text-center text-[32px] font-bold text-white">
-                {{ liga.name.split(' (')[0] }}
-              </h2>
 
-              <!-- Cualidad del Bot -->
+            <!-- Sección para bots que participan en una liga -->
+            <section
+              v-for="summary in botLeagueSummariesTest"
+              :key="summary.botId"
+              class="mb-4 w-full rounded-2xl bg-[#2a2a2a] px-4 pt-4 pb-4"
+            >
+              <!-- Nombre del Bot y su Cualidad -->
+              <h2 class="text-center text-[32px] font-bold text-white">
+                {{ getBotById(summary.botId)?.name }}
+              </h2>
               <h3 class="text-center text-[32px] font-semibold text-white">
-                ({{ liga.name.split(' (')[1]?.replace(')', '') }})
+                ({{ getBotById(summary.botId)?.description }})
               </h3>
 
-              <!-- Línea Separadora -->
+              <!-- Línea separadora -->
               <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
 
               <p class="mb-2 text-center text-[16px] font-bold text-white">
                 Posición en la Liga Actual
               </p>
 
-              <!-- Si el bot tiene una posición dentro de la liga -->
-              <div v-if="getIndicesByBotName(liga, botName).length">
-                <table class="mx-auto w-full table-auto border-collapse text-white">
-                  <thead>
-                    <tr class="border-b border-gray-600 text-left">
-                      <th
-                        class="px-3 py-2 text-center text-[18px] whitespace-nowrap sm:text-[24px]"
-                      >
-                        Pos
-                      </th>
-                      <th class="px-4 py-2 text-left text-[18px] whitespace-nowrap sm:text-[24px]">
-                        Nombre
-                      </th>
-                      <th class="px-4 py-2 text-left text-[18px] whitespace-nowrap sm:text-[24px]">
-                        Cualidad
-                      </th>
-                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">PJ</th>
-                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">G</th>
-                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">E</th>
-                      <th class="px-2 py-2 text-center text-[18px] sm:text-[24px]">P</th>
-                      <th class="px-3 py-2 text-center text-[18px] sm:text-[24px]">Ptos</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="i in getIndicesByBotName(liga, botName)"
-                      :key="i"
-                      class="border-b border-gray-500"
-                      :class="{
-                        'font-bold text-[#FADA5E]':
-                          clasificaciones[toCamelCase(liga.name)][i - 1].nombre.toLowerCase() ===
-                          botName.toLowerCase(),
-                      }"
-                    >
-                      <td
-                        class="px-3 py-2 text-center text-[16px] whitespace-nowrap sm:text-[20px]"
-                      >
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].pos }}
-                      </td>
-                      <td
-                        class="flex items-center px-4 py-2 text-left text-[16px] whitespace-nowrap sm:text-[20px]"
-                      >
-                        <img
-                          :src="clasificaciones[toCamelCase(liga.name)][i - 1].imagen"
-                          alt=""
-                          class="mr-2"
-                        />
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].nombre }}
-                      </td>
-                      <td class="px-4 py-2 text-left text-[16px] whitespace-nowrap sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].cualidad }}
-                      </td>
-                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].PJ }}
-                      </td>
-                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].G }}
-                      </td>
-                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].E }}
-                      </td>
-                      <td class="px-2 py-2 text-center text-[16px] sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].P }}
-                      </td>
-                      <td class="px-3 py-2 text-center text-[16px] sm:text-[20px]">
-                        {{ clasificaciones[toCamelCase(liga.name)][i - 1].Ptos }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <!-- Botones "Ver Liga Actual" y "Ver Historial de Ligas" -->
-                <div class="mt-6 flex flex-wrap justify-center gap-x-4">
-                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
-                    Ver Liga Actual
-                  </button>
-                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
-                    Ver Historial de Ligas
-                  </button>
-                </div>
-              </div>
-
-              <!-- Si no participa en la liga -->
-              <div v-else>
-                <p class="mt-6 mb-6 text-center text-[16px] font-bold text-[#8D8D8D]">
-                  En ninguna liga actualmente...
-                </p>
-                <div class="mt-4 flex justify-center gap-x-4">
-                  <button
-                    class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
-                    @click="apuntarseLiga(botsDetails[1].botId)"
+              <!-- Tabla de clasificación -->
+              <table class="mx-auto w-full table-auto border-collapse text-white">
+                <thead>
+                  <tr class="border-b border-gray-600 text-left">
+                    <th class="px-3 py-2 text-center text-[18px]">Pos</th>
+                    <th class="px-4 py-2 text-left text-[18px]">Nombre</th>
+                    <th class="px-4 py-2 text-left text-[18px]">Cualidad</th>
+                    <th class="px-2 py-2 text-center text-[18px]">PJ</th>
+                    <th class="px-2 py-2 text-center text-[18px]">G</th>
+                    <th class="px-2 py-2 text-center text-[18px]">E</th>
+                    <th class="px-2 py-2 text-center text-[18px]">P</th>
+                    <th class="px-3 py-2 text-center text-[18px]">Ptos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Se itera sobre la clasificación filtrada (por ejemplo: posición superior, actual e inferior) -->
+                  <tr
+                    v-for="(entry, index) in summary.classification"
+                    :key="index"
+                    class="border-b border-gray-500"
+                    :class="{ 'font-bold text-[#FADA5E]': entry.name.toLowerCase() === getBotById(summary.botId)?.name.toLowerCase() }"
                   >
-                    Apuntarse
-                  </button>
-                </div>
-                <div class="mt-4 flex justify-center gap-x-4">
-                  <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
-                    Ver Historial de Ligas
-                  </button>
-                </div>
+                    <td class="px-3 py-2 text-center text-[16px]">
+                      {{ entry.position }}
+                    </td>
+                    <td class="flex items-center px-4 py-2 text-left text-[16px]">
+                      <!--<img :src="getBotById(entry.botId)?.urlImage" alt="Imagen del bot" class="mr-2 h-6 w-6" />-->
+                      {{ entry.name }}
+                    </td>
+                    <td class="px-4 py-2 text-left text-[16px]">
+                      {{ getBotById(entry.botId)?.description }}
+                    </td>
+                    <td class="px-2 py-2 text-center text-[16px]">
+                      {{ entry.nWins + entry.nDraws + entry.nLosses }}
+                    </td>
+                    <td class="px-2 py-2 text-center text-[16px]">
+                      {{ entry.nWins }}
+                    </td>
+                    <td class="px-2 py-2 text-center text-[16px]">
+                      {{ entry.nDraws }}
+                    </td>
+                    <td class="px-2 py-2 text-center text-[16px]">
+                      {{ entry.nLosses }}
+                    </td>
+                    <td class="px-3 py-2 text-center text-[16px]">
+                      {{ entry.points }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Botones para ver la liga actual y el historial de ligas -->
+              <div class="mt-6 flex flex-wrap justify-center gap-x-4">
+                <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                  Ver Liga Actual
+                </button>
+                <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                  Ver Historial de Ligas
+                </button>
+              </div>
+            </section>
+
+            <!-- Sección para bots que NO están en ninguna liga -->
+            <section
+              v-for="bot in botsNotInLeague"
+              :key="bot.botId"
+              class="mb-4 w-full rounded-2xl bg-[#2a2a2a] px-4 pt-4 pb-4 text-center"
+            >
+              <!-- Nombre del Bot y su Cualidad -->
+              <h2 class="text-center text-[32px] font-bold text-white">
+                {{ bot.name }}
+              </h2>
+              <h3 class="text-center text-[32px] font-semibold text-white">
+                {{ bot.description }}
+              </h3>
+
+              <!-- Línea separadora -->
+              <div class="mx-auto mt-1 mb-4 h-[2px] w-2/3 bg-gray-500"></div>
+
+              <p class="mt-6 mb-6 text-[16px] font-bold text-[#8D8D8D]">
+                En ninguna liga actualmente...
+              </p>
+              <div class="flex flex-col items-center gap-y-4">
+                <button
+                  class="rounded-full bg-white px-6 py-2 text-[16px] font-bold text-black"
+                  @click="apuntarseLiga(bot.botId)"
+                >
+                  Apuntarse
+                </button>
+                <button class="rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white">
+                  Ver Historial de Ligas
+                </button>
               </div>
             </section>
           </div>
