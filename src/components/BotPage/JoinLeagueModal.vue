@@ -53,7 +53,8 @@ const loadLeagues = async () => {
   } else {
     // Si la respuesta es correcta, se parsea a JSON y se asigna a la variable leagues
     const leagues: League[] = await response.json()
-    ligas.value = leagues
+
+    ligas.value = leagues.filter((l) => l.state === 'PENDING')
   }
 }
 
@@ -64,14 +65,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px]">
-    <div class="w-[570px] rounded-xl bg-[#1D1D1D] p-6 text-center text-white">
+  <div
+    class="fixed inset-0 flex items-center justify-center backdrop-blur-[3px]"
+    @click="emit('closeJoinLeagueModal')"
+  >
+    <div class="w-[570px] rounded-xl bg-[#1D1D1D] p-6 text-center text-white" @click.stop>
       <h2 class="mb-2 text-center text-2xl font-bold">Seleccionar Liga</h2>
       <div class="mx-0 mt-0 mb-4 h-[1px] w-full bg-[#FFFFFF]"></div>
 
       <!-- Lista de ligas -->
       <ul class="mx-auto rounded-lg bg-[#DDDDDD] p-2 dark:bg-[#353535]">
         <li
+          v-if="ligas.length !== 0"
           v-for="liga in ligas"
           :key="liga.id"
           :class="[
@@ -91,6 +96,7 @@ onMounted(() => {
             <span class="text-lg font-semibold text-black dark:text-white">{{ liga.name }}</span>
           </div>
         </li>
+        <div v-else>No hay ligas para apuntarse</div>
       </ul>
 
       <!-- Botón Apuntarse -->

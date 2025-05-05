@@ -134,8 +134,8 @@ async function onSubmitForm() {
 
   const botData = {
     name: nombre.value,
-    urlImage: imageUrl.value,
-    description: cualidad.value,
+    imageUrl: imageUrl.value,
+    quality: cualidad.value,
     endpoint: apiUrl.value
   }
 

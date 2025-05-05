@@ -92,11 +92,14 @@ function handleJoinLeague(botId?: number) {
 
       <!-- Botones para ver la liga actual y el historial de ligas -->
       <div class="mt-6 flex flex-wrap justify-center gap-x-4">
-        <button
+        <RouterLink
+          :to="
+            '/league/' + botLeagueSummaries.find((summary) => summary.botId === bot.id)?.leagueId
+          "
           class="cursor-pointer rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
         >
           Ver Liga Actual
-        </button>
+        </RouterLink>
         <button
           class="cursor-pointer rounded-full bg-[#06f] px-6 py-2 text-[16px] font-bold text-white"
         >

@@ -10,6 +10,8 @@ const dropdownContainer = ref()
 const props = defineProps<{
   options: Bot[] | undefined
 }>()
+
+console.log('props', props)
 const emit = defineEmits(['update:selected'])
 
 const options = ref<Bot[] | undefined>(props.options)
@@ -69,7 +71,7 @@ const filteredOptions = computed(() => {
         :key="option.name"
         class="flex flex-row gap-1 rounded-lg bg-[#4e4e4e] px-2 py-1 text-sm"
       >
-        <img :src="option.imageUrl" alt="" srcset="" /> {{ option.quality }} ({{ option.name }})
+        <img :src="option.imageUrl" class="w-5 h-5"  alt="" srcset="" /> {{ option.quality }} ({{ option.name }})
         <button class="" @click.stop="toggleOption(option)">X</button>
       </div>
       <input
@@ -86,7 +88,7 @@ const filteredOptions = computed(() => {
         <div v-for="(option, index) in filteredOptions" :key="option.name">
           <div class="flex flex-row gap-2">
             <input type="checkbox" :checked="isSelected(option)" @change="toggleOption(option)" />
-            <img :src="option.imageUrl" alt="" srcset="" /> {{ option.quality }} ({{
+            <img :src="option.imageUrl" class="w-5 h-5" alt="" srcset="" /> {{ option.quality }} ({{
               option.name
             }})
           </div>

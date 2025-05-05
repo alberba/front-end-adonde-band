@@ -107,8 +107,7 @@ async function startLeague() {
   if (!response.ok) {
     alert('Error al iniciar la liga. Por favor, inténtalo de nuevo.')
   } else {
-    alert('¡Liga iniciada correctamente!')
-    router.push(`/league/${leagueId}`)
+    location.reload()
   }
 }
 

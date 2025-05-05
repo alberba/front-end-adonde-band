@@ -7,18 +7,17 @@ import { onMounted, ref } from 'vue'
 import Swal from 'sweetalert2'
 import type { Bot } from '@/types'
 
-
-
 interface BotSummary {
   id: number
   name: string
   description: string
 }
 
+const isLoading = ref(true)
 const options = ref<Bot[]>()
 
 const getAllBotsSummary = async () => {
-  const response = await fetch('http://localhost:3000/api/v0/bot', {
+  const response = await fetch('http://localhost:8080/api/v0/bot', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -34,10 +33,11 @@ const getAllBotsSummary = async () => {
 
     const botsDetails = await Promise.all(
       data.map(async (bot: BotSummary) => {
-        const botResponse = await fetch(`http://localhost:3000/api/v0/bot/${bot.name}`, {
+        const botResponse = await fetch(`http://localhost:8080/api/v0/bot/${bot.id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         })
 
@@ -47,11 +47,13 @@ const getAllBotsSummary = async () => {
         }
         const botData = await botResponse.json()
 
+        console.log('Bot details:', botData)
+
         return {
           id: botData.id,
           name: botData.name,
-          description: botData.description,
-          urlImage: botData.urlImage,
+          quality: botData.quality,
+          imageUrl: botData.imageUrl,
         }
       })
     )
@@ -59,8 +61,9 @@ const getAllBotsSummary = async () => {
   }
 }
 
-onMounted(() => {
-  getAllBotsSummary()
+onMounted(async () => {
+  await getAllBotsSummary()
+  isLoading.value = false
 })
 
 const name = ref('')
@@ -75,10 +78,8 @@ const createLeagueRequest = async () => {
     rounds: rounds.value,
     matchTime: matchTime.value,
     bots: selectedBots.value.map((bot) => bot.id),
-    imagen: imageUrl.value,
-    // urlImagen: imageUrl.value,
+    imageUrl: imageUrl.value,
   }
-  console.log('Body:', body)
 
   const response = await fetch('http://localhost:8080/api/v0/league', {
     method: 'POST',
@@ -141,8 +142,9 @@ const onImageLoad = (event: Event) => {
 
 <template>
   <HeaderApp :isHeading1="false" />
-
+  <main v-if="isLoading" class="flex h-screen items-center justify-center"><p>Cargando</p></main>
   <main
+    v-else
     class="xs:px-8 mb-10 flex w-full flex-col items-center justify-center px-3 sm:max-w-[860px] md:px-10 lg:w-[860px]"
   >
     <header class="m-3 flex w-full flex-col gap-2">
