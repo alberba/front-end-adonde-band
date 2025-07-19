@@ -8,6 +8,12 @@
       "path": "./tsconfig.app.json"
     }
   ],
+  "compilerOptions": {
+    "target": "es2020",
+    "types": [
+      "vue-sweetalert2",
+    ],
+  },
   "types": [
     "vue-sweetalert2",
   ],

@@ -1,7 +1,7 @@
 <template>
   <header class="flex w-full flex-row items-center justify-between px-10 py-2.5">
     <h1 class="text-4xl font-bold md:text-[48px] lg:text-[64px]">Bienvenido a BotSports</h1>
-    <img class="h-[150px]" src="../assets/loginicon.svg" alt="" />
+    <img class="h-[150px]" src="../assets/svg/loginicon.svg" alt="" />
   </header>
 
   <main class="my-10 flex w-full justify-center">

@@ -4,9 +4,7 @@ import WinIcon from '@/assets/svg/clasificacion/WinIcon.vue'
 import FooterApp from '@/components/FooterApp.vue'
 import HeaderApp from '@/components/HeaderApp.vue'
 import router from '@/router'
-import type { Participation, Match, League } from '@/types'
-import Swal from 'sweetalert2'
-import { ref } from 'vue'
+import type { Participation, Match } from '@/types'
 
 // TODO: Descomentar cuando se tenga la API de partidos de una liga
 // import { onMounted } from 'vue'
@@ -16,7 +14,6 @@ import { ref } from 'vue'
 //import type { League } from '@/types'
 
 // const matches = ref<Match[]>([])
-
 
 /*
 const route = useRoute()
@@ -206,7 +203,6 @@ function handleErrorResponse(status: number) {
 //   loadLeague()
 // })
 
-
 const clasificacion: Participation[] = [
   {
     botId: 1,
@@ -348,9 +344,7 @@ const clasificacion: Participation[] = [
     nLosses: 6,
     nMatches: 10,
   },
-];
-
-const ligaNombre = 'LaLiga EA Sports'
+]
 
 // Ejemplo de datos de jornadas con encuentros
 const combates: Match[] = [
@@ -513,9 +507,6 @@ const esMiBot = (nombreEquipo: string) => {
 // }
 
 const titleHeader = '¡Hola, ' + localStorage.getItem('username') + '!'
-
-const userIdApi = 0
-const userId = Number(localStorage.getItem('userId') || '0')
 </script>
 
 <template>
@@ -525,32 +516,8 @@ const userId = Number(localStorage.getItem('userId') || '0')
   >
     <!-- Contenedor pequeño que incluye solo el header -->
     <header class="m-3 flex w-full flex-col gap-3">
-  <div class="flex flex-row justify-between">
-    <h1 class="text-left text-4xl font-bold">{{ league?.name }}</h1>
-
-    <!-- Mostrar botones solo si el user es el owner -->
-    <div class="flex flex-row gap-4 font-bold text-xl" v-if="userId === league?.user">
-      <!-- Mostrar botón solo si la liga está pendiente -->
-      <button
-        v-if="league?.state === 'pendiente'"
-        class="cursor-pointer px-4.5 py-3 bg-[#06f] text-white rounded-3xl"
-        @click="startLeague"
-      >
-        Empezar Liga
-      </button>
-
-      <!-- Redirigir a configuración (puedes cambiar la ruta) -->
-      <RouterLink
-        :to="`/league/${league?.leagueId}/config`"
-        class="cursor-pointer px-4.5 py-3 bg-[#06f] text-white rounded-3xl"
-      >
-        Configuración
-      </RouterLink>
-    </div>
-  </div>
-
-  <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
-</header>
+      <div class="mt-0 h-0 w-full dark:border dark:border-[#525252]"></div>
+    </header>
 
     <div class="flex w-full flex-col gap-5">
       <div class="w-full bg-[#BBBBBB] p-4 dark:bg-[#525252]">
@@ -669,28 +636,61 @@ const userId = Number(localStorage.getItem('userId') || '0')
           <!-- Cuerpo de la tabla -->
           <tbody>
             <tr v-for="(equipo, index) in clasificacion" :key="index" class="border-t sm:text-xl">
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-16 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.position }}
               </td>
               <td
-                :class="['flex items-center gap-1 p-1', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']"
+                :class="[
+                  'flex items-center gap-1 p-1',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
               >
                 <!--<img :src="equipo.imagen" alt=" " class="h-6 w-6 lg:h-8 lg:w-8" />-->
                 {{ equipo.name }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-8 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.nMatches }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-8 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.nWins }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-8 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.nDraws }}
               </td>
-              <td :class="['w-8 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-8 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.nLosses }}
               </td>
-              <td :class="['w-16 p-1 text-center', esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '']">
+              <td
+                :class="[
+                  'w-16 p-1 text-center',
+                  esMiBot(equipo.name) ? 'font-bold text-[#FADA5E]' : '',
+                ]"
+              >
                 {{ equipo.points }}
               </td>
             </tr>
